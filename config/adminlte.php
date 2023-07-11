@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Validation\Rules\Can;
+
 return [
 
     /*
@@ -317,17 +319,20 @@ return [
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
+            'can'  => 'admin.pages',
         ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
+            'can'  => 'admin.settings',
         ],
         [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
+            'can'  => 'admin.settings',
         ],
         [
             'text'    => 'multilevel',

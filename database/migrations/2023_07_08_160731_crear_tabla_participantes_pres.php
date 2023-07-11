@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('presentacion');
-            $table->unsignedBigInteger('semillerista');
+            $table->unsignedBigInteger('integrante');
 
             $table->foreign('presentacion')->references('id')->on('presentaciones')->onDelete('cascade'); //si se elimina la presentacion, tambien a los participantes
-            $table->foreign('semillerista')->references('num_identificacion')->on('semilleristas')->onDelete('cascade'); //si se elimina al semillerista, tambien al participante
+            $table->foreign('integrante')->references('id')->on('integrantes_proy')->onDelete('cascade'); //si se elimina al integrante, tambien al participante
 
             $table->timestamps();
         });
