@@ -65,8 +65,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Semilleros</b> <br>&nbsp;&nbsp;Dpto. Sistemas​',
+    'logo_img' => 'vendor/adminlte/dist/img/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -88,7 +88,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/logo.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -111,7 +111,7 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/logo.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -255,7 +255,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -302,91 +302,95 @@ return [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
         // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
+        /*[
+            'type' => 'sidebar-menu-search', //buscador
             'text' => 'search',
-        ],
+        ],*/
+
+        //Perfil <- todos ven
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-            'can'  => 'admin.pages',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-            'can'  => 'admin.settings',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-            'can'  => 'admin.settings',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
+            'text'    => 'Perfil',
+            'icon'    => 'fas fa-fw fa-user',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Datos Personales',
+                    'url'  => 'perfil',
+                    'icon' => 'fas fa-fw fa-address-card',
+                    //'can'  => 'perfil',
                 ],
                 [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Cambiar Contraseña',
+                    'url'  => 'cambiar_contrasena',
+                    'icon' => 'fas fa-fw fa-lock',
+                    //'can'  => 'perfil',
                 ],
             ],
+            'can'  => 'perfil',
         ],
-        ['header' => 'labels'],
+
+        //Director <- solo director ve
         [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
+            'header' => 'ADMINISTRACIÓN',
+            'can'  => 'director.administracion',
         ],
         [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
+            'text' => 'Usuarios',
+            'url'  => '/usuarios',
+            'icon' => 'fas fa-fw fa-users',
+            'can'  => 'director.usuarios',
+        ],
+        [
+            'text' => 'Semilleros',
+            'url'  => '/semilleros',
+            'icon' => 'fas fa-fw fa-list',
+            'can'  => 'director.semilleros',
+        ],
+        [
+            'text' => 'Proyectos',
+            'url'  => '/proyectos',
+            'icon' => 'fas fa-fw fa-archive',
+            'can'  => 'director.proyectos',
+        ],
+
+        //coordinador <- solo coordinador ver
+        [
+            'header' => 'ADMINISTRACIÓN',
+            'can'  => 'coordinador.administracion',
+        ],
+        [
+            'text' => 'Semillero',
+            'url'  => '/semillero',
+            'icon' => 'fas fa-fw fa-atom',
+            'can'  => 'coordinador-semillerista.semillero', //Coordinador y semillerista ven
+        ],
+        [
+            'text' => 'Semilleristas',
+            'url'  => '/semillero/semilleristas',
+            'icon' => 'fas fa-fw fa-users',
+            'can'  => 'coordinador.administracion',
+        ],
+        [
+            'text' => 'Proyectos',
+            'url'  => 'semillero/proyectos',
+            'icon' => 'fas fa-fw fa-archive',
+            'can'  => 'coordinador.proyectos',
+        ],
+
+        //solo el semillerista ve
+        [
+            'text' => 'Proyectos',
+            'url'  => 'semillerista/proyectos',
+            'icon' => 'fas fa-fw fa-archive',
+            'can'  => 'semillerista.proyectos',
+        ],
+
+        //todos pueden ver
+        [
+            'text' => 'Eventos',
+            'url'  => '/eventos',
+            'icon' => 'fas fa-fw fa-calendar',
+            'can'  => 'eventos',
         ],
     ],
 

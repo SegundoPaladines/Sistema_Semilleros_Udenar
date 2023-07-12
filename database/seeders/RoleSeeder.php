@@ -20,9 +20,30 @@ class RoleSeeder extends Seeder
         $coordinador = Role::create(['name'=>'coordinador']);
         $semillerista = Role::create(['name'=>'semillerista']);
 
-        Permission::create(['name'=>"coordinador.home"])->syncRoles($coordinador,$director, $semillerista);
-        Permission::create(['name'=>"admin.pages"])->syncRoles($coordinador,$director, $semillerista);
-        Permission::create(['name'=>"admin.settings"])->syncRoles($director);
+        //******************INICIO <- permisos para visualizacion del HOME y sus componenetes**********************
+
+        //todos pueden ver
+        Permission::create(['name'=>"home"])->syncRoles($coordinador, $director, $semillerista);
+        Permission::create(['name'=>"perfil"])->syncRoles($coordinador, $director, $semillerista);
+        Permission::create(['name'=>"eventos"])->syncRoles($director, $coordinador, $semillerista);
+
+        //coordinador y semillerista pueden ver
+        Permission::create(['name'=>"coordinador-semillerista.semillero"])->syncRoles($coordinador, $semillerista);
+
+        //solo el director puede ver
+        Permission::create(['name'=>"director.administracion"])->syncRoles($director);
+        Permission::create(['name'=>"director.proyectos"])->syncRoles($director);
+        Permission::create(['name'=>"director.usuarios"])->syncRoles($director);
+        Permission::create(['name'=>"director.semilleros"])->syncRoles($director);
+
+        //solo el coordinador puede ver
+        Permission::create(['name'=>"coordinador.administracion"])->syncRoles($coordinador);
+        Permission::create(['name'=>"coordinador.proyectos"])->syncRoles($coordinador);
+
+        //solo el semillerista puede ver
+        Permission::create(['name'=>"semillerista.proyectos"])->syncRoles($semillerista);
+        
+        //*******************FIN <- persmisos para visualizacion del HOME y sus componentes*******************************************************************
         
     }
 }

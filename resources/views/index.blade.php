@@ -3,11 +3,11 @@
 @section('title', 'Coordinador')
 
 @section('content_header')
-    <h1>Coordinador</h1>
+    <h1>Sistema de Semilleros</h1>
 @stop
 
 @section('content')
-    <p>Bienvenido Coordinador</p>
+    <p>Bienvenido {{ $user->name }}</p>
 @stop
 
 @section('css')

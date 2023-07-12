@@ -12,6 +12,6 @@ class SemilleroPolicy
 
     public function coordinador(User $user, Semillero $semillero)
     {
-        return false;
+        return true;
     }
 }
