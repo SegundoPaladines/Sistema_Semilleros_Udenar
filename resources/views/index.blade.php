@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Coordinador')
+@section('title', 'Semilleros Sistemas Udenar')
 
 @section('content_header')
     <h1>Sistema de Semilleros</h1>

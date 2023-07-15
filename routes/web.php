@@ -14,12 +14,22 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {return view('welcome');});
+//rutas sin autenticacion
+
+Route::get('/', [HomeController::class,'welcome'])
+    ->name('welcome');
+
+Route::get('/login', [HomeController::class,'login'])
+    ->middleware(['guest'])
+    ->name('login');
+
+// rutas con autenticacion
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/home', [HomeController::class,'index'])->name('home');
+    Route::get('/home', [HomeController::class,'index'])
+        ->name('home');
 });

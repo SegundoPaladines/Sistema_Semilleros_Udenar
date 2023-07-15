@@ -14,19 +14,19 @@ class UserSeeder extends Seeder
     {
         User::create([
                 'name'=> 'Admin',
-                'email'=>'admin@gmail.com',
+                'email'=>'admin@udenar.edu.co',
                 'password'=> bcrypt('admin123')
         ])->assignRole('admin');
 
         User::create([
             'name'=> 'Coordinador',
-            'email'=>'coordinador@gmail.com',
+            'email'=>'coordinador@udenar.edu.co',
             'password'=> bcrypt('admin123')
         ])->assignRole('coordinador');
 
         User::create([
             'name'=> 'Semillerista',
-            'email'=>'semillerista@gmail.com',
+            'email'=>'semillerista@udenar.edu.co',
             'password'=> bcrypt('admin123')
         ])->assignRole('semillerista');
 

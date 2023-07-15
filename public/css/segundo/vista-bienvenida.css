@@ -212,3 +212,116 @@ body{
     margin: 0;
     background: #000;
 }
+
+#logo{
+   align-items: center;
+}
+#nombre{
+    letter-spacing: 0.2em;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1.2em;
+}
+
+#vtn-login{
+    border-radius: 20px;
+}
+
+#msg-bienvenida h1{
+    color:gray;
+    letter-spacing: 0.2em;
+    font-size: 2em;
+}
+#frm-login{
+    width: 100%;
+}
+.frm-div{
+    width: 100%;
+}
+.input-frm{
+    width: 100%;
+    max-width: 400px;
+    border: none;
+    border-bottom: 3px solid gray;
+}
+.input-frm:focus {
+    outline: none;
+    border-bottom: 5px solid gray;
+}
+.btn-login{
+    width: 90%;
+    background-color: white;
+    padding: 3%;
+    border: solid 2px #4CAF50;
+    color: black;
+}
+.btn-login:hover{
+    background-color:#4CAF50;
+    color:white;
+}
+
+.reset-passwd {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px; 
+    font-weight: 500; 
+    transition: color 0.3s;
+    display: inline-block; 
+    margin-top: 10px; 
+}
+  
+.reset-passwd:hover {
+    color: #0056b3;
+    border-bottom: 2px solid #007bff;
+}
+  
+.reset-passwd:focus {
+    outline: none;
+}
+
+.valid {
+    border-bottom: 5px solid green;
+}
+
+.invalid {
+    border-bottom: 5px solid red;
+}
+
+.texto-email{
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+#texto-email{
+    display: none;
+    position: absolute; 
+    top: -6rem;
+    width: 100%;
+    z-index: 200;
+}
+
+#texto-pass{
+    display: none;
+    position: absolute; 
+    top: 2rem;
+    width: 100%;
+    z-index: 200;
+}
+.ver-contrasena {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+#icono-ver-contra{
+    color: gray;
+}
+#error-login{
+    position: absolute;
+    top: 15rem;
+    width: 80%;
+    z-index: 200;
+}
