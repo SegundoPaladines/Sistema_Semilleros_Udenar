@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Models\Semillero' => 'App\Policies\SemilleroPolicy',
+        'App\Models\Director' => 'App\Policies\UsuariosPolicy',
     ];
 
     /**

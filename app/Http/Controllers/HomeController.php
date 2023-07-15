@@ -24,4 +24,8 @@ class HomeController extends Controller
         session()->forget('openModal');
         return view('welcome');
     }
+
+    public function registarUsuarios() {
+        return redirect()->route('register');
+    }
 }
