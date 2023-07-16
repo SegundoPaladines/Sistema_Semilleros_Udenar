@@ -30,6 +30,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/register', [HomeController::class, 'registarUsuarios']);
+    Route::get('/register', [HomeController::class, 'registarUsuarios'])->name('register');
+    Route::post('/register', [HomeController::class, 'postUsuarios'])->name('register');
     Route::get('/home', [HomeController::class,'index'])->name('home');
 });

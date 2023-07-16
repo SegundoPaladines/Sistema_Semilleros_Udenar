@@ -335,7 +335,7 @@ return [
         ],
         [
             'text' => 'Usuarios',
-            'url'  => '/usuarios',
+            'url'  => 'admin/usuarios',
             'icon' => 'fas fa-fw fa-users',
             'can'  => 'director.usuarios',
         ],

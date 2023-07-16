@@ -26,6 +26,9 @@ class HomeController extends Controller
     }
 
     public function registarUsuarios() {
-        return redirect()->route('register');
+        return redirect()->route('v_reg_usr');
+    }
+    public function postUsuarios() {
+        return redirect()->route('registar_usuario');
     }
 }

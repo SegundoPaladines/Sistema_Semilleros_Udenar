@@ -30,6 +30,42 @@ class UserSeeder extends Seeder
             'password'=> bcrypt('admin123')
         ])->assignRole('semillerista');
 
+        User::create([
+            'name'=> 'Daniel Garcia',
+            'email'=>'daniel.g@udenar.edu.co',
+            'password'=> bcrypt('admin123')
+        ])->assignRole('admin');
+
+        User::create([
+            'name'=> 'Paola Arturo',
+            'email'=>'paola.a@udenar.edu.co',
+            'password'=> bcrypt('admin123')
+        ])->assignRole('coordinador');
+
+        User::create([
+            'name'=> 'Jorge Muñoz',
+            'email'=>'jorje.m@udenar.edu.co',
+            'password'=> bcrypt('admin123')
+        ])->assignRole('semillerista');
+        
+        User::create([
+            'name'=> 'Segundo Paladines',
+            'email'=>'segundo.p@udenar.edu.co',
+            'password'=> bcrypt('admin123')
+        ])->assignRole('admin');
+
+        User::create([
+            'name'=> 'Snadra Vallejo',
+            'email'=>'sandra.v@udenar.edu.co',
+            'password'=> bcrypt('admin123')
+        ])->assignRole('coordinador');
+
+        User::create([
+            'name'=> 'Julian Paz',
+            'email'=>'Julian.p@udenar.edu.co',
+            'password'=> bcrypt('admin123')
+        ])->assignRole('semillerista');
+
        //generar aleatorios User::factory(9)->create();
     }
 }
