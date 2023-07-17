@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Persona;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -104,6 +107,54 @@ class HomeController extends Controller
 
                 $persona = Persona::where('usuario', $user->id)->first();
                 return redirect()->route('perfil')->with('actualizacionExitosa', true);
+            }
+        }
+    }
+    public function actualizarContrasena(){
+        $user = auth()->user();
+
+        return view('reset-psswd')->with('user', $user);
+    }
+    public function cambiarContrasena(Request $request){
+        $user = auth()->user();
+        $usr_edit = User::findOrFail($user->id);
+
+        $validator = Validator::make($request->all(), [
+            'passwd1' => 'required|min:6',
+            'passwd2' => 'required|min:6',
+            'passwd3' => 'required|min:6',
+        ], [
+            'passwd1.min' => 'La contraseña debe tener al menos :min caracteres.',
+            'passwd2.min' => 'La contraseña debe tener al menos :min caracteres.',
+            'passwd3.min' => 'La contraseña debe tener al menos :min caracteres.',
+            'passwd1.required' => 'La contraseña vieja no puede estar vacia.',
+            'passwd2.required' => 'La contraseña nueva no puede estar vacia',
+            'passwd3.required' => 'La contraseña nueva no puede estar vacia',
+        ]);
+        
+        if (!password_verify($request->input('passwd1'), $usr_edit->password)) {
+            $validator = Validator::make($request->all(), [], []);
+            $validator->errors()->add('passwd1', 'Contraseña Incorrecta.');
+
+            return redirect()->back()->withErrors($validator)->withInput();
+        }else{
+            if (($request->input('passwd2')) === ($request->input('passwd3'))) {
+                // Comprobar si hay errores de validación
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->withInput();
+                } else {
+                    $user->password = bcrypt($request->input('passwd2'));
+                    $user->save();
+                    
+                    return redirect()->route('cambiar-contrasena')->with('cambioExitoso', true);
+                }
+            } else {
+                $validator = Validator::make($request->all(), [], []);
+    
+                $validator->errors()->add('passwd2', 'Las contraseñas no coinciden.');
+                $validator->errors()->add('passwd3', 'Las contraseñas no coinciden.');
+    
+                return redirect()->back()->withErrors($validator)->withInput();
             }
         }
     }

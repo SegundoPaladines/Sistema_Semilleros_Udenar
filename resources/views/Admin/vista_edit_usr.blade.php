@@ -81,7 +81,7 @@
     @if (session('registroExitoso'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso();
+                mostrarAlertaRegistroExitoso("¡La actualización se ha realizado exitosamente!","Actualizacion Exitosa", true);
             });
         </script>
     @endif

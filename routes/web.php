@@ -35,5 +35,7 @@ Route::middleware([
     Route::get('/home', [HomeController::class,'index'])->name('home');
     Route::get('/perfil', [HomeController::class, 'perfil'])->name('perfil');
     Route::post('/perfil', [HomeController::class, 'actualizarPerfil'])->name('actualizar_perfil');
+    Route::get('/cambiar_contrasena', [HomeController::class, 'actualizarContrasena'])->name('cambiar-contrasena');
+    Route::post('/cambiar_contrasena', [HomeController::class, 'cambiarContrasena'])->name('cambio-contrasena');
     //Route::get('/cambiar_contrasena', [HomeController::class, 'contrasena'])-name('contrasena');
 });
