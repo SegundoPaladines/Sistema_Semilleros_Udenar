@@ -16,42 +16,49 @@
                 <div class="row">
                     <div class="col-md-6">
                         <!-- Nombre de usuario -->
-                        <div class="mb-4 form-outline">
-                            <label class="form-label" for="nombre">Nombre de Usuario</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" value="{{$usr_edit->name }}" />
+                        <div>
                             @error('nombre')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            <div class="mb-4 form-outline">
+                                <input type="text" id="nombre" name="nombre" class="form-control" value="{{$usr_edit->name }}" />
+                                <label class="form-label" for="nombre">Nombre de Usuario</label>
+                            </div>
                         </div>
-            
                         <!-- Email  -->
-                        <div class="mb-4 form-outline">
-                            <label class="form-label" for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" value="{{$usr_edit->email}}" />
+                        <div>
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            <div class="mb-4 form-outline">
+                                <input type="email" id="email" name="email" class="form-control" value="{{$usr_edit->email}}" />
+                                <label class="form-label" for="email">Email</label>
+                            </div>
                         </div>
                     </div>
             
                     <div class="col-md-6">
                         <!-- Contraseña -->
-                        <div class="mb-4 form-outline">
-                            <label class="form-label" for="passwd1">Contraseña</label>
-                            <input type="password" id="passwd1" name="passwd1" class="form-control"  placeholder="Escriba la nueva contraseña"/>
+                        <div>
                             @error('passwd1')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            <div class="mb-4 form-outline">
+                                <input type="password" id="passwd1" name="passwd1" class="form-control"  placeholder="Escriba la nueva contraseña"/>
+                                <label class="form-label" for="passwd1">Contraseña</label>
+                            </div>
                         </div>
             
                         <!-- Repetir Contraseña -->
+                       <div>
+                        @error('passwd2')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                         <div class="mb-4 form-outline">
-                            <label class="form-label" for="passwd2">Repita la Contraseña</label>
                             <input type="password" id="passwd2" name="passwd2" class="form-control" placeholder="Repita la nueva contraseña"/>
-                            @error('passwd2')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <label class="form-label" for="passwd2">Repita la Contraseña</label>
                         </div>
+                       </div>
                     </div>
                     <div class="mb-4 form-outline">
                         <label for="rol">Rol:</label>
@@ -82,13 +89,21 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
+    <!--CSS Propio-->
     <link rel="stylesheet" href="{{asset('css/segundo/reg_suarios.css')}}">
 @endsection
 
 @section('js')
+    <!-- JQery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <!--Js Propio-->
     <script src="{{ asset('js/segundo/reg_suarios.js') }}"></script>
 @stop

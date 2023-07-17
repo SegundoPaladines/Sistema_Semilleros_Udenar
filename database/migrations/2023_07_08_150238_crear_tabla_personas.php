@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('personas', function (Blueprint $table) {
             $table->unsignedBigInteger('num_identificacion');
             $table->unsignedTinyInteger('tipo_identificacion');
-            $table->unsignedBigInteger('usuario');
+            $table->unsignedBigInteger('usuario')->unique();
             $table->string('nombre',100);
             $table->string('correo',100);
             $table->string('telefono',20);
             $table->string('direccion',30);
             $table->enum('sexo', [0,1]); //0 mujer | 1 hombre. Este campo solo puede tomar 2 valores
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->date('fecha_nac');
             $table->string('programa_academico');
 

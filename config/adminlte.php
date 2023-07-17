@@ -311,17 +311,20 @@ return [
         [
             'text'    => 'Perfil',
             'icon'    => 'fas fa-fw fa-user',
+            'classes'  => 'nav-link-propio',
             'submenu' => [
                 [
                     'text' => 'Datos Personales',
                     'url'  => 'perfil',
                     'icon' => 'fas fa-fw fa-address-card',
+                    'classes'  => 'nav-link-propio',
                     //'can'  => 'perfil',
                 ],
                 [
                     'text' => 'Cambiar Contraseña',
                     'url'  => 'cambiar_contrasena',
                     'icon' => 'fas fa-fw fa-lock',
+                    'classes'  => 'nav-link-propio',
                     //'can'  => 'perfil',
                 ],
             ],
@@ -338,18 +341,21 @@ return [
             'url'  => 'admin/usuarios',
             'icon' => 'fas fa-fw fa-users',
             'can'  => 'director.usuarios',
+            'classes'  => 'nav-link-propio',
         ],
         [
             'text' => 'Semilleros',
             'url'  => '/semilleros',
             'icon' => 'fas fa-fw fa-list',
             'can'  => 'director.semilleros',
+            'classes'  => 'nav-link-propio',
         ],
         [
             'text' => 'Proyectos',
             'url'  => '/proyectos',
             'icon' => 'fas fa-fw fa-archive',
             'can'  => 'director.proyectos',
+            'classes'  => 'nav-link-propio',
         ],
 
         //coordinador <- solo coordinador ver
@@ -362,18 +368,21 @@ return [
             'url'  => '/semillero',
             'icon' => 'fas fa-fw fa-atom',
             'can'  => 'coordinador-semillerista.semillero', //Coordinador y semillerista ven
+            'classes'  => 'nav-link-propio',
         ],
         [
             'text' => 'Semilleristas',
             'url'  => '/semillero/semilleristas',
             'icon' => 'fas fa-fw fa-users',
             'can'  => 'coordinador.administracion',
+            'classes'  => 'nav-link-propio',
         ],
         [
             'text' => 'Proyectos',
             'url'  => 'semillero/proyectos',
             'icon' => 'fas fa-fw fa-archive',
             'can'  => 'coordinador.proyectos',
+            'classes'  => 'nav-link-propio',
         ],
 
         //solo el semillerista ve
@@ -382,6 +391,7 @@ return [
             'url'  => 'semillerista/proyectos',
             'icon' => 'fas fa-fw fa-archive',
             'can'  => 'semillerista.proyectos',
+            'classes'  => 'nav-link-propio',
         ],
 
         //todos pueden ver
@@ -390,6 +400,7 @@ return [
             'url'  => '/eventos',
             'icon' => 'fas fa-fw fa-calendar',
             'can'  => 'eventos',
+            'classes'  => 'nav-link-propio',
         ],
     ],
 

@@ -33,4 +33,7 @@ Route::middleware([
     Route::get('/register', [HomeController::class, 'registarUsuarios'])->name('register');
     Route::post('/register', [HomeController::class, 'postUsuarios'])->name('register');
     Route::get('/home', [HomeController::class,'index'])->name('home');
+    Route::get('/perfil', [HomeController::class, 'perfil'])->name('perfil');
+    Route::post('/perfil', [HomeController::class, 'actualizarPerfil'])->name('actualizar_perfil');
+    //Route::get('/cambiar_contrasena', [HomeController::class, 'contrasena'])-name('contrasena');
 });

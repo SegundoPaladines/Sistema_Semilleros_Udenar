@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Persona extends Model
 {
+    protected $table = 'personas';
+    protected $primaryKey = 'num_identificacion';
+    public $timestampos = true;
+
     //la persona tiene un usuario
     public function usuario(){
         return $this->HasOne(User::class);
