@@ -63,6 +63,13 @@
                         @if($u->id !== $user->id)
                             <a href="{{route('delete_usr', $u->id)}}" class="btn btn-danger">Eliminar</a>
                         @endif
+
+                        @if($u->id !== $user->id)
+                            <a href="{{route('perfiles', $u->id)}}" class="btn btn-info">Perfil</a>
+                        @else
+                            <a href="{{route('perfil')}}" class="btn btn-info">Perfil</a>
+                        @endif
+                        
                     </td>
                 </tr>
                 @php

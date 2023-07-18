@@ -105,7 +105,6 @@ class HomeController extends Controller
                 
                 $persona->save();
 
-                $persona = Persona::where('usuario', $user->id)->first();
                 return redirect()->route('perfil')->with('actualizacionExitosa', true);
             }
         }

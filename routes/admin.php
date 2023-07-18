@@ -15,3 +15,11 @@ Route::post('/vista/editar-usuarios/{id}', [AdminController::class,'editUsuarios
 //eliminar
 Route::get('/eliminar-usuarios/{id}', [AdminController::class,'eliminarUsuario'])->name('delete_usr');
 Route::get('/eliminar-usuario/{id}', [AdminController::class,'eliminarUsuarioConfirmado'])->name('eliminar_confirmado');
+
+//perfiles
+Route::get('/perfil/{id}', [AdminController::class, 'perfil'])->name('perfiles');
+Route::post('/perfil/{id}', [AdminController::class, 'actualizarPerfil'])->name('actualizar_perfiles');
+
+//semilleros
+Route::get('/semilleros', [AdminController::class, 'listarSemilleros'])->name('listar_semilleros');
+Route::get('/agregar_semilleros', [AdminController::class, 'agregarSemilleros'])->name('agregar_semilleros');

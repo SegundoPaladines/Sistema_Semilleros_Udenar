@@ -345,7 +345,7 @@ return [
         ],
         [
             'text' => 'Semilleros',
-            'url'  => '/semilleros',
+            'url'  => 'admin/semilleros',
             'icon' => 'fas fa-fw fa-list',
             'can'  => 'director.semilleros',
             'classes'  => 'nav-link-propio',

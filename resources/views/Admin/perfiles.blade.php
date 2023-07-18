@@ -11,7 +11,7 @@
     <br>
 
     <div id="contenedor-perfil">
-        <form action="{{route('actualizar_perfil')}}" method= "POST">
+        <form action="{{route('actualizar_perfiles', $usr_edit->id)}}" method= "POST">
           @csrf
             <div class="row">
               <div class="col">
@@ -54,7 +54,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
                 <div class="form-outline">
-                  <input type="email" id="correo" class="form-control disabled" disabled value="{{ $user->email }}"/>
+                  <input type="email" id="correo" class="form-control disabled" disabled value="{{ $usr_edit->email }}"/>
                   <label class="form-label" for="correo">Correo</label>
                 </div>
               </div>
@@ -114,18 +114,10 @@
         </form>
     </div>
 
-    @if (session('actualizarProfa'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                porfavorActualizar();
-            });
-        </script>
-    @endif
-
     @if (session('actualizacionExitosa'))
       <script>
           document.addEventListener('DOMContentLoaded', function() {
-              actualizacionExitosa();
+              actualizacionExitosa({{$usr_edit->id}});
           });
       </script>
     @endif
@@ -175,5 +167,5 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!--Js Propio-->
     <script src="{{ asset('js/segundo/campos-especiales.js') }}"></script>
-    <script src="{{ asset('js/segundo/perfil.js') }}"></script>
+    <script src="{{ asset('js/segundo/perfiles.js') }}"></script>
 @stop

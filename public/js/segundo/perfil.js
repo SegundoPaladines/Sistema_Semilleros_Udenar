@@ -43,11 +43,11 @@ function porfavorActualizar() {
       modalExito.style.display = 'block';
     
       btnCerrarModal.addEventListener('click', function() {
-        window.location.href = 'home';
+        window.location.href = '/perfil';
       });
 
       btnCerrarModal2.addEventListener('click', function() {
-        window.location.href = 'home';
+        window.location.href = '/perfil';
       });
 
     }

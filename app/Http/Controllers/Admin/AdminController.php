@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Rol;
+use App\Models\Persona;
+use App\Models\Semillero;
 
 class AdminController extends Controller
 {
-    public function listarUsuarios()
-    {
+    public function listarUsuarios(){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
@@ -24,11 +25,7 @@ class AdminController extends Controller
     
         return view('Admin.usuarios', compact('usuarios', 'user'));
     }
-
-    public function obtenerRol(User $user){
-        return $user->getRoleNames()[0];
-    }
-
+    
     public function vistaRegUsuarios(){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -117,8 +114,7 @@ class AdminController extends Controller
         return view('Admin.vista_edit_usr', compact('user', 'usr_edit', 'numRol', 'id'));
     }
 
-    public function editUsuarios(Request $request, $id)
-    {
+    public function editUsuarios(Request $request, $id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
@@ -181,8 +177,7 @@ class AdminController extends Controller
         }
     }
 
-    public function eliminarUsuario($id)
-    {
+    public function eliminarUsuario($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
@@ -212,4 +207,106 @@ class AdminController extends Controller
         }
     }
 
+    public function perfil($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $usr_edit = User::findOrFail($id);
+        $persona = Persona::where('usuario', $usr_edit->id)->first();
+        if($persona !== null){
+            return view('Admin.perfiles', ['persona' => $persona, 'user' => $user, 'usr_edit' => $usr_edit]);
+        }else{
+            return view('Admin.perfiles', ['user' => $user, 'usr_edit' => $usr_edit]);
+        }
+    }
+
+    public function actualizarPerfil(Request $request, $id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $validator = Validator::make($request->all(), [
+            'num_identificacion' => 'required',
+            'tipo_identificacion' => 'required',
+            'nombre' => 'required',
+            'telefono' => 'required',
+            'direccion' => 'required',
+            'fecha_nac' => 'required',
+            'sexo' => 'required',
+            'programa' => 'required',
+        ], [
+            'num_identificacion.required'=>'El Numero de identificacion no puede estár Vacio',
+            'tipo_identificacion.required'=>'El tipo de identificacion no puede estár Vacio',
+            'nombre.required'=>'El nombre no puede estár Vacio',
+            'telefono.required'=>'El telefono no puede estár Vacio',
+            'direccion.required'=>'La direccion no puede estár Vacio',
+            'fecha_nac.required'=>'La fecha de nacimiento no puede estár Vacia',
+            'sexo.required'=>'El sexo no puede estár Vacio',
+            'programa.required'=>'El programa academico no puede estár Vacio',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            $usr_edit = User::findOrFail($id);
+            $persona = Persona::where('usuario', $usr_edit->id)->first();
+
+            if($persona !== null){
+                $persona -> num_identificacion = $request ->input('num_identificacion');
+                $persona -> tipo_identificacion = $request ->input('tipo_identificacion');
+                $persona -> usuario = $usr_edit->id;
+                $persona -> nombre = $request ->input('nombre');
+                $persona -> correo = $usr_edit->email;
+                $persona -> telefono = $request ->input('telefono');
+                $persona -> direccion = $request ->input('direccion');
+                $persona -> fecha_nac = $request ->input('fecha_nac');
+                $persona -> sexo = $request ->input('sexo');
+                $persona -> programa_academico = $request ->input('programa');
+                
+                $persona->save();
+
+                return redirect()->route('perfiles', $usr_edit->id)->with('actualizacionExitosa', true);
+            }else{
+                $persona = new Persona();
+                $persona -> num_identificacion = $request ->input('num_identificacion');
+                $persona -> tipo_identificacion = $request ->input('tipo_identificacion');
+                $persona -> usuario = $usr_edit->id;
+                $persona -> nombre = $request ->input('nombre');
+                $persona -> correo = $usr_edit->email;
+                $persona -> telefono = $request ->input('telefono');
+                $persona -> direccion = $request ->input('direccion');
+                $persona -> fecha_nac = $request ->input('fecha_nac');
+                $persona -> sexo = $request ->input('sexo');
+                $persona -> programa_academico = $request ->input('programa');
+                
+                $persona->save();
+
+                return redirect()->route('perfiles', $usr_edit->id)->with('actualizacionExitosa', true);
+            }
+        }
+    }
+
+    public function listarSemilleros(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $semilleros = Semillero::all();
+
+        return view('Admin.semilleros', compact('user','semilleros'));
+
+    }
+    
+    public function agregarSemilleros(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        return view('Admin.agregar_semilleros', compact('user'));
+    }
 }
