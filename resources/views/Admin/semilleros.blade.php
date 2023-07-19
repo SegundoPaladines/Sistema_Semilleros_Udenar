@@ -31,23 +31,41 @@
         </table>    
     </center>
     <br>
-
+    <hr>
+    <hr>
+    <br>
     @foreach($semilleros as $s)
         <section>
             <div class="container">
                <div class="row">
-                    <div class="col"><center><h1><td>{{$s->nombre}}</td></h1></center></div>
                     <div class="col">
-                        <a  class="btn btn-primary">Actualizar</a>
-                        <a  class="btn btn-info">Participantes</a>
-                        <a  class="btn btn-danger">Eliminar</a>
+                        <center><h1>{{$s->nombre}}</h1></center></div> <br>
+                        <center><p><span style="font-size: small; font-style: italic;">{{$s->descripcion}}</span></p><br></center>
+                        <center><p><span style="font-size: small; font-style: italic;"><strong>Sede:</strong>  {{$s->sede}}, Fundado en: {{$s->fecha_creacion}} según <a href="{{ Storage::url($s->resolucion)}}" target="_blank">Resolución {{$s->num_res}}</a></span></p></center>
+                        <center><p><span style="font-size: small; font-style: italic;"><strong>Contacto:</strong>  {{$s->correo}}</span></p></center>
                     </div>
+                </div>
+                <div class="row">
+                    <center>
+                        <a href="{{ Storage::url($s->resolucion)}}" target="_blank" style="background-color: #6caa84;" class="btn btn-floating" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar Resolución">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </center>
+                </div><br>
+                <div class="row">
+                    <center>
+                        <div class="col">
+                            <a  class="btn btn-primary">Actualizar</a>
+                            <a  class="btn btn-info">Participantes</a>
+                            <a  class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </center>
                 </div>
                 <hr><br>
                 <div class="row">
                     <div class="col">
                         <div class="bg-image hover-overlay">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/053.webp" class="w-100" />
+                            <img src="{{ Storage::url($s->logo)}}" class="w-100" />
                             <div
                                 class="mask"
                                 style="
@@ -61,13 +79,47 @@
                         </div>
                     </div>
                     <div class="col">
-                        <p>{{$s->descripcion}}</p>
+                        <div>
+                            <h4>Presentación</h4>
+                            <p>{{$s->presentacion}}</p>
+                        </div><br>
+                        <div>
+                            <h4>Objetivos</h4>
+                            <p>{{$s->objetivos}}</p>
+                        </div><br>
                     </div>
+                </div><br>
+                <div class="row">
+                    <div class="col">
+                        <div>
+                            <h4>Misión</h4>
+                            <p>{{$s->mision}}</p>
+                        </div><br>
+                    </div>
+                    <div class="col">
+                        <div>
+                            <h4>Visión</h4>
+                            <p>{{$s->vision}}</p>
+                        </div><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <h4>Lineas de Investigación</h4>
+                        <p>{{$s->lineas_inv}}</p>
+                    </div><br>
+                </div><br>
+                <div class="row">
+                    <div>
+                        <h4>Valores</h4>
+                        <p>{{$s->valores}}</p>
+                    </div><br>
                 </div>
             </div>
             <br>
         </section>
-        <br>
+        <hr>
+        <hr>
         <br>
     @endforeach
     

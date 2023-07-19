@@ -11,7 +11,7 @@
     <br>
     <center>
         <div id="contenedor-form">
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('agregar_semillero') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col">
@@ -20,7 +20,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="id_semillero" name="id_semillero" class="form-control" />
+                                <input type="text" id="id_semillero" name="id_semillero" class="form-control" value="{{ old('id_semillero') }}" />
                                 <label class="form-label" for="id_semillero">Id del Semillero</label>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="nombre" name="nombre" class="form-control" />
+                                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre') }}" />
                                 <label class="form-label" for="nombre">Nombre del Semillero</label>
                             </div>
                         </div>
@@ -40,16 +40,33 @@
                         @error('sede')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                        <select id ="sede" name="sede" class="form-select">
-                            <option selected>Sede</option>
+                        <select id="sede" name="sede" class="form-select">
+                            <option value="">Sede</option>
                             <option value="1">Pasto</option>
-                            <option value="1">Ipiales</option>
+                            <option value="2">Ipiales</option>
                             <option value="3">Túquerres</option>
                             <option value="4">Tumaco</option>
                         </select>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                      @error('logo')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                      <label class="form-label" for="logo"> Cargar Logo</label>
+                      <input class="form-control form-control-lg" id="logo" name="logo" type="file" accept="image/*" placeholder="Cargar foto" />
+                    </div>
 
+                    <div class="col">
+                        @error('resolucion')
+                          <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        <label class="form-label" for="resolucion"> Cargar Resolución</label>
+                        <input class="form-control form-control-lg" id="resolucion" name="resolucion" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx" placeholder="Cargar Resolucion" />
+                    </div>
+                </div>
+                <br>
                 <div class="row">
                     <div class="col">
                         <div>
@@ -57,7 +74,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="correo" name="correo" class="form-control" />
+                                <input type="text" id="correo" name="correo" class="form-control" value="{{ old('correo') }}" />
                                 <label class="form-label" for="correo">Correo</label>
                             </div>
                         </div>
@@ -68,7 +85,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="num_res" name="num_res" class="form-control" />
+                                <input type="text" id="num_res" name="num_res" class="form-control" value="{{ old('num_res') }}" />
                                 <label class="form-label" for="num_res">Numero de Resolución</label>
                             </div>
                         </div>
@@ -79,7 +96,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <input class="form-control" type="text" id="fecha_creacion" name="fecha_creacion" placeholder="Fecha de Creacion">
+                                <input class="form-control" type="text" id="fecha_creacion" name="fecha_creacion" value="{{ old('fecha_creacion') }}" placeholder="Fecha de Creacion">
                                 <label class="form-label" for="fecha_creacion">Fecha de Creacion</label>
                             </div>
                         </div>
@@ -92,7 +109,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ old('descripcion') }}</textarea>
                                 <label class="form-label" for="descripcion">Descripción</label>
                               </div>
                         </div>
@@ -104,7 +121,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="mision" name="mision" rows="3"></textarea>
+                                <textarea class="form-control" id="mision" name="mision" rows="3">{{ old('mision') }}</textarea>
                                 <label class="form-label" for="mision">Mision</label>
                               </div>
                         </div>
@@ -116,7 +133,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="vision" name="vision" rows="3"></textarea>
+                                <textarea class="form-control" id="vision" name="vision" rows="3">{{ old('vision') }}</textarea>
                                 <label class="form-label" for="vision">Vision</label>
                               </div>
                         </div>
@@ -130,7 +147,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="presentacion" name="presentacion" rows="3"></textarea>
+                                <textarea class="form-control" id="presentacion" name="presentacion" rows="3">{{ old('presentacion') }}</textarea>
                                 <label class="form-label" for="presentacion">Presentación</label>
                               </div>
                         </div>
@@ -142,7 +159,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="objetivos" name="objetivos" rows="3"></textarea>
+                                <textarea class="form-control" id="objetivos" name="objetivos" rows="3">{{ old('objetivos') }}</textarea>
                                 <label class="form-label" for="objetivos">Objetivos</label>
                               </div>
                         </div>
@@ -154,7 +171,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="valores" name="valores" rows="3"></textarea>
+                                <textarea class="form-control" id="valores" name="valores" rows="3">{{ old('valores') }}</textarea>
                                 <label class="form-label" for="valores">Valores</label>
                               </div>
                         </div>
@@ -168,7 +185,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="lineas_inv" name="lineas_inv" rows="3"></textarea>
+                                <textarea class="form-control" id="lineas_inv" name="lineas_inv" rows="3">{{ old('lineas_inv') }}</textarea>
                                 <label class="form-label" for="lineas_inv">Lineas de Investigación</label>
                               </div>
                         </div>
@@ -183,25 +200,47 @@
     @if (session('registroExitoso'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡La actualización se ha realizado exitosamente!","Actualizacion Exitosa", true);
+                mostrarAlertaRegistroExitoso("¡El semillero se ha registrado con éxito!", "Registro Exitoso", true);
             });
         </script>
     @endif
+    <!-- Modal -->
+    <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalExitoLabel">
+                        <h5 id="modal-titulo"></h5>
+                    </h5>
+                    <button id="cerrar-modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i id="modal-icono"></i>
+                    </div>
+                    <p id="modalExitoMensaje" class="mt-3 text-center"></p>
+                </div>
+                <div class="modal-footer">
+                    <button widht="60%" type="button" id="btnCerrarModal" class="btn">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @stop
 
 @section('css')
-    <!-- JQery -->
+    <!-- JQery UI -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!-- Font Awesome -->
+    <!-- Font Awesome 6 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
-    <!--CSS Propio-->
-
-@endsection
+    <!-- CSS Propio -->
+    <link href="{{ asset('css/segundo/campos-especiales.css') }}" rel="stylesheet">
+@stop
 
 @section('js')
     <!-- JQery -->
@@ -209,6 +248,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-    <!--Js Propio-->
+    <!-- JS Propio -->
     <script src="{{ asset('js/segundo/campos-especiales.js') }}"></script>
+    <script src="{{ asset('js/segundo/reg_suarios.js') }}"></script>
 @stop

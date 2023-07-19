@@ -8,6 +8,8 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use App\Models\User;
 use App\Models\Rol;
 use App\Models\Persona;
@@ -237,56 +239,55 @@ class AdminController extends Controller
             'fecha_nac' => 'required',
             'sexo' => 'required',
             'programa' => 'required',
+            'foto' => 'nullable|image|max:2048',
         ], [
-            'num_identificacion.required'=>'El Numero de identificacion no puede estár Vacio',
-            'tipo_identificacion.required'=>'El tipo de identificacion no puede estár Vacio',
-            'nombre.required'=>'El nombre no puede estár Vacio',
-            'telefono.required'=>'El telefono no puede estár Vacio',
-            'direccion.required'=>'La direccion no puede estár Vacio',
-            'fecha_nac.required'=>'La fecha de nacimiento no puede estár Vacia',
-            'sexo.required'=>'El sexo no puede estár Vacio',
-            'programa.required'=>'El programa academico no puede estár Vacio',
+            'num_identificacion.required'=>'El Numero de identificacion no puede estar vacío',
+            'tipo_identificacion.required'=>'El tipo de identificacion no puede estar vacío',
+            'nombre.required'=>'El nombre no puede estar vacío',
+            'telefono.required'=>'El telefono no puede estar vacío',
+            'direccion.required'=>'La dirección no puede estar vacía',
+            'fecha_nac.required'=>'La fecha de nacimiento no puede estar vacía',
+            'sexo.required'=>'El sexo no puede estar vacío',
+            'programa.required'=>'El programa academico no puede estar vacío',
+            'foto.image' => 'El archivo debe ser una imagen',
+            'foto.max' => 'El tamaño de la imagen no puede ser mayor a 2MB',
         ]);
-
+    
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            $usr_edit = User::findOrFail($id);
-            $persona = Persona::where('usuario', $usr_edit->id)->first();
-
-            if($persona !== null){
-                $persona -> num_identificacion = $request ->input('num_identificacion');
-                $persona -> tipo_identificacion = $request ->input('tipo_identificacion');
-                $persona -> usuario = $usr_edit->id;
-                $persona -> nombre = $request ->input('nombre');
-                $persona -> correo = $usr_edit->email;
-                $persona -> telefono = $request ->input('telefono');
-                $persona -> direccion = $request ->input('direccion');
-                $persona -> fecha_nac = $request ->input('fecha_nac');
-                $persona -> sexo = $request ->input('sexo');
-                $persona -> programa_academico = $request ->input('programa');
-                
-                $persona->save();
-
-                return redirect()->route('perfiles', $usr_edit->id)->with('actualizacionExitosa', true);
-            }else{
-                $persona = new Persona();
-                $persona -> num_identificacion = $request ->input('num_identificacion');
-                $persona -> tipo_identificacion = $request ->input('tipo_identificacion');
-                $persona -> usuario = $usr_edit->id;
-                $persona -> nombre = $request ->input('nombre');
-                $persona -> correo = $usr_edit->email;
-                $persona -> telefono = $request ->input('telefono');
-                $persona -> direccion = $request ->input('direccion');
-                $persona -> fecha_nac = $request ->input('fecha_nac');
-                $persona -> sexo = $request ->input('sexo');
-                $persona -> programa_academico = $request ->input('programa');
-                
-                $persona->save();
-
-                return redirect()->route('perfiles', $usr_edit->id)->with('actualizacionExitosa', true);
-            }
         }
+    
+        $usr_edit = User::findOrFail($id);
+        $persona = Persona::where('usuario', $usr_edit->id)->first();
+    
+        if ($persona === null) {
+            $persona = new Persona();
+        }
+
+        $persona->num_identificacion = $request->input('num_identificacion');
+        $persona->tipo_identificacion = $request->input('tipo_identificacion');
+        $persona->usuario = $usr_edit->id;
+        $persona->nombre = $request->input('nombre');
+        $persona->correo = $usr_edit->email;
+        $persona->telefono = $request->input('telefono');
+        $persona->direccion = $request->input('direccion');
+        $persona->fecha_nac = $request->input('fecha_nac');
+        $persona->sexo = $request->input('sexo');
+        $persona->programa_academico = $request->input('programa');
+    
+        $imagen = $request->file('foto');
+        if ($imagen !== null && $imagen->isValid()) {
+            if ($persona->foto !== null) {
+                Storage::delete($persona->foto);
+            }
+
+            $rutaFoto = $imagen->store('public/perfiles/imagenes');
+            $persona->foto = $rutaFoto;
+        }
+
+        $persona->save();
+
+        return redirect()->route('perfiles', $usr_edit->id)->with('actualizacionExitosa', true);
     }
 
     public function listarSemilleros(){
@@ -309,4 +310,96 @@ class AdminController extends Controller
 
         return view('Admin.agregar_semilleros', compact('user'));
     }
+    public function agregarSemillero(Request $request){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $validator = Validator::make($request->all(), [
+            'id_semillero' => 'required',
+            'sede' => 'required',
+            'nombre' => 'required',
+            'correo' => 'required',
+            'logo' => 'required|image',
+            'descripcion' => 'required',
+            'mision' => 'required',
+            'vision' => 'required',
+            'valores' => 'required',
+            'objetivos' => 'required',
+            'lineas_inv' => 'required',
+            'presentacion' => 'required',
+            'fecha_creacion' => 'required',
+            'num_res' => 'required',
+            'resolucion' => 'required|mimes:pdf,doc,docx,ppt,pptx',
+        ], [
+            'id_semillero.required' => 'El campo ID del Semillero es requerido.',
+            'sede.required' => 'El campo Sede es requerido.',
+            'nombre.required' => 'El campo Nombre es requerido.',
+            'correo.required' => 'El campo Correo es requerido.',
+            'logo.required' => 'El campo Logo es requerido.',
+            'logo.image' => 'El campo Logo debe ser una imagen.',
+            'descripcion.required' => 'El campo Descripción es requerido.',
+            'mision.required' => 'El campo Misión es requerido.',
+            'vision.required' => 'El campo Visión es requerido.',
+            'valores.required' => 'El campo Valores es requerido.',
+            'objetivos.required' => 'El campo Objetivos es requerido.',
+            'lineas_inv.required' => 'El campo Líneas de Investigación es requerido.',
+            'presentacion.required' => 'El campo Presentación es requerido.',
+            'fecha_creacion.required' => 'El campo Fecha de Creación es requerido.',
+            'num_res.required' => 'El campo Número de Resolución es requerido.',
+            'resolucion.required' => 'El campo Resolución es requerido.',
+            'resolucion.mimes' => 'El campo Resolución debe ser un archivo de tipo PDF, Word o PowerPoint.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $semillero = new Semillero();
+
+        $semillero->id_semillero = $request->input('id_semillero');
+        $semillero->nombre = $request->input('nombre');
+        $semillero->correo = $request->input('correo');
+        $semillero->descripcion = $request->input('descripcion');
+        $semillero->mision = $request->input('mision');
+        $semillero->vision = $request->input('vision');
+        $semillero->valores = $request->input('valores');
+        $semillero->objetivos = $request->input('objetivos');
+        $semillero->lineas_inv = $request->input('lineas_inv');
+        $semillero->presentacion = $request->input('presentacion');
+        $semillero->fecha_creacion = $request->input('fecha_creacion');
+        $semillero->num_res = $request->input('num_res');
+
+        if ($request->input('sede') === "1") {
+            $semillero->sede = "Pasto";
+        } else if ($request->input('sede') === "2") {
+            $semillero->sede = "Ipiales";
+        } else if ($request->input('sede') === "3") {
+            $semillero->sede = "Túqueres";
+        } else if ($request->input('sede') === "4") {
+            $semillero->sede = "Tumaco";
+        }
+
+        $logo = $request->file('logo');
+        if ($logo !== null && $logo->isValid()) {
+            $rutaLogo = $logo->store('public/semilleros/logos');
+            $semillero->logo = $rutaLogo;
+        } else {
+            return redirect()->back()->withErrors(['logo' => 'El campo Logo es inválido.'])->withInput();
+        }
+
+        $resolucion = $request->file('resolucion');
+        if ($resolucion !== null && $resolucion->isValid()) {
+            $rutaRes = $resolucion->store('public/semilleros/resoluciones');
+            $semillero->resolucion = $rutaRes;
+        } else {
+            return redirect()->back()->withErrors(['resolucion' => 'El campo Resolución es inválido.'])->withInput();
+        }
+
+        $semillero->save();
+
+        return redirect()->route('agregar_semilleros')->with('registroExitoso', true);
+    }
+
 }

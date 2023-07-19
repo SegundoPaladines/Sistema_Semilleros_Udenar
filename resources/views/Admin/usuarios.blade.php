@@ -58,6 +58,7 @@
                         </span>
                     </td>
                     <td>
+                        
                         <a href="{{route('edit_usr', $u->id)}}" class="btn btn-primary">Editar</a>
 
                         @if($u->id !== $user->id)
