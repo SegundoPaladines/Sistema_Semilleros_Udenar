@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Semillerista extends Model
 {
+    protected $table = 'semilleristas';
+    protected $primaryKey = 'num_identificacion';
+    public $timestamps = true;
+
     // el semillerista es una persona
     public function persona(){
         return $this->hasOne(Persona::class);

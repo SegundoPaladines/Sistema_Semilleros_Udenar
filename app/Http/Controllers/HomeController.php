@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use App\Models\Persona;
 use App\Models\User;
+use App\Models\Semillerista;
 
 class HomeController extends Controller
 {
@@ -107,8 +108,13 @@ class HomeController extends Controller
         }
 
         $persona->save();
-    
-        return redirect()->route('perfil')->with('actualizacionExitosa', true);
+
+        $nombre_rol = $user->getRoleNames()[0];
+        if($nombre_rol == 'semillerista'){
+            return redirect()->route('vista_actualizar_datos_semillerista');
+        }else{
+            return redirect()->route('perfil')->with('actualizacionExitosa', true);
+        }
     }
     public function actualizarContrasena(){
         $user = auth()->user();

@@ -55,9 +55,9 @@
                 <div class="row">
                     <center>
                         <div class="col">
-                            <a  class="btn btn-primary">Actualizar</a>
-                            <a  class="btn btn-info">Participantes</a>
-                            <a  class="btn btn-danger">Eliminar</a>
+                            <a  href="{{route('actualizar_semillero', $s->id_semillero)}}" class="btn btn-primary">Actualizar</a>
+                            <a  href="{{route('participantes_semillero', $s->id_semillero)}}" class="btn btn-info">Participantes</a>
+                            <a  href="{{route('delete_sem', $s->id_semillero)}}" class="btn btn-danger">Eliminar</a>
                         </div>
                     </center>
                 </div>
@@ -122,6 +122,63 @@
         <hr>
         <br>
     @endforeach
+
+    @if (session('preguntarEliminar'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var elimina = '{{ request()->query('elimina') }}';
+                mostrarModalEliminar(elimina);
+            });
+        </script>
+    @endif
+    @if (session('semilleroEliminado'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() { 
+                mostrarAlertaRegistroExitoso("¡Semillero: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
+            });
+        </script>
+    @endif
+
+    <!-- Modal -->
+    <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalExitoLabel">
+                        <h5 id="modal-titulo"></h5>
+                    </h5>
+                    <button id="cerrar-modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i id="modal-icono"></i>
+                    </div>
+                    <p id="modalExitoMensaje" class="mt-3 text-center"></p>
+                </div>
+                <div class="modal-footer">
+                    <button widht="60%" type="button" id="btnCerrarModal" class="btn">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de Confirmación de Eliminación -->
+    <div class="modal fade" id="delete_ext_emergente" tabindex="-1" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas eliminar este semillero?</p>
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminar()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarEliminar()">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
 @stop
 
@@ -144,4 +201,5 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!--Js Propio-->
     <script src="{{ asset('js/segundo/listarsemilleros.js') }}"></script>
+    <script src="{{ asset('js/segundo/semilleros.js') }}"></script>
 @stop

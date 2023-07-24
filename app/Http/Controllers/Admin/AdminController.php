@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Rol;
 use App\Models\Persona;
 use App\Models\Semillero;
+use App\Models\Semillerista;
 
 class AdminController extends Controller
 {
@@ -27,7 +28,6 @@ class AdminController extends Controller
     
         return view('Admin.usuarios', compact('usuarios', 'user'));
     }
-    
     public function vistaRegUsuarios(){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -36,7 +36,6 @@ class AdminController extends Controller
     
         return view('Admin.vista_reg_usr', compact('user'));
     }
-
     public function registrarUsuario(Request $request){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -88,7 +87,6 @@ class AdminController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
     }
-
     public function vistaEditUsuarios($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -115,7 +113,6 @@ class AdminController extends Controller
     
         return view('Admin.vista_edit_usr', compact('user', 'usr_edit', 'numRol', 'id'));
     }
-
     public function editUsuarios(Request $request, $id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -178,7 +175,6 @@ class AdminController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
     }
-
     public function eliminarUsuario($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -191,7 +187,6 @@ class AdminController extends Controller
             return redirect()->route('usuarios', ['elimina' => $id])->with('preguntarEliminar', true);
         }
     }
-
     public function eliminarUsuarioConfirmado($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -202,13 +197,18 @@ class AdminController extends Controller
             return redirect()->route('usuarios')->with('noSuicidio', true);
         }else {
             $usr_del = User::findOrFail($id);
+            $persona_del = Persona::where('usuario', $usr_del->id)->first();
+            if($persona_del !== null){
+                if ($persona_del->foto !== null) {
+                    Storage::delete($persona_del->foto);
+                }
+            }
             $usr_del->delete();
             
             return redirect()->route('usuarios', ['eliminado' => $usr_del->name])->with('usuarioEliminado', true);
 
         }
     }
-
     public function perfil($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -223,7 +223,6 @@ class AdminController extends Controller
             return view('Admin.perfiles', ['user' => $user, 'usr_edit' => $usr_edit]);
         }
     }
-
     public function actualizarPerfil(Request $request, $id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -289,19 +288,17 @@ class AdminController extends Controller
 
         return redirect()->route('perfiles', $usr_edit->id)->with('actualizacionExitosa', true);
     }
-
     public function listarSemilleros(){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol, new Semillero());
 
-        $semilleros = Semillero::all();
+        $semilleros =  DB::table('semilleros')->get();
 
         return view('Admin.semilleros', compact('user','semilleros'));
 
     }
-    
     public function agregarSemilleros(){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -401,5 +398,179 @@ class AdminController extends Controller
 
         return redirect()->route('agregar_semilleros')->with('registroExitoso', true);
     }
+    public function vistaActualizarSemillero($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
 
+        $semillero = Semillero::findOrFail($id);
+
+        return view('Admin.actualizar_semilleros', ['id_semillero_edit'=>$id, 'semillero' => $semillero, 'user' => $user]);
+    }
+    public function actualizarSemillero(Request $request, $id_semillero_edit){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $validator = Validator::make($request->all(), [
+            'id_semillero' => 'required',
+            'sede' => 'required',
+            'nombre' => 'required',
+            'correo' => 'required',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'descripcion' => 'required',
+            'mision' => 'required',
+            'vision' => 'required',
+            'valores' => 'required',
+            'objetivos' => 'required',
+            'lineas_inv' => 'required',
+            'presentacion' => 'required',
+            'fecha_creacion' => 'required',
+            'num_res' => 'required',
+            'resolucion' => 'nullable|mimes:pdf,doc,docx,ppt,pptx',
+        ], [
+            'id_semillero.required' => 'El campo ID del Semillero es requerido.',
+            'sede.required' => 'El campo Sede es requerido.',
+            'nombre.required' => 'El campo Nombre es requerido.',
+            'correo.required' => 'El campo Correo es requerido.',
+            'logo.image' => 'El campo Logo debe ser una imagen.',
+            'descripcion.required' => 'El campo Descripción es requerido.',
+            'mision.required' => 'El campo Misión es requerido.',
+            'vision.required' => 'El campo Visión es requerido.',
+            'valores.required' => 'El campo Valores es requerido.',
+            'objetivos.required' => 'El campo Objetivos es requerido.',
+            'lineas_inv.required' => 'El campo Líneas de Investigación es requerido.',
+            'presentacion.required' => 'El campo Presentación es requerido.',
+            'fecha_creacion.required' => 'El campo Fecha de Creación es requerido.',
+            'resolucion.required' => 'El campo Resolución es requerido.',
+            'resolucion.mimes' => 'El campo Resolución debe ser un archivo de tipo PDF, Word o PowerPoint.',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $semillero = DB::table('semilleros')->where('id_semillero', $id_semillero_edit)->first();
+
+        $semilleroData = [
+            'id_semillero' => $request->input('id_semillero'),
+            'nombre' => $request->input('nombre'),
+            'correo' => $request->input('correo'),
+            'descripcion' => $request->input('descripcion'),
+            'mision' => $request->input('mision'),
+            'vision' => $request->input('vision'),
+            'valores' => $request->input('valores'),
+            'objetivos' => $request->input('objetivos'),
+            'lineas_inv' => $request->input('lineas_inv'),
+            'presentacion' => $request->input('presentacion'),
+            'fecha_creacion' => $request->input('fecha_creacion'),
+            'num_res' => $request->input('num_res'),
+        ];
+
+        if ($request->input('sede') === "1") {
+            $semilleroData['sede'] = "Pasto";
+        } else if ($request->input('sede') === "2") {
+            $semilleroData['sede'] = "Ipiales";
+        } else if ($request->input('sede') === "3") {
+            $semilleroData['sede'] = "Túqueres";
+        } else if ($request->input('sede') === "4") {
+            $semilleroData['sede'] = "Tumaco";
+        }
+
+        $logo = $request->file('logo');
+        if ($logo !== null && $logo->isValid()) {
+            if ($semillero->logo !== null) {
+                Storage::delete($semillero->logo);
+            }
+
+            $rutaLogo = $logo->store('public/semilleros/logos');
+            $semilleroData['logo'] = $rutaLogo;
+        }
+
+        $resolucion = $request->file('resolucion');
+        if ($resolucion !== null && $resolucion->isValid()) {
+            if ($semillero->resolucion !== null) {
+                Storage::delete($semillero->resolucion);
+            }
+
+            $rutaRes = $resolucion->store('public/semilleros/resoluciones');
+            $semilleroData['resolucion'] = $rutaRes;
+        }
+
+        // Actualizar el registro en la base de datos
+        DB::table('semilleros')->where('id_semillero', $id_semillero_edit)->update($semilleroData);
+
+        return redirect()->route('vista_actualizar_semillero', $semilleroData['id_semillero'])->with('registroExitoso', true);
+    }
+    public function eliminarSemillero($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        return redirect()->route('listar_semilleros', ['elimina' => $id])->with('preguntarEliminar', true);
+    }
+    public function eliminarSemilleroConfirmado($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $sem_del = Semillero::findOrFail($id);
+
+        if ($sem_del->logo !== null) {
+            Storage::delete($sem_del->logo);
+        }
+
+        if ($sem_del->resolucion !== null) {
+            Storage::delete($sem_del->resolucion);
+        }
+
+        $sem_del->delete();
+            
+        return redirect()->route('listar_semilleros', ['eliminado' => $sem_del->nombre])->with('usuarioEliminado', true);
+    }
+    public function vistaParticipantes($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $semillero = Semillero::findOrFail($id);
+        $participantes = Semillerista::where('semillero', $id);
+
+        return view('Admin.participantes-semillero', compact('participantes', 'semillero', 'user'));
+    }
+    public function obtenerIdUsuario($num_identificacion){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $persona = Persona::where('num_identificacion', $num_identificacion)->first();
+
+        return $persona->usuario;
+    }
+    public function obtenerNombrePersona($num_identificacion){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $persona = Persona::where('num_identificacion', $num_identificacion)->first();
+
+        return $persona->nombre;
+    }
+    public function obtenerCorreoUsuario($num_identificacion){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $persona = Persona::where('num_identificacion', $num_identificacion)->first();
+
+        return $persona->correo;
+    }
 }
