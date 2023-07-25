@@ -37,3 +37,12 @@ Route::get('/eliminar-semillero/{id}', [AdminController::class,'eliminarSemiller
 
 //ver participantes de un semillero
 Route::get('/participantes-semillero/{id}', [AdminController::class,'vistaParticipantes'])->name('participantes_semillero');
+
+//agregar participantes a un semillero
+Route::get('/add-participantes-semillero/{id}', [AdminController::class,'addParticipantes'])->name('add_par_sem');
+
+//vincular los participantes 1 a 1
+Route::get('/vincular-semillerista-semillero/{num_identificacion}/{id}', [AdminController::class, 'vincularSemilleristaSemillero'])->name('vincular_sem_sem');
+
+//desvincular participantes
+Route::get('/desvincular_sem_sem/{num_identificacion}', [AdminController::class, 'desvincularSemillero'])->name('desvincular_sem_sem');

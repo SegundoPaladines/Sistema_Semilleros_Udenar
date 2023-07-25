@@ -15,6 +15,7 @@ use App\Models\Rol;
 use App\Models\Persona;
 use App\Models\Semillero;
 use App\Models\Semillerista;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -539,9 +540,9 @@ class AdminController extends Controller
         $this->authorize('director', $rol, new Semillero());
 
         $semillero = Semillero::findOrFail($id);
-        $participantes = Semillerista::where('semillero', $id);
+        $participantes = Semillerista::where('semillero', $id)->get();
 
-        return view('Admin.participantes-semillero', compact('participantes', 'semillero', 'user'));
+        return view('Admin.participantes-semillero', compact('participantes', 'semillero', 'user', 'id'));
     }
     public function obtenerIdUsuario($num_identificacion){
         $user = auth()->user();
@@ -572,5 +573,68 @@ class AdminController extends Controller
         $persona = Persona::where('num_identificacion', $num_identificacion)->first();
 
         return $persona->correo;
+    }
+    public function addParticipantes($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $semilleristas_libres = Semillerista::whereNull('semillero')->get();
+        $semillero = Semillero::findOrFail($id);
+
+        /*
+        Hacer un apartado especial para actualizarles la informacion
+
+        $usr = User::get();
+        $usr_no_sem_info = [];
+        $usr_nada_info = [];
+
+        foreach ($usr as $u) {
+            $persona = Persona::where('usuario', $u->id)->first();
+
+            if ($u->getRoleNames()[0] == 'semillerista' && $persona) {
+                $semillerista = Semillerista::where('num_identificacion', $persona->num_identificacion)->first();
+
+                if ($semillerista === null) {
+                    $usr_no_sem_info[] = $u;
+                }
+            }else{
+                $usr_nada_info = [];
+            }
+        }
+        */
+
+        return view('Admin.agregar-participantes-semillero', compact('semilleristas_libres', 'semillero', 'user', 'id'));
+    }
+    public function vincularSemilleristaSemillero($num_identificacion, $id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $semillerista = Semillerista::findOrFail($num_identificacion);
+        $semillerista->semillero = $id;
+        $semillerista->fecha_vinculacion = Carbon::now()->toDateString(); // Obtiene la fecha actual y la formatea como date
+        $semillerista->estado = "1";
+
+        $semillerista->save();
+
+        return redirect()->route('add_par_sem', $id)->with('vinculacionExitosa', true);
+    }
+    public function desvincularSemillero($num_identificacion){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $semillerista = Semillerista::findOrFail($num_identificacion);
+        $semillerista->semillero = null;
+        $semillerista->fecha_vinculacion = null;
+        $semillerista->estado = "0";
+        
+        $semillerista->save();
+
+        return redirect()->back()->with('desvinculacionExitosa', true);
     }
 }

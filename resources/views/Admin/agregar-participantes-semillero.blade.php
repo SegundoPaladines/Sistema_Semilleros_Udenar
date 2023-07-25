@@ -3,7 +3,7 @@
 @section('title', 'Participantes')
 
 @section('content_header')
-    <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
+    <h1>Agregar Participantes al Semillero {{$semillero->nombre}}</h1>
 @stop
 
 @section('content')
@@ -22,11 +22,6 @@
                         </div>
                     </div>
                 </td>
-                <td>
-                    <div id="btn-agregar">
-                        <a href="{{route('add_par_sem', $id)}}" class="btn btn-success">Añadir Participantes</a>
-                    </div>
-                </td>
             </tr>
         </table>
     </center>
@@ -40,42 +35,37 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Semestre</th>
-                <th scope="col">Fecha Vinculación</th>
-                <th scope="col">Estado</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
             @php
-            $i=1;
+                $i = 1;
             @endphp
-            @foreach($participantes as $p)
-            <tr>
-                <th scope="row">{{$i}}</th>
-                <td>{{$p->num_identificacion}}</td>
-                <td>{{$p->cod_estudiante}}</td>
-                <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($p->num_identificacion)}}</td>
-                <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
-                <td>{{$p->semestre}}</td>
-                <td>{{$p->fecha_vinculacion}}</td>
-                <td>{{$p->estado}}</td>
-                <td>
-                    <a href="{{route('desvincular_sem_sem', $p->num_identificacion)}}" class="btn btn-danger">Desvincular</a>
-                    <a href="" class="btn btn-primary">Datos Academicos</a>
-                    <a href="{{route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-info">Perfil</a>
-                </td>
-            </tr>
-            @php
-            $i++;
-            @endphp
+            @foreach($semilleristas_libres as $s)
+                <tr>
+                    <th scope="row">{{ $i }}</th>
+                    <td>{{ $s->num_identificacion }}</td>
+                    <td>{{ $s->cod_estudiante }}</td>
+                    <td>{{ app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($s->num_identificacion) }}</td>
+                    <td>{{ app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($s->num_identificacion) }}</td>
+                    <td>{{ $s->semestre }}</td>
+                    <td>
+                        <a href="{{ route('vincular_sem_sem', ['num_identificacion' => $s->num_identificacion, 'id' => $id]) }}" class="btn btn-success">Vincular</a>
+                        <a href="{{ route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion)) }}" class="btn btn-info">Perfil</a>
+                    </td>
+                </tr>
+                @php
+                    $i++;
+                @endphp
             @endforeach
         </tbody>
     </table>
 
-    @if (session('desvinculacionExitosa'))
+    @if (session('vinculacionExitosa'))
         <script>
-            document.addEventListener('DOMContentLoaded', function() { 
-                mostrarAlertaRegistroExitoso("Se desvinculo el usuario del semillero con Exito!", "Desvinculación Exitosa", true);
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡Se ha vinculado el semillerita al semillero de forma correcta!","Vinculacion Exitosa", true);
             });
         </script>
     @endif
@@ -98,26 +88,6 @@
                 </div>
                 <div class="modal-footer">
                     <button widht="60%" type="button" id="btnCerrarModal" class="btn">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal de Confirmación de Eliminación -->
-    <div class="modal fade" id="delete_ext_emergente" tabindex="-1" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="usuarioEliminarNombre"></p>
-                    <p id="usuarioEliminarCorreo"></p>
-                    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
-                </div>
-                <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarUsuario()">Cancelar</button>
-                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarUsuario()">Eliminar</button>
                 </div>
             </div>
         </div>
