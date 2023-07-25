@@ -322,12 +322,34 @@ class AdminController extends Controller
         return view('Admin.eventos', compact('user'));
     }
 
-    public function agregarEventos(){
+    public function vistaRegEventos(){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol, new Evento());
         
-        return view('Admin.agregar_eventos', compact('user'));
+        return view('Admin.vista_reg_eventos', compact('user'));
+    }
+
+    public function registrarEventos(Request $r){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Evento());
+
+        $nuevo_evento = new Evento();
+
+        $nuevo_evento->codigo_evento = $r->input('codigo_evento');
+        $nuevo_evento->nombre = $r->input('nombre');
+        $nuevo_evento->descripcion = $r->input('descripcion');
+        $nuevo_evento->fecha_inicio = $r->input('fecha_inicio');
+        $nuevo_evento->fecha_fin = $r->input('fecha_fin');
+        $nuevo_evento->lugar = $r->input('lugar');
+        $nuevo_evento->tipo = $r->input('tipo');
+        $nuevo_evento->modalidad = $r->input('modalidad');
+        $nuevo_evento->clasificacion = $r->input('clasificacion');
+        $nuevo_evento->observaciones = $r->input('observaciones');
+        $nuevo_evento->save();
+        return redirect()->route('vista_reg_eventos')->with('registroExitoso', true);
     }
 }

@@ -24,7 +24,7 @@
                 </td>
                 <td>
                     <div id="btn-agregar">
-                        <a href="{{route('agregar_eventos')}}" class="btn btn-success">Añadir eventos</a>
+                        <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
                     </div>
                 </td>
             </tr>
