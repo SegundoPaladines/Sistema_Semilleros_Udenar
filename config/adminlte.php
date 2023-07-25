@@ -358,6 +358,7 @@ return [
             'classes'  => 'nav-link-propio',
         ],
 
+
         //coordinador <- solo coordinador ver
         [
             'header' => 'ADMINISTRACIÓN',
@@ -397,7 +398,7 @@ return [
         //todos pueden ver
         [
             'text' => 'Eventos',
-            'url'  => '/eventos',
+            'url'  => 'admin/eventos',
             'icon' => 'fas fa-fw fa-calendar',
             'can'  => 'eventos',
             'classes'  => 'nav-link-propio',

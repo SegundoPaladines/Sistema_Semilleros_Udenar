@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Rol;
 use App\Models\Persona;
 use App\Models\Semillero;
+use App\Models\Evento;
 
 class AdminController extends Controller
 {
@@ -296,9 +297,9 @@ class AdminController extends Controller
         $this->authorize('director', $rol, new Semillero());
 
         $semilleros = Semillero::all();
-
+        
         return view('Admin.semilleros', compact('user','semilleros'));
-
+        
     }
     
     public function agregarSemilleros(){
@@ -306,7 +307,27 @@ class AdminController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol, new Semillero());
-
+        
         return view('Admin.agregar_semilleros', compact('user'));
+    }
+    
+    public function listarEventos(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Evento());
+        
+        $eventos = Evento::all();
+        
+        return view('Admin.eventos', compact('user'));
+    }
+
+    public function agregarEventos(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Evento());
+        
+        return view('Admin.agregar_eventos', compact('user'));
     }
 }

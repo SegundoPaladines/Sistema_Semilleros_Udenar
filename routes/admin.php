@@ -23,3 +23,7 @@ Route::post('/perfil/{id}', [AdminController::class, 'actualizarPerfil'])->name(
 //semilleros
 Route::get('/semilleros', [AdminController::class, 'listarSemilleros'])->name('listar_semilleros');
 Route::get('/agregar_semilleros', [AdminController::class, 'agregarSemilleros'])->name('agregar_semilleros');
+
+//eventos
+Route::get('/eventos', [AdminController::class, 'listarEventos'])->name('listar_eventos');
+Route::get('/agregar_eventos', [AdminController::class, 'agregarEventos'])->name('agregar_eventos');
