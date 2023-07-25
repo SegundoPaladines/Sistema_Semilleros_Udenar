@@ -319,7 +319,7 @@ class AdminController extends Controller
         
         $eventos = Evento::all();
         
-        return view('Admin.eventos', compact('user'));
+        return view('Admin.eventos', compact('eventos','user'));
     }
 
     public function vistaRegEventos(){
@@ -327,7 +327,7 @@ class AdminController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol, new Evento());
-        
+
         return view('Admin.vista_reg_eventos', compact('user'));
     }
 

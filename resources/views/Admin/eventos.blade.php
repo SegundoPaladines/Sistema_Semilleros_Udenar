@@ -31,9 +31,42 @@
         </table>    
     </center>
     <br>
-
-    
-    
+    <table id= "tabla_eventos" class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Codigo Evento</th>
+                <th scope="col">Nombre de Evento</th>
+                <th scope="col">Fecha de Inicio</th>
+                <th scope="col">Fecha de Finalización</th>
+                <th scope="col">Opciones</th>
+                <!-- <th scope="col">Rol</th>
+                <th scope="col">Opciones</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $i=1;
+            @endphp
+            @foreach($eventos as $e)
+                <tr>
+                    <th scope="row">{{$i}}</th>
+                    <td>{{$e->codigo_evento}}</td>
+                    <td>{{$e->nombre}}</td>
+                    <td>{{$e->fecha_inicio}}</td>
+                    <td>{{$e->fecha_fin}}</td>
+                    <td>
+                        <a href="{{route('editar_evento', $e->id)}}" class="btn btn-primary">Editar</a>
+                        <a href="{{route('delete_evento', $e->id)}}" class="btn btn-danger">Eliminar</a>
+                        
+                    </td>
+                </tr>
+                @php
+                    $i++;
+                @endphp
+            @endforeach
+        </tbody>
+    </table>
 @stop
 
 @section('css')
@@ -44,7 +77,7 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--CSS propio-->
-    <link rel="stylesheet" href="{{asset('css/segundo/listarEventos.css')}}">
+    <link rel="stylesheet" href="{{asset('css/segundo/listarSemilleros.css')}}">
     
 @endsection
 

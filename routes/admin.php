@@ -26,5 +26,12 @@ Route::get('/agregar_semilleros', [AdminController::class, 'agregarSemilleros'])
 
 //eventos
 Route::get('/eventos', [AdminController::class, 'listarEventos'])->name('listar_eventos');
+
 Route::get('vista/registrar_eventos', [AdminController::class, 'vistaRegEventos'])->name('vista_reg_eventos');
+Route::post('vista/registrar_eventos', [AdminController::class, 'registrarEventos'])->name('registrar_evento');
+
+Route::post('vista/editar_eventos', [AdminController::class, 'registrarEventos'])->name('editar_evento');
+Route::post('vista/registrar_eventos', [AdminController::class, 'registrarEventos'])->name('registrar_evento');
+
+Route::post('vista/eliminar_eventos', [AdminController::class, 'registrarEventos'])->name('delete_evento');
 Route::post('vista/registrar_eventos', [AdminController::class, 'registrarEventos'])->name('registrar_evento');
