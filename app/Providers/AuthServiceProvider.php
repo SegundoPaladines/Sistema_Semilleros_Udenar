@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Semillero' => 'App\Policies\SemilleroPolicy',
         'App\Models\Rol' => 'App\Policies\UsuariosPolicy',
         'App\Models\Eventos' => 'App\Policies\EventosPolicy',
+        'App\Models\Proyecto' => 'App\Policies\ProyectosPolicy',
     ];
 
     /**

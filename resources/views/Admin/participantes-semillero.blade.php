@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Usuarios')
+@section('title', 'Participantes')
 
 @section('content_header')
-    <h1>Listado de Usuarios</h1>
+    <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
                 <td>
                     <div id="contenedor-buscador" class="input-group">
                         <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar usuarios">
+                            <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
                         </div>
                         <div id="ic">
                             <i class="fas fa-search"></i>
@@ -24,95 +24,58 @@
                 </td>
                 <td>
                     <div id="btn-agregar">
-                        <a href="{{route('v_reg_usr')}}" class="btn btn-success">Añadir Usuarios</a>
+                        <a href="{{route('add_par_sem', $id)}}" class="btn btn-success">Añadir Participantes</a>
                     </div>
                 </td>
             </tr>
-        </table>    
+        </table>
     </center>
     <br>
-    <table id= "tabla_usuarios" class="table">
+    <table id="tabla_usuarios" class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre de Usuario</th>
+                <th scope="col">Numero De Identificación</th>
+                <th scope="col">Codigo Estudiante</th>
+                <th scope="col">Nombre</th>
                 <th scope="col">Correo</th>
-                <th scope="col">Rol</th>
+                <th scope="col">Semestre</th>
+                <th scope="col">Fecha Vinculación</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
             @php
-                $i=1;
+            $i=1;
             @endphp
-            @foreach($usuarios as $u)
-                <tr>
-                    <th scope="row">{{$i}}</th>
-                    <td>{{$u->id}}</td>
-                    <td>{{$u->name}}</td>
-                    <td>{{$u->email}}</td>
-                    <td> 
-                        <span id="rol_{{$u->id}}"class="badge rounded-pill d-inline">
-                            {{ $u->getRoleNames()->first() }}
-                        </span>
-                    </td>
-                    <td>
-                        
-                        <a href="{{route('edit_usr', $u->id)}}" class="btn btn-primary">Editar</a>
-
-                        @if($u->id !== $user->id)
-                            <a href="{{route('delete_usr', $u->id)}}" class="btn btn-danger">Eliminar</a>
-                        @endif
-
-                        @if($u->id !== $user->id)
-                            <a href="{{route('perfiles', $u->id)}}" class="btn btn-info">Perfil</a>
-                        @else
-                            <a href="{{route('perfil')}}" class="btn btn-info">Perfil</a>
-                        @endif
-
-                        @if($u->getRoleNames()->first() == 'semillerista')
-                            <a href="{{route('act_info_acad_sem', $u->id)}}" class="btn btn-dark">Inf. Acad</a>
-                        @endif
-                        
-                    </td>
-                </tr>
-                @php
-                    $i++;
-                @endphp
+            @foreach($participantes as $p)
+            <tr>
+                <th scope="row">{{$i}}</th>
+                <td>{{$p->num_identificacion}}</td>
+                <td>{{$p->cod_estudiante}}</td>
+                <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($p->num_identificacion)}}</td>
+                <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
+                <td>{{$p->semestre}}</td>
+                <td>{{$p->fecha_vinculacion}}</td>
+                <td>{{$p->estado}}</td>
+                <td>
+                    <a href="{{route('desvincular_sem_sem', $p->num_identificacion)}}" class="btn btn-danger">Desvincular</a>
+                    <a href="{{route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-info">Perfil</a>
+                    <a href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-primary">Inf. Acad</a>
+                </td>
+            </tr>
+            @php
+            $i++;
+            @endphp
             @endforeach
         </tbody>
     </table>
 
-    @if (session('registroExitoso'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡La actualización se ha realizado exitosamente!","Actualizacion Exitosa", true);
-            });
-        </script>
-    @endif
-
-    @if (session('noSuicidio'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡No puede eliminarse a si mismo!","Accion Rechazada", false);
-            });
-        </script>
-    @endif
-
-    @if (session('preguntarEliminar'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elimina = '{{ request()->query('elimina') }}';
-            mostrarModalEliminar(elimina);
-        });
-    </script>
-    @endif
-
-    @if (session('usuarioEliminado'))
+    @if (session('desvinculacionExitosa'))
         <script>
             document.addEventListener('DOMContentLoaded', function() { 
-                mostrarAlertaRegistroExitoso("¡Usuario: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
+                mostrarAlertaRegistroExitoso("Se desvinculo el usuario del semillero con Exito!", "Desvinculación Exitosa", true);
             });
         </script>
     @endif

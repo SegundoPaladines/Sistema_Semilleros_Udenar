@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use App\Models\Persona;
 use App\Models\User;
+use App\Models\Semillerista;
 
 class HomeController extends Controller
 {
@@ -58,55 +61,59 @@ class HomeController extends Controller
             'fecha_nac' => 'required',
             'sexo' => 'required',
             'programa' => 'required',
+            'foto' => 'nullable|image|max:2048',
         ], [
-            'num_identificacion.required'=>'El Numero de identificacion no puede estár Vacio',
-            'tipo_identificacion.required'=>'El tipo de identificacion no puede estár Vacio',
-            'nombre.required'=>'El nombre no puede estár Vacio',
-            'telefono.required'=>'El telefono no puede estár Vacio',
-            'direccion.required'=>'La direccion no puede estár Vacio',
-            'fecha_nac.required'=>'La fecha de nacimiento no puede estár Vacia',
-            'sexo.required'=>'El sexo no puede estár Vacio',
-            'programa.required'=>'El programa academico no puede estár Vacio',
+            'num_identificacion.required'=>'El Numero de identificacion no puede estar vacío',
+            'tipo_identificacion.required'=>'El tipo de identificacion no puede estar vacío',
+            'nombre.required'=>'El nombre no puede estar vacío',
+            'telefono.required'=>'El telefono no puede estar vacío',
+            'direccion.required'=>'La dirección no puede estar vacía',
+            'fecha_nac.required'=>'La fecha de nacimiento no puede estar vacía',
+            'sexo.required'=>'El sexo no puede estar vacío',
+            'programa.required'=>'El programa academico no puede estar vacío',
+            'foto.image' => 'El archivo debe ser una imagen',
+            'foto.max' => 'El tamaño de la imagen no puede ser mayor a 2MB',
         ]);
-
+    
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            $user = auth()->user();
-            $persona = Persona::where('usuario', $user->id)->first();
+        }
+    
+        $user = auth()->user();
+        $persona = Persona::where('usuario', $user->id)->first();
+    
+        if ($persona === null) {
+            $persona = new Persona();
+        }
 
-            if($persona !== null){
-                $persona -> num_identificacion = $request ->input('num_identificacion');
-                $persona -> tipo_identificacion = $request ->input('tipo_identificacion');
-                $persona -> usuario = $user->id;
-                $persona -> nombre = $request ->input('nombre');
-                $persona -> correo = $user->email;
-                $persona -> telefono = $request ->input('telefono');
-                $persona -> direccion = $request ->input('direccion');
-                $persona -> fecha_nac = $request ->input('fecha_nac');
-                $persona -> sexo = $request ->input('sexo');
-                $persona -> programa_academico = $request ->input('programa');
-                
-                $persona->save();
-
-                return redirect()->route('perfil')->with('actualizacionExitosa', true);
-            }else{
-                $persona = new Persona();
-                $persona -> num_identificacion = $request ->input('num_identificacion');
-                $persona -> tipo_identificacion = $request ->input('tipo_identificacion');
-                $persona -> usuario = $user->id;
-                $persona -> nombre = $request ->input('nombre');
-                $persona -> correo = $user->email;
-                $persona -> telefono = $request ->input('telefono');
-                $persona -> direccion = $request ->input('direccion');
-                $persona -> fecha_nac = $request ->input('fecha_nac');
-                $persona -> sexo = $request ->input('sexo');
-                $persona -> programa_academico = $request ->input('programa');
-                
-                $persona->save();
-
-                return redirect()->route('perfil')->with('actualizacionExitosa', true);
+        $persona->num_identificacion = $request->input('num_identificacion');
+        $persona->tipo_identificacion = $request->input('tipo_identificacion');
+        $persona->usuario = $user->id;
+        $persona->nombre = $request->input('nombre');
+        $persona->correo = $user->email;
+        $persona->telefono = $request->input('telefono');
+        $persona->direccion = $request->input('direccion');
+        $persona->fecha_nac = $request->input('fecha_nac');
+        $persona->sexo = $request->input('sexo');
+        $persona->programa_academico = $request->input('programa');
+    
+        $imagen = $request->file('foto');
+        if ($imagen !== null && $imagen->isValid()) {
+            if ($persona->foto !== null) {
+                Storage::delete($persona->foto);
             }
+
+            $rutaFoto = $imagen->store('public/perfiles/imagenes');
+            $persona->foto = $rutaFoto;
+        }
+
+        $persona->save();
+
+        $nombre_rol = $user->getRoleNames()[0];
+        if($nombre_rol == 'semillerista'){
+            return redirect()->route('vista_actualizar_datos_semillerista');
+        }else{
+            return redirect()->route('perfil')->with('actualizacionExitosa', true);
         }
     }
     public function actualizarContrasena(){

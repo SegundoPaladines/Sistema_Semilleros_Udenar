@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Registrar Semillero')
+@section('title', 'Actualizar Semillero')
 
 @section('content_header')
-    <h1>Registrar Semillero</h1>
+    <h1>Actualizar Semillero</h1>
 @stop
 
 @section('content')
@@ -11,7 +11,7 @@
     <br>
     <center>
         <div id="contenedor-form">
-            <form method="POST" action="{{ route('agregar_semillero') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('actualizar_semillero', $id_semillero_edit) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col">
@@ -20,7 +20,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="id_semillero" name="id_semillero" class="form-control" value="{{ old('id_semillero') }}" />
+                                <input type="text" id="id_semillero" name="id_semillero" class="form-control" value="{{ $id_semillero_edit }}" />
                                 <label class="form-label" for="id_semillero">Id del Semillero</label>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre') }}" />
+                                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ $semillero->nombre }}" />
                                 <label class="form-label" for="nombre">Nombre del Semillero</label>
                             </div>
                         </div>
@@ -42,10 +42,10 @@
                         @enderror
                         <select id="sede" name="sede" class="form-select">
                             <option value="">Sede</option>
-                            <option value="1">Pasto</option>
-                            <option value="2">Ipiales</option>
-                            <option value="3">Túquerres</option>
-                            <option value="4">Tumaco</option>
+                            <option value="1" {{  $semillero->sede == "Pasto" ? 'selected' : '' }}>Pasto</option>
+                            <option value="2" {{  $semillero->sede == "Ipiales" ? 'selected' : '' }}>Ipiales</option>
+                            <option value="3" {{  $semillero->sede == "Túqueres" ? 'selected' : '' }}>Túquerres</option>
+                            <option value="4" {{  $semillero->sede == "Tumaco" ? 'selected' : '' }}>Tumaco</option>
                         </select>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="correo" name="correo" class="form-control" value="{{ old('correo') }}" />
+                                <input type="text" id="correo" name="correo" class="form-control" value="{{ $semillero->correo }}" />
                                 <label class="form-label" for="correo">Correo</label>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="num_res" name="num_res" class="form-control" value="{{ old('num_res') }}" />
+                                <input type="text" id="num_res" name="num_res" class="form-control" value="{{ $semillero->num_res }}" />
                                 <label class="form-label" for="num_res">Numero de Resolución</label>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <input class="form-control" type="text" id="fecha_creacion" name="fecha_creacion" value="{{ old('fecha_creacion') }}" placeholder="Fecha de Creacion">
+                                <input class="form-control" type="text" id="fecha_creacion" name="fecha_creacion" value="{{ $semillero->fecha_creacion }}" placeholder="Fecha de Creacion">
                                 <label class="form-label" for="fecha_creacion">Fecha de Creacion</label>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ old('descripcion') }}</textarea>
+                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ $semillero->descripcion }}</textarea>
                                 <label class="form-label" for="descripcion">Descripción</label>
                               </div>
                         </div>
@@ -121,7 +121,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="mision" name="mision" rows="3">{{ old('mision') }}</textarea>
+                                <textarea class="form-control" id="mision" name="mision" rows="3">{{ $semillero->mision }}</textarea>
                                 <label class="form-label" for="mision">Mision</label>
                               </div>
                         </div>
@@ -133,7 +133,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="vision" name="vision" rows="3">{{ old('vision') }}</textarea>
+                                <textarea class="form-control" id="vision" name="vision" rows="3">{{$semillero->vision }}</textarea>
                                 <label class="form-label" for="vision">Vision</label>
                               </div>
                         </div>
@@ -147,7 +147,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="presentacion" name="presentacion" rows="3">{{ old('presentacion') }}</textarea>
+                                <textarea class="form-control" id="presentacion" name="presentacion" rows="3">{{ $semillero->presentacion }}</textarea>
                                 <label class="form-label" for="presentacion">Presentación</label>
                               </div>
                         </div>
@@ -159,7 +159,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="objetivos" name="objetivos" rows="3">{{ old('objetivos') }}</textarea>
+                                <textarea class="form-control" id="objetivos" name="objetivos" rows="3">{{ $semillero->objetivos }}</textarea>
                                 <label class="form-label" for="objetivos">Objetivos</label>
                               </div>
                         </div>
@@ -171,7 +171,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="valores" name="valores" rows="3">{{ old('valores') }}</textarea>
+                                <textarea class="form-control" id="valores" name="valores" rows="3">{{ $semillero->valores }}</textarea>
                                 <label class="form-label" for="valores">Valores</label>
                               </div>
                         </div>
@@ -185,7 +185,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="lineas_inv" name="lineas_inv" rows="3">{{ old('lineas_inv') }}</textarea>
+                                <textarea class="form-control" id="lineas_inv" name="lineas_inv" rows="3">{{ $semillero->lineas_inv }}</textarea>
                                 <label class="form-label" for="lineas_inv">Lineas de Investigación</label>
                               </div>
                         </div>
@@ -193,14 +193,14 @@
                 </div>
                 <br>
                 <!-- Boton Enviar -->
-                <button type="submit" class="mb-3 btn btn-success btn-block">Agregar Semillero</button>
+                <button type="submit" class="mb-3 btn btn-success btn-block">Actualizar Semillero</button>
             </form>
         </div>
     </center>
     @if (session('registroExitoso'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡El semillero se ha registrado con éxito!", "Registro Exitoso", true);
+                mostrarAlertaRegistroExitoso("¡El semillero se ha actualizado con éxito!", "Actualizacion Exitosa", true);
             });
         </script>
     @endif
@@ -239,7 +239,7 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!-- CSS Propio -->
-    <link href="{{ asset('css/segundo/campos-especiales.css') }}" rel="stylesheet">
+
 @stop
 
 @section('js')

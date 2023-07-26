@@ -9,5 +9,5 @@ class Rol extends Model
 {
     protected $table = 'roles';
     protected $primaryKey = 'id';
-    public $timestampos = true;
+    public $timestamps = true;
 }

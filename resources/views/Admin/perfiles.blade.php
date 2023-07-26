@@ -3,15 +3,24 @@
 @section('title', 'Perfil')
 
 @section('content_header')
-    <h1>Perfil</h1>
+  <div class="row">
+    <div class="col">
+        <h1>Perfil</h1>
+    </div>
+    <div class="col">
+        @if(isset($persona) && $persona->foto !== null)
+            <img class="foto-perfil" src="{{ Storage::url($persona->foto)}}" alt="Foto de Perfil">
+        @endif
+    </div>
+  </div>
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
+    <p> Perfil de {{$usr_edit->name }}</p>
     <br>
 
     <div id="contenedor-perfil">
-        <form action="{{route('actualizar_perfiles', $usr_edit->id)}}" method= "POST">
+        <form action="{{route('actualizar_perfiles', $usr_edit->id)}}" method= "POST" enctype="multipart/form-data">
           @csrf
             <div class="row">
               <div class="col">
@@ -47,6 +56,17 @@
                 </div>
               </div>
             </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                @error('foto')
+                  <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <label class="form-label" for="foto"> Cargar Foto</label>
+                <input class="form-control form-control-lg" id="foto" name="foto" type="file" accept="image/*" placeholder="Cargar foto" />
+              </div>
+            </div>
+            <br>
             <hr />
             <div class="row">
               <div class="col">
@@ -113,7 +133,7 @@
             <button type="submit" class="btn btn-success btn-block mb-4">Actualizar Información</button>
         </form>
     </div>
-
+<br><br>
     @if (session('actualizacionExitosa'))
       <script>
           document.addEventListener('DOMContentLoaded', function() {
@@ -121,6 +141,22 @@
           });
       </script>
     @endif
+
+    @if (session('usuarioSinPersona'))
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              usuarioSinPersona({{$usr_edit->id}});
+          });
+      </script>
+    @endif
+
+    @if (session('noCoorSinDatos'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            noCoorSinDatos({{$usr_edit->id}});
+        });
+    </script>
+  @endif
 
     <!-- Modal -->
     <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">

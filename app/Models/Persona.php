@@ -9,7 +9,7 @@ class Persona extends Model
 {
     protected $table = 'personas';
     protected $primaryKey = 'num_identificacion';
-    public $timestampos = true;
+    public $timestamps = true;
 
     //la persona tiene un usuario
     public function usuario(){

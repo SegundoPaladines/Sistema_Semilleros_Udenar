@@ -86,6 +86,29 @@
         </script>
     @endif
 
+      <!-- Modal -->
+      <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalExitoLabel">
+                        <h5 id="modal-titulo"></h5>
+                    </h5>
+                    <button id="cerrar-modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i id="modal-icono"></i>
+                    </div>
+                    <p id="modalExitoMensaje" class="mt-3 text-center"></p>
+                </div>
+                <div class="modal-footer">
+                    <button widht="60%" type="button" id="btnCerrarModal" class="btn">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('css')

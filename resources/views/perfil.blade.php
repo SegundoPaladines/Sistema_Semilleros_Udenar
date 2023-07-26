@@ -3,7 +3,16 @@
 @section('title', 'Perfil')
 
 @section('content_header')
-    <h1>Perfil</h1>
+  <div class="row">
+    <div class="col">
+        <h1>Perfil</h1>
+    </div>
+    <div class="col">
+        @if(isset($persona) && $persona->foto !== null)
+            <img class="foto-perfil" src="{{ Storage::url($persona->foto)}}" alt="Foto de Perfil">
+        @endif
+    </div>
+  </div>
 @stop
 
 @section('content')
@@ -11,7 +20,7 @@
     <br>
 
     <div id="contenedor-perfil">
-        <form action="{{route('actualizar_perfil')}}" method= "POST">
+        <form action="{{ route('actualizar_perfil') }}" method="POST" enctype="multipart/form-data">
           @csrf
             <div class="row">
               <div class="col">
@@ -45,8 +54,19 @@
                   <input  type="text" id="nombre" name="nombre" class="form-control" value="{{ isset($persona) ? $persona->nombre : old('nombre') }}" />
                   <label class="form-label" for="nombre">Nombre y Apellidos Completos</label>
                 </div>
-              </div>
+              </div>             
             </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                @error('foto')
+                  <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <label class="form-label" for="foto"> Cargar Foto</label>
+                <input class="form-control form-control-lg" id="foto" name="foto" type="file" accept="image/*" placeholder="Cargar foto" />
+              </div> 
+            </div>
+            <br>
             <hr />
             <div class="row">
               <div class="col">
@@ -113,6 +133,8 @@
             <button type="submit" class="btn btn-success btn-block mb-4">Actualizar Información</button>
         </form>
     </div>
+    <br><br>
+
 
     @if (session('actualizarProfa'))
         <script>
