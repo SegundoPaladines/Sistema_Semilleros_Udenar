@@ -33,5 +33,5 @@ Route::post('vista/registrar_eventos', [AdminController::class, 'registrarEvento
 Route::get('vista/editar_eventos/{id}', [AdminController::class, 'vistaEditEventos'])->name('edit_eventos');
 Route::post('vista/editar_eventos/{id}', [AdminController::class, 'editarEventos'])->name('editar_evento');
 
-Route::post('vista/eliminar_eventos', [AdminController::class, 'registrarEventos'])->name('delete_evento');
-Route::post('vista/registrar_eventos', [AdminController::class, 'registrarEventos'])->name('registrar_evento');
+Route::get('vista/eliminar_eventos/{id}', [AdminController::class, 'eliminarEvento'])->name('elimina_evento');
+Route::get('vista/eliminar_eventos/{id}', [AdminController::class, 'confirmacionEliminacionEvento'])->name('eliminar_evento');

@@ -385,4 +385,33 @@ class AdminController extends Controller
         return redirect()->route('listar_eventos')->with('registroExitoso', true);
     }
 
+    public function eliminarEvento($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+    
+        // redirect()->route('listar_eventos')->with('preguntarEliminar', true);
+        redirect()->route('listar_eventos', ['elimina' => $id])->with('preguntarEliminar', true);
+        return redirect()->route('usuarios', ['elimina' => $id])->with('preguntarEliminar', true);
+    }
+
+    public function confirmacionEliminacionEvento($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+        $evento_del = Evento::findOrFail($id);
+        $evento_del->delete();
+        
+        // return redirect()->route('listar_eventos');
+        // return redirect()->route('listar_eventos')->with('usuarioEliminado', true);
+        // return redirect()->route('listar_eventos', ['eliminado' => $evento_del->name]);
+        return redirect()->route('listar_eventos', ['eliminado' => $evento_del->name])->with('eventoEliminado', true);
+        return redirect()->route('listar_eventos', ['eliminado' => $evento_del->name])->with('usuarioEliminado', true);
+        // return redirect()->route('listar', ['eliminado' => $usr_del->name])->with('usuarioEliminado', true);
+
+        
+    }
+
 }
