@@ -15,6 +15,7 @@ use App\Models\Rol;
 use App\Models\Persona;
 use App\Models\Semillero;
 use App\Models\Semillerista;
+use App\Models\Coordinador;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -156,13 +157,47 @@ class AdminController extends Controller
 
                 $usr_edit->save();
 
-                $usr_edit->removeRole($usr_edit->getRoleNames()[0]);
+                if ($usr_edit->getRoleNames()->count() > 0) {
+                    $usr_edit->removeRole($usr_edit->getRoleNames()[0]);
+                }
+
+                $persona = Persona::where('usuario', $usr_edit->id)->first();
+                $semillerista = null;
+                $coordinador = null;
+
+                if($persona !== null){
+                    $semillerista = Semillerista::where('num_identificacion', $persona->num_identificacion)->first();
+                    $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+                }
 
                 if ($request->input('rol') === "1") {
+                    if($coordinador !== null){
+                        if ($coordinador->acuerdo_nombramiento !== null) {
+                            Storage::delete($coordinador->acuerdo_nombramiento);
+                        }
+
+                        $coordinador->delete();
+                    }
+
                     $usr_edit->assignRole('semillerista');
                 } else if ($request->input('rol') === "2") {
+
+                    if($semillerista !== null){
+                        $semillerista->delete();
+                    }
+
                     $usr_edit->assignRole('coordinador');
                 } else if ($request->input('rol') === "3") {
+                    if($coordinador !== null){
+                        if ($coordinador->acuerdo_nombramiento !== null) {
+                            Storage::delete($coordinador->acuerdo_nombramiento);
+                        }
+
+                        $coordinador->delete();
+                    }
+                    if($semillerista !== null){
+                        $semillerista->delete();
+                    }
                     $usr_edit->assignRole('admin');
                 }
 
@@ -184,6 +219,7 @@ class AdminController extends Controller
     
         if ($id == $user->id) {
             return redirect()->route('usuarios')->with('noSuicidio', true);
+
         }else {
             return redirect()->route('usuarios', ['elimina' => $id])->with('preguntarEliminar', true);
         }
@@ -202,6 +238,20 @@ class AdminController extends Controller
             if($persona_del !== null){
                 if ($persona_del->foto !== null) {
                     Storage::delete($persona_del->foto);
+                }
+
+                $coordinador_del = Coordinador::where('num_identificacion', $persona_del->num_identificacion)->first();
+                if($coordinador_del !== null){
+                    if ($coordinador_del->acuerdo_nombramiento !== null) {
+                        Storage::delete($coordinador_del->acuerdo_nombramiento);
+                    }
+                }
+
+                $semillerista_del = Semillerista::where('num_identificacion', $persona_del->num_identificacion)->first();
+                if($semillerista_del !== null){
+                    if ($semillerista_del->reporte_matricula !== null) {
+                        Storage::delete($semillerista_del->reporte_matricula);
+                    }
                 }
             }
             $usr_del->delete();
@@ -636,5 +686,214 @@ class AdminController extends Controller
         $semillerista->save();
 
         return redirect()->back()->with('desvinculacionExitosa', true);
+    }
+    public function vistaActualizarAcademicaSem($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $persona = Persona::where('usuario', $id)->first();
+        if($persona !== null){
+            $semillerista = Semillerista::where('num_identificacion', $persona->num_identificacion)->first();
+            return view('Admin.actualizar-academica-semillerista', compact('persona', 'semillerista', 'id'));
+        }else{
+            return redirect()->route('actualizar_perfiles', $id)->with('usuarioSinPersona', true);
+        }
+    }
+    public function actualizarAcademicaSem(Request $request, $id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $persona = Persona::where('usuario', $id)->first();
+
+        if ($persona === null) {
+            return redirect()->route('actualizar_perfiles', $id)->with('usuarioSinPersona', true);
+        }else{
+            $validator = Validator::make($request->all(), [
+                'cod_estudiante' => 'required|max:255',
+                'semestre' => 'required|integer|between:1,10',
+                'reporte_matricula' => 'required|mimes:pdf|max:2048',
+            ], [
+                'cod_estudiante.required' => 'El código estudiantil es obligatorio.',
+                'cod_estudiante.max' => 'El código estudiantil no debe exceder los 255 caracteres.',
+                'semestre.required' => 'El semestre es obligatorio.',
+                'semestre.integer' => 'El semestre debe ser un número entero.',
+                'semestre.between' => 'El semestre debe estar entre 1 y 10.',
+                'reporte_matricula.required' => 'El reporte de matrícula es obligatorio.',
+                'reporte_matricula.mimes' => 'El reporte de matrícula debe ser un archivo PDF.',
+                'reporte_matricula.max' => 'El tamaño máximo del reporte de matrícula es de 2 MB.',
+            ]);
+        
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            
+            $semillerista = Semillerista::where('num_identificacion', $persona->num_identificacion)->first();
+        
+            if ($semillerista === null) {
+                $semillerista = new Semillerista();
+                $semillerista->num_identificacion = $persona->num_identificacion;
+            }
+            
+            $semillerista->cod_estudiante = $request->input('cod_estudiante');
+            $semillerista->semestre = $request->input('semestre');
+    
+            $reporte = $request->file('reporte_matricula');
+            if ($reporte !== null && $reporte->isValid()) {
+                if ($semillerista->reporte_matricula !== null) {
+                    Storage::delete($semillerista->reporte_matricula);
+                }
+    
+                $rutaReporte = $reporte->store('public/perfiles/semilleristas/reportes');
+                $semillerista->reporte_matricula = $rutaReporte;
+            }
+            $semillerista->save();
+            
+            return redirect()->back()->with('actualizacionExitosa', true);
+        }
+
+    }
+    public function vistaCoordinadorSem($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+    
+        $semillero = Semillero::where('id_semillero', $id)->first();
+        $coordinador = Coordinador::where('semillero', $id)->first();
+        $persona = null;
+    
+        if ($coordinador !== null) {
+            $persona = Persona::where('num_identificacion', $coordinador->num_identificacion)->first();
+        }
+    
+        return view('Admin.coordinador-semillero', compact('coordinador', 'semillero', 'persona', 'id'));
+    }
+    public function nombrarCoordinador($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $coordinador = Coordinador::where('semillero', $id)->first();
+        $semillero = Semillero::where('id_semillero', $id)->first();
+
+        if ($coordinador !== null) {
+            $persona = Persona::where('num_identificacion', $coordinador->num_identificacion)->first();
+            return view('Admin.coordinador-semillero', compact('coordinador', 'semillero', 'persona'))->with('semilleroYaTieneCoordinador', true);
+        } else {
+            $usuarios = User::all();
+            $candidatos = [];
+
+            foreach ($usuarios as $u) {
+                if ($u->getRoleNames()[0] == 'coordinador') {
+                    $persona = Persona::where('usuario', $u->id)->first();
+                    if ($persona !== null) {
+                        $coordinador = Coordinador::where('semillero', $u->id)->first();
+                        if ($coordinador !== null) {
+                            if ($coordinador->semillero == null) {
+                                $candidatos[] = $u;
+                            }
+                        } else {
+                            $candidatos[] = $u;
+                        }
+                    } else {
+                        $candidatos[] = $u;
+                    }
+                }
+            }
+            return view('Admin.nombrar-coordinador', compact('candidatos', 'semillero', 'id'));
+        }
+    }
+    public function nombrarCoordinadorSemillero(Request $request, $semillero_id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+        
+        $candidato_id = $request->input('candidato_id');
+
+        $validator = Validator::make($request->all(), [
+            'area_conocimiento' => 'required|string|max:255',
+            'acuerdo_nombramiento' => 'required|mimes:pdf,doc,docx,ppt,pptx|max:2048',
+        ], [
+            'area_conocimiento.required' => 'El área de conocimiento es obligatoria.',
+            'area_conocimiento.string' => 'El área de conocimiento debe ser un texto.',
+            'area_conocimiento.max' => 'El área de conocimiento no debe exceder los :max caracteres.',
+            'acuerdo_nombramiento.required' => 'El acuerdo de nombramiento es obligatorio.',
+            'acuerdo_nombramiento.mimes' => 'El acuerdo de nombramiento debe ser un archivo de tipo: pdf, doc, docx, ppt o pptx.',
+            'acuerdo_nombramiento.max' => 'El acuerdo de nombramiento no debe exceder los :max kilobytes.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $persona = Persona::where('usuario', $candidato_id)->first();
+
+        if ($persona !== null) {
+            $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+            if ($coordinador !== null) {
+                if ($coordinador->semillero == null) {
+                    $coordinador->semillero = $semillero_id;
+
+                    if ($coordinador->acuerdo_nombramiento !== null) {
+                        Storage::delete($coordinador->acuerdo_nombramiento);
+                    }
+
+                    $acuerdo = $request->file('acuerdo_nombramiento');
+                    $rutaAcuerdo = $acuerdo->store('public/semilleros/acuerdos');
+                    $coordinador->acuerdo_nombramiento = $rutaAcuerdo;
+
+                    $coordinador->fecha_vinculacion = Carbon::now()->toDateString(); // Formatear la fecha como date
+
+                    $coordinador->save();
+
+                    return redirect()->route('vista_coor_sem', $semillero_id)->with('coordinadorVinculado', true);
+                } else {
+                    return redirect()->back()->with('yaesCoordinador', true);
+                }
+            } else {
+                $coordinador = new Coordinador();
+                $coordinador->num_identificacion = $persona->num_identificacion;
+                $coordinador->area_con = $request->input('area_conocimiento');
+
+                $acuerdo = $request->file('acuerdo_nombramiento');
+                $rutaAcuerdo = $acuerdo->store('public/semilleros/acuerdos');
+
+                $coordinador->acuerdo_nombramiento = $rutaAcuerdo;
+                $coordinador->fecha_vinculacion = Carbon::now()->toDateString(); // Formatear la fecha como date
+                $coordinador->semillero = $semillero_id;
+
+                $coordinador->save();
+
+                return redirect()->route('vista_coor_sem', $semillero_id)->with('coordinadorVinculado', true);
+            }
+        } else {
+            return redirect()->route('perfiles', $candidato_id)->with('noCoorSinDatos', true);
+        }
+    }
+    public function despedirCoordinadorSemillero($semillero_id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol, new Semillero());
+
+        $coordinador = Coordinador::where('semillero', $semillero_id)->first();
+
+        if ($coordinador) {
+            if ($coordinador->acuerdo_nombramiento !== null) {
+                Storage::delete($coordinador->acuerdo_nombramiento);
+            }
+
+            $coordinador->delete();
+
+            return redirect()->route('vista_coor_sem', $semillero_id)->with('coordinadordesVinculado', true);
+        } else {
+            return redirect()->route('vista_coor_sem', $semillero_id)->with('errorDespedirCoordinador', true);
+        }
     }
 }

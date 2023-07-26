@@ -46,3 +46,19 @@ Route::get('/vincular-semillerista-semillero/{num_identificacion}/{id}', [AdminC
 
 //desvincular participantes
 Route::get('/desvincular_sem_sem/{num_identificacion}', [AdminController::class, 'desvincularSemillero'])->name('desvincular_sem_sem');
+
+//actualizar info academica usuario
+Route::get('/actualizar_informacion_academica_semillerista/{id}', [AdminController::class, 'vistaActualizarAcademicaSem'])->name('act_info_acad_sem');
+Route::post('/actualizar_informacion_academica_semillerista/{id}', [AdminController::class, 'actualizarAcademicaSem'])->name('actualizar_acad_semillerista');
+
+//coordinador semillero
+Route::get('/coordinador-semillero/{id}', [AdminController::class, 'vistaCoordinadorSem'])->name('vista_coor_sem');
+
+//lista de posibles coordinadores
+Route::get('/nombrar-coordinador-semillero/{id}', [AdminController::class, 'nombrarCoordinador'])->name('vencular_coor_sem');
+
+//vincular coordinador a semillero
+Route::post('/nombrar_coordinador/{semillero_id}', [AdminController::class, 'nombrarCoordinadorSemillero'])->name('nombrar_coor_sem');
+
+//desvincular coordinador de semillero
+Route::get('/despedir_coordinador/{semillero_id}', [AdminController::class, 'despedirCoordinadorSemillero'])->name('destituir_coor_sem');

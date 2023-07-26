@@ -53,6 +53,7 @@
                     <td>
                         <a href="{{ route('vincular_sem_sem', ['num_identificacion' => $s->num_identificacion, 'id' => $id]) }}" class="btn btn-success">Vincular</a>
                         <a href="{{ route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion)) }}" class="btn btn-info">Perfil</a>
+                        <a href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion))}}" class="btn btn-primary">Inf. Acad</a>
                     </td>
                 </tr>
                 @php

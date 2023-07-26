@@ -57,6 +57,7 @@
                         <div class="col">
                             <a  href="{{route('actualizar_semillero', $s->id_semillero)}}" class="btn btn-primary">Actualizar</a>
                             <a  href="{{route('participantes_semillero', $s->id_semillero)}}" class="btn btn-info">Participantes</a>
+                            <a  href="{{route('vista_coor_sem', $s->id_semillero)}}" class="btn btn-dark">Coordinador</a>
                             <a  href="{{route('delete_sem', $s->id_semillero)}}" class="btn btn-danger">Eliminar</a>
                         </div>
                     </center>

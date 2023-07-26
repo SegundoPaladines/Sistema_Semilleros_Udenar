@@ -70,6 +70,10 @@
                         @else
                             <a href="{{route('perfil')}}" class="btn btn-info">Perfil</a>
                         @endif
+
+                        @if($u->getRoleNames()->first() == 'semillerista')
+                            <a href="{{route('act_info_acad_sem', $u->id)}}" class="btn btn-dark">Inf. Acad</a>
+                        @endif
                         
                     </td>
                 </tr>

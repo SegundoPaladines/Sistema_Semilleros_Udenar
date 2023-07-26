@@ -61,8 +61,8 @@
                 <td>{{$p->estado}}</td>
                 <td>
                     <a href="{{route('desvincular_sem_sem', $p->num_identificacion)}}" class="btn btn-danger">Desvincular</a>
-                    <a href="" class="btn btn-primary">Datos Academicos</a>
                     <a href="{{route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-info">Perfil</a>
+                    <a href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-primary">Inf. Acad</a>
                 </td>
             </tr>
             @php

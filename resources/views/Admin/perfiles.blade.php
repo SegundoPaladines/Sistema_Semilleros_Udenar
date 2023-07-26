@@ -142,6 +142,22 @@
       </script>
     @endif
 
+    @if (session('usuarioSinPersona'))
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              usuarioSinPersona({{$usr_edit->id}});
+          });
+      </script>
+    @endif
+
+    @if (session('noCoorSinDatos'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            noCoorSinDatos({{$usr_edit->id}});
+        });
+    </script>
+  @endif
+
     <!-- Modal -->
     <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
       <div class="modal-dialog">
