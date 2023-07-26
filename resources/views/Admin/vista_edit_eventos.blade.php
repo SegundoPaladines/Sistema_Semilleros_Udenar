@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Registrar Evento')
+@section('title', 'Editar Evento')
 
 @section('content_header')
-    <h1>Registrar Evento</h1>
+    <h1>Editar Evento</h1>
 @stop
 
 @section('content')
@@ -11,7 +11,7 @@
     <br>
     <center>
         <div id="contenedor-form">
-            <form method="POST" action="" action="{{ route('registrar_evento') }}">
+            <form method="POST" action="" action="{{ route('editar_evento','codigo_evento') }}">
                 @csrf
                 <div class="row">
                     <div class="col">
@@ -20,7 +20,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="codigo_evento" name="codigo_evento" class="form-control" />
+                                <input type="text" id="codigo_evento" name="codigo_evento" class="form-control" value="{{$evento_id->codigo_evento }}" />
                                 <label class="form-label" for="codigo_evento">Id del Evento</label>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="nombre" name="nombre" class="form-control" />
+                                <input type="text" id="nombre" name="nombre" class="form-control" value="{{$evento_id->nombre}}"/>
                                 <label class="form-label" for="nombre">Nombre del Evento</label>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <input class="form-control" type="date" id="fecha_inicio" name="fecha_inicio" placeholder="Fecha de inicio">
+                                <input class="form-control" type="date" id="fecha_inicio" name="fecha_inicio" placeholder="Fecha de inicio" value="{{$evento_id->fecha_inicio}}">
                                 <label class="form-label" for="fecha_inicio">Fecha de Inicio</label>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <input class="form-control" type="date" id="fecha_fin" name="fecha_fin" placeholder="Fecha de fin">
+                                <input class="form-control" type="date" id="fecha_fin" name="fecha_fin" placeholder="Fecha de fin" value="{{$evento_id->fecha_fin}}">
                                 <label class="form-label" for="fecha_fin">Fecha de Finalización</label>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="correo" name="correo" class="form-control" />
+                                <input type="text" id="correo" name="correo" class="form-control"  />
                                 <label class="form-label" for="correo">Correo</label>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="lugar" name="lugar" class="form-control" />
+                                <input type="text" id="lugar" name="lugar" class="form-control" value="{{$evento_id->lugar}}"/>
                                 <label class="form-label" for="lugar">Lugar</label>
                             </div>
                         </div>
@@ -99,16 +99,16 @@
                     
                 </div>
                 <div class="row">
-                <div class="col">
+                    <div class="col">
                         @error('tipo')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                        <select id ="tipo" name="tipo" class="form-select">
-                            <option selected>Tipo</option>
-                            <option value="1">Congreso</option>
-                            <option value="2">Encuentro</option>
-                            <option value="3">Seminario</option>
-                            <option value="4">Taller</option>
+                        <select id="tipo" name="tipo" class="form-select">
+                            <option value="">Tipo</option>
+                            <option value="1" {{ $evento_id->tipo == '1' ? 'selected' : '' }}>Congreso</option>
+                            <option value="2" {{ $evento_id->tipo == '2' ? 'selected' : '' }}>Encuentro</option>
+                            <option value="3" {{ $evento_id->tipo == '3' ? 'selected' : '' }}>Seminario</option>
+                            <option value="4" {{ $evento_id->tipo == '4' ? 'selected' : '' }}>Taller</option>
                         </select>
                     </div>
                     <div class="col">
@@ -117,9 +117,9 @@
                         @enderror
                         <select id ="modalidad" name="modalidad" class="form-select">
                             <option selected>Modalidad</option>
-                            <option value="1">Virtual</option>
-                            <option value="2">Presencial</option>
-                            <option value="3">Hibrida</option>
+                            <option value="1" {{ $evento_id->modalidad == '1' ? 'selected' : '' }}>Virtual</option>
+                            <option value="2" {{ $evento_id->modalidad == '2' ? 'selected' : '' }}>Presencial</option>
+                            <option value="3" {{ $evento_id->modalidad == '3' ? 'selected' : '' }}>Hibrida</option>
                         </select>
                     </div>
                     <div class="col">
@@ -128,9 +128,9 @@
                         @enderror
                         <select id ="clasificacion" name="clasificacion" class="form-select">
                             <option selected>Clasificación</option>
-                            <option value="1">Local</option>
-                            <option value="2">Regional</option>
-                            <option value="3">Nacional</option>
+                            <option value="1" {{ $evento_id->clasificacion == '1' ? 'selected' : '' }}>Local</option>
+                            <option value="2" {{ $evento_id->clasificacion == '2' ? 'selected' : '' }}>Regional</option>
+                            <option value="3" {{ $evento_id->clasificacion == '3' ? 'selected' : '' }}>Nacional</option>
                         </select>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" >{{ $evento_id->descripcion }}</textarea>
                                 <label class="form-label" for="descripcion">Descripción</label>
                               </div>
                         </div>
@@ -153,7 +153,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-outline">
-                                <textarea class="form-control" id="observaciones" name="observaciones" rows="3"></textarea>
+                                <textarea class="form-control" id="observaciones" name="observaciones" rows="3">{{ $evento_id->observaciones }}</textarea>
                                 <label class="form-label" for="observaciones">Observaciones</label>
                               </div>
                         </div>
@@ -161,14 +161,14 @@
                 </div>
                 <br>
                 <!-- Boton Enviar -->
-                <button type="submit" class="mb-3 btn btn-success btn-block">Agregar Evento</button>
+                <button type="submit" class="mb-3 btn btn-success btn-block">Actualizar Evento</button>
             </form>
         </div>
     </center>
     @if (session('registroExitoso'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡Se ha registrado el evento!","", true);
+                mostrarAlertaRegistroExitoso("¡Se ha actualizado los datos del evento!","", true);
             });
         </script>
     @endif

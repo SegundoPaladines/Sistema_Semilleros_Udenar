@@ -40,8 +40,6 @@
                 <th scope="col">Fecha de Inicio</th>
                 <th scope="col">Fecha de Finalización</th>
                 <th scope="col">Opciones</th>
-                <!-- <th scope="col">Rol</th>
-                <th scope="col">Opciones</th> -->
             </tr>
         </thead>
         <tbody>
@@ -56,9 +54,8 @@
                     <td>{{$e->fecha_inicio}}</td>
                     <td>{{$e->fecha_fin}}</td>
                     <td>
-                        <a href="{{route('editar_evento', $e->id)}}" class="btn btn-primary">Editar</a>
-                        <a href="{{route('delete_evento', $e->id)}}" class="btn btn-danger">Eliminar</a>
-                        
+                        <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
+                        <a href="{{route('delete_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
                 @php

@@ -330,13 +330,13 @@ class AdminController extends Controller
 
         return view('Admin.vista_reg_eventos', compact('user'));
     }
-
+    
     public function registrarEventos(Request $r){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol, new Evento());
-
+        
         $nuevo_evento = new Evento();
 
         $nuevo_evento->codigo_evento = $r->input('codigo_evento');
@@ -352,4 +352,37 @@ class AdminController extends Controller
         $nuevo_evento->save();
         return redirect()->route('vista_reg_eventos')->with('registroExitoso', true);
     }
+
+    public function vistaEditEventos($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+        
+        $evento_id = Evento::findOrFail($id);
+        return view('Admin.vista_edit_eventos', compact('user','evento_id'));
+    }
+
+    public function editarEventos(Request $r, $id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $evento_id = Evento::findOrFail($id);
+
+        $evento_id->codigo_evento = $r->input('codigo_evento');
+        $evento_id->nombre = $r->input('nombre');
+        $evento_id->descripcion = $r->input('descripcion');
+        $evento_id->fecha_inicio = $r->input('fecha_inicio');
+        $evento_id->fecha_fin = $r->input('fecha_fin');
+        $evento_id->lugar = $r->input('lugar');
+        $evento_id->tipo = $r->input('tipo');
+        $evento_id->modalidad = $r->input('modalidad');
+        $evento_id->clasificacion = $r->input('clasificacion');
+        $evento_id->observaciones = $r->input('observaciones');
+        $evento_id->save();
+        return redirect()->route('listar_eventos')->with('registroExitoso', true);
+    }
+
 }
