@@ -350,6 +350,7 @@ class AdminController extends Controller
         $nuevo_evento->clasificacion = $r->input('clasificacion');
         $nuevo_evento->observaciones = $r->input('observaciones');
         $nuevo_evento->save();
+        
         return redirect()->route('vista_reg_eventos')->with('registroExitoso', true);
     }
 
@@ -360,6 +361,7 @@ class AdminController extends Controller
         $this->authorize('director', $rol);
         
         $evento_id = Evento::findOrFail($id);
+
         return view('Admin.vista_edit_eventos', compact('user','evento_id'));
     }
 
@@ -382,6 +384,7 @@ class AdminController extends Controller
         $evento_id->clasificacion = $r->input('clasificacion');
         $evento_id->observaciones = $r->input('observaciones');
         $evento_id->save();
+
         return redirect()->route('listar_eventos')->with('registroExitoso', true);
     }
 
@@ -391,9 +394,7 @@ class AdminController extends Controller
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol);
     
-        // redirect()->route('listar_eventos')->with('preguntarEliminar', true);
-        redirect()->route('listar_eventos', ['elimina' => $id])->with('preguntarEliminar', true);
-        return redirect()->route('usuarios', ['elimina' => $id])->with('preguntarEliminar', true);
+        return redirect()->route('listar_eventos', ['elimina' => $id])->with('preguntarEliminar', true);
     }
 
     public function confirmacionEliminacionEvento($id){
@@ -401,17 +402,11 @@ class AdminController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol);
+
         $evento_del = Evento::findOrFail($id);
         $evento_del->delete();
         
-        // return redirect()->route('listar_eventos');
-        // return redirect()->route('listar_eventos')->with('usuarioEliminado', true);
-        // return redirect()->route('listar_eventos', ['eliminado' => $evento_del->name]);
-        return redirect()->route('listar_eventos', ['eliminado' => $evento_del->name])->with('eventoEliminado', true);
-        return redirect()->route('listar_eventos', ['eliminado' => $evento_del->name])->with('usuarioEliminado', true);
-        // return redirect()->route('listar', ['eliminado' => $usr_del->name])->with('usuarioEliminado', true);
-
-        
+        return redirect()->route('listar_eventos', ['eliminado' => $evento_del->nombre])->with('eventoEliminado', true);
     }
 
 }

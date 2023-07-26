@@ -65,22 +65,6 @@
         </tbody>
     </table>
 
-    @if (session('registroExitoso'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡La actualización se ha realizado exitosamente!","Actualizacion Exitosa", true);
-            });
-        </script>
-    @endif
-
-    @if (session('noSuicidio'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡No puede eliminarse a si mismo!","Accion Rechazada", false);
-            });
-        </script>
-    @endif
-
     @if (session('preguntarEliminar'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -90,10 +74,10 @@
     </script>
     @endif
 
-    @if (session('usuarioEliminado'))
+    @if (session('eventoEliminado'))
         <script>
             document.addEventListener('DOMContentLoaded', function() { 
-                mostrarAlertaRegistroExitoso("¡Usuario: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
+                mostrarAlertaRegistroExitoso("¡Evento: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
             });
         </script>
     @endif
@@ -131,11 +115,11 @@
                 <div class="modal-body">
                     <p id="usuarioEliminarNombre"></p>
                     <p id="usuarioEliminarCorreo"></p>
-                    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+                    <p>¿Estás seguro de que deseas eliminar este evento?</p>
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarUsuario()">Cancelar</button>
-                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarUsuario()">Eliminar</button>
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarEvento()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarEvento()">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -161,6 +145,6 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!--Js Propio-->
-    <script src="{{ asset('js/segundo/listarusuarios.js') }}"></script>
-    <script src="{{ asset('js/segundo/reg_suarios.js') }}"></script>
+    <script src="{{ asset('js/david/listarEventos.js') }}"></script>
+    <script src="{{ asset('js/david/alerta_exito.js') }}"></script>
 @stop
