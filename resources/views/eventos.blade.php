@@ -22,11 +22,13 @@
                         </div>
                     </div>
                 </td>
+                @can('director.administracion')
                 <td>
                     <div id="btn-agregar">
                         <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
                     </div>
                 </td>
+                @endcan
             </tr>
         </table>    
     </center>
@@ -39,7 +41,9 @@
                 <th scope="col">Nombre de Evento</th>
                 <th scope="col">Fecha de Inicio</th>
                 <th scope="col">Fecha de Finalización</th>
+                @can('director.administracion')
                 <th scope="col">Opciones</th>
+                @endcan
             </tr>
         </thead>
         <tbody>
@@ -53,10 +57,12 @@
                     <td>{{$e->nombre}}</td>
                     <td>{{$e->fecha_inicio}}</td>
                     <td>{{$e->fecha_fin}}</td>
+                    @can('director.administracion')
                     <td>
                         <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
                         <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
                     </td>
+                    @endcan
                 </tr>
                 @php
                     $i++;

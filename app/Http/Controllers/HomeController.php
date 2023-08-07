@@ -11,6 +11,7 @@ use Intervention\Image\Facades\Image;
 use App\Models\Persona;
 use App\Models\User;
 use App\Models\Semillerista;
+use App\Models\Evento;
 
 class HomeController extends Controller
 {
@@ -163,5 +164,11 @@ class HomeController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
         }
+    }
+
+    public function listarEventos(){
+        $user = auth()->user();        
+        $eventos = Evento::all();
+        return view('eventos', compact('eventos','user'));
     }
 }

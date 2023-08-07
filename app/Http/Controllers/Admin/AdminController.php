@@ -361,16 +361,6 @@ class AdminController extends Controller
         return view('Admin.agregar_semilleros', compact('user'));
     }
     
-    public function listarEventos(){
-        $user = auth()->user();
-        $nombre_rol = $user->getRoleNames()[0];
-        $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('director', $rol, new Evento());
-        
-        $eventos = Evento::all();
-        
-        return view('Admin.eventos', compact('eventos','user'));
-    }
 
     public function vistaRegEventos(){
         $user = auth()->user();

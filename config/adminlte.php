@@ -398,7 +398,7 @@ return [
         //todos pueden ver
         [
             'text' => 'Eventos',
-            'url'  => 'admin/eventos',
+            'url'  => '/eventos',
             'icon' => 'fas fa-fw fa-calendar',
             'can'  => 'eventos',
             'classes'  => 'nav-link-propio',
