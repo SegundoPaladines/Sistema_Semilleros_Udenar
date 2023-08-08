@@ -12,6 +12,9 @@ use App\Models\Persona;
 use App\Models\User;
 use App\Models\Semillerista;
 use App\Models\Evento;
+use App\Models\Semillero;
+use App\Models\Coordinador;
+use App\Models\Rol;
 
 class HomeController extends Controller
 {
@@ -165,10 +168,28 @@ class HomeController extends Controller
             }
         }
     }
-
     public function listarEventos(){
         $user = auth()->user();        
         $eventos = Evento::all();
         return view('eventos', compact('eventos','user'));
+    }
+    public function verSemillero(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        if ($rol->name === 'coordinador') {
+            // Lógica para coordinadores
+            $persona = DB::table('personas')->where('usuario', $user->id)->first();
+            $coordinador = Coordinador::findOrFail($persona->num_identificacion);
+            $semillero = Semillero::findOrFail($coordinador->semillero);
+            return view('semillero', compact('semillero', 'user'));
+        } elseif ($rol->name === 'semillerista') {
+            // Lógica para semilleristas
+            $persona = DB::table('personas')->where('usuario', $user->id)->first();
+            $semillerista = Semillerista::findOrFail($persona->num_identificacion);
+            $semillero = Semillero::findOrFail($semillerista->semillero);
+            return view('semillero', compact('semillero', 'user'));
+        }
+        
     }
 }
