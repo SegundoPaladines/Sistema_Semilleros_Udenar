@@ -373,7 +373,8 @@ return [
         ],
         [
             'text' => 'Semilleristas',
-            'url'  => '/semillero/semilleristas',
+            'url'  => '/coordinador/semilleristas',
+            // 'url'  => '/semillero/semilleristas',
             'icon' => 'fas fa-fw fa-users',
             'can'  => 'coordinador.administracion',
             'classes'  => 'nav-link-propio',

@@ -33,7 +33,6 @@
                     <center>
                         <div class="col">
                             <a  href="{{route('vista_editar_semillero', $semillero->id_semillero)}}" class="btn btn-primary">Editar</a>
-                            <a  href="" class="btn btn-info">Semilleristas</a>
                         </div>
                     </center>
                 </div>

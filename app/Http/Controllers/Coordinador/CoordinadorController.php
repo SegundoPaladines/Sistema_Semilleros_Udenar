@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Rol;
+use App\Models\Semillerista;
+use App\Models\Persona;
 
 class CoordinadorController extends Controller
 {
+    
     public function index()
     {
         $semillero = new Semillero();
@@ -126,4 +129,54 @@ class CoordinadorController extends Controller
 
         return redirect()->route('vista_editar_semillero', $semilleroData['id_semillero'])->with('registroExitoso', true);
 }
+    public function verSemilleristas(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol);
+        $persona = DB::table('personas')->where('usuario', $user->id)->first();
+        $coordinador = Coordinador::findOrFail($persona->num_identificacion);
+        $semillero = Semillero::findOrFail($coordinador->semillero);
+        $id = $semillero->id_semillero;
+        $participantes = Semillerista::where('semillero', $id)->get();
+        return view('Coordinador.listaSemilleristas',compact('participantes', 'semillero', 'user', 'id'));
+    }
+
+    public function obtenerNombrePersona($num_identificacion){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol);
+
+        $persona = Persona::where('num_identificacion', $num_identificacion)->first();
+
+        return $persona->nombre;
+    }
+    public function obtenerCorreoUsuario($num_identificacion){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol);
+
+        $persona = Persona::where('num_identificacion', $num_identificacion)->first();
+
+        return $persona->correo;
+    }
+
+    public function desvincularSemillero($num_identificacion){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol, new Semillero());
+
+        $semillerista = Semillerista::findOrFail($num_identificacion);
+        $semillerista->semillero = null;
+        $semillerista->fecha_vinculacion = null;
+        $semillerista->estado = "0";
+        
+        $semillerista->save();
+
+        return redirect()->back()->with('desvinculacionExitosa', true);
+    }
+
 }
