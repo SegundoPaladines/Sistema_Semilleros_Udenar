@@ -31,6 +31,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/register', [HomeController::class, 'registarUsuarios'])->name('register');
+    Route::get('/check-email/{email}', [HomeController::class, 'checkEmail']);
     Route::post('/register', [HomeController::class, 'postUsuarios'])->name('register');
     Route::get('/home', [HomeController::class,'index'])->name('home');
     Route::get('/perfil', [HomeController::class, 'perfil'])->name('perfil');

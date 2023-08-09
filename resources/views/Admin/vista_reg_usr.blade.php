@@ -11,7 +11,7 @@
     <br>
     <center>
         <div id="contenedor-form">
-            <form method="POST" action="{{ route('registar_usuario') }}">
+            <form  id="form" name="form" method="POST" action="{{ route('registar_usuario') }}">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
@@ -20,8 +20,9 @@
                             @error('nombre')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            <span id="nombre-e" name="nombre-e"class="text-danger"></span>
                             <div class="mb-4 form-outline">
-                                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre') }}" />
+                                <input type="text" id="nombre" name="nombre" class="form-control" required value="{{ old('nombre') }}" />
                                 <label class="form-label" for="nombre">Nombre de Usuario</label>
                             </div>
                         </div>
@@ -31,21 +32,23 @@
                             @error('email')
                                     <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            <span id="email-e" name="email-e"class="text-danger"></span>
                             <div class="mb-4 form-outline">
-                                <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" />
+                                <input type="email" id="email" name="email" class="form-control" required value="{{ old('email') }}" />
                                 <label class="form-label" for="email">Email</label>
                             </div>
                         </div>
                     </div>
             
+                    <!-- Contraseña -->
                     <div class="col-md-6">
-                        <!-- Contraseña -->
                         <div>
                             @error('passwd1')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            <span id="passwd1-e" name="passwd1-e"class="text-danger"></span>
                             <div class="mb-4 form-outline">
-                                <input type="password" id="passwd1" name="passwd1" class="form-control" value="{{ old('passwd1') }}" />
+                                <input type="password" id="passwd1" name="passwd1" class="form-control" required value="{{ old('passwd1') }}" />
                                 <label class="form-label" for="passwd1">Contraseña</label>
                             </div>
                         </div>
@@ -55,8 +58,9 @@
                             @error('passwd2')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            <span id="passwd2-e" name="passwd2-e" class="text-danger"></span>
                             <div class="mb-4 form-outline">
-                                <input type="password" id="passwd2" name="passwd2" class="form-control" value="{{ old('passwd2') }}" />
+                                <input type="password" id="passwd2" name="passwd2" class="form-control" required value="{{ old('passwd2') }}" />
                                 <label class="form-label" for="passwd2">Repita la Contraseña</label>
                             </div>
                         </div>
@@ -68,6 +72,7 @@
                             <option value="2" {{ old('rol') == '2' ? 'selected' : '' }}>Coordinador</option>
                             <option value="3" {{ old('rol') == '3' ? 'selected' : '' }}>Administrador</option>
                         </select>
+                        <span id="rol-e" name="rol-e" class="text-danger">Seleccione una opción.</span>
                         @error('rol')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -75,7 +80,7 @@
                 </div>
             
                 <!-- Boton Enviar -->
-                <button type="submit" class="mb-3 btn btn-success btn-block">Registrar</button>
+                <button type="submit" id="btn-submit" class="mb-3 btn btn-success btn-block">Registrar</button>
             </form>
         </div>
     </center>

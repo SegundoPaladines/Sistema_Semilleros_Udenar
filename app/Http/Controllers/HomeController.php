@@ -39,6 +39,10 @@ class HomeController extends Controller
     public function registarUsuarios() {
         return redirect()->route('v_reg_usr');
     }
+    public function checkEmail($email) {
+        $user = User::where('email', $email)->first();
+        return response()->json(['exists' => !is_null($user)]);
+    }
     public function postUsuarios() {
         return redirect()->route('registar_usuario');
     }
