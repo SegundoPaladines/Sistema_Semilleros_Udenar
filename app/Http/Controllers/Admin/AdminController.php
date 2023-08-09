@@ -47,7 +47,7 @@ class AdminController extends Controller
 
         if (($request->input('passwd1')) === ($request->input('passwd2'))) {
             $validator = Validator::make($request->all(), [
-                'nombre' => 'required|regex:/^[A-Za-z\s]+$/|min:2|max:50',
+                'nombre' => 'required|regex:/^[A-Za-zñÑ\s]+$/|min:2|max:50'                ,
                 'email' => 'required|email|unique:users,email|ends_with:@udenar.edu.co',
                 'passwd1' => 'required|min:6',
             ], [
