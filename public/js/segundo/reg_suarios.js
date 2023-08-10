@@ -57,14 +57,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (nombreValue.length === 0) {
             nombreError.textContent = 'El nombre es obligatorio.';
+            nombreError.classList.add('d-block');
+            nombreInput.classList.add('is-invalid');
         } else if (!nombreValue.match(nombreRegex)) {
             nombreError.textContent = 'El nombre solo puede contener letras y espacios.';
+            nombreError.classList.add('d-block');
+            nombreInput.classList.add('is-invalid');
         } else if (nombreValue.length < 2) {
             nombreError.textContent = 'El nombre debe tener al menos 2 caracteres.';
+            nombreError.classList.add('d-block');
+            nombreInput.classList.add('is-invalid');
         } else if (nombreValue.length > 50) {
             nombreError.textContent = 'El nombre no puede tener más de 50 caracteres.';
+            nombreError.classList.add('d-block');
+            nombreInput.classList.add('is-invalid');
         } else {
             nombreError.textContent = ''; // Borrar el mensaje de error si la validación es exitosa
+            nombreError.classList.remove('d-block'); // Ocultar el div de error
+            nombreInput.classList.remove('is-invalid'); // Quitar la clase de resaltado de error
         }
         btns.disabled = !areAllFieldsValid();
     });
@@ -74,17 +84,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!emailValue) {
             emailError.textContent = 'El campo correo es obligatorio.';
+            emailError.classList.add('d-block');
+            emailInput.classList.add('is-invalid');
         } else if (!isValidEmail(emailValue)) {
             emailError.textContent = 'El correo debe ser válido.';
+            emailError.classList.add('d-block');
+            emailInput.classList.add('is-invalid');
         } else if (!emailValue.endsWith('@udenar.edu.co')) {
             emailError.textContent = 'El correo debe terminar en @udenar.edu.co';
+            emailError.classList.add('d-block');
+            emailInput.classList.add('is-invalid');
         } else {
             const isRegistered = await isEmailRegistered(emailValue);
     
             if (isRegistered) {
                 emailError.textContent = 'El correo ya está registrado.';
+                emailError.classList.add('d-block');
+                emailInput.classList.add('is-invalid');
             }else {
                         emailError.textContent = ''; // Borrar el mensaje de error si todo es válido
+                        emailError.classList.remove('d-block');
+                        emailInput.classList.remove('is-invalid');
             }
         }
         btns.disabled = !areAllFieldsValid();
@@ -95,10 +115,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!passwd1Value) {
             passwd1Error.textContent = 'La contraseña es obligatoria.';
+            passwd1Error.classList.add('d-block');
+            passwd1Input.classList.add('is-invalid');
         } else if (passwd1Value.length < 6) {
             passwd1Error.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+            passwd1Error.classList.add('d-block');
+            passwd1Input.classList.add('is-invalid');
         } else {
             passwd1Error.textContent = ''; // Borrar el mensaje de error si todo es válido
+            passwd1Error.classList.remove('d-block');
+            passwd1Input.classList.remove('is-invalid');
         }
         btns.disabled = !areAllFieldsValid();
     });
@@ -109,10 +135,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!passwd2Value) {
             passwd2Error.textContent = 'La contraseña es obligatoria.';
+            passwd2Error.classList.add('d-block');
+            passwd2Input.classList.add('is-invalid');
         } else if (passwd2Value !== passwd1Value) {
             passwd2Error.textContent = 'Las contraseñas no coinciden.';
+            passwd2Error.classList.add('d-block');
+            passwd2Input.classList.add('is-invalid');
         } else {
             passwd2Error.textContent = ''; // Borrar el mensaje de error si todo es válido
+            passwd2Error.classList.remove('d-block');
+            passwd2Input.classList.remove('is-invalid');
         }
         btns.disabled = !areAllFieldsValid();
     });
