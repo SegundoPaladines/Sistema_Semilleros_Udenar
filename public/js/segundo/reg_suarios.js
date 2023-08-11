@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             nombreError.classList.add('d-block');
             nombreInput.classList.add('is-invalid');
         } else if (!nombreValue.match(nombreRegex)) {
-            nombreError.textContent = 'El nombre solo puede contener letras y espacios.';
+            nombreError.textContent = 'Ingrese únicamente letras y espacios.';
             nombreError.classList.add('d-block');
             nombreInput.classList.add('is-invalid');
         } else if (nombreValue.length < 2) {
