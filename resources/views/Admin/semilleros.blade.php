@@ -3,127 +3,117 @@
 @section('title', 'Semilleros')
 
 @section('content_header')
-    <h1>Listado de Semilleros</h1>
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+        <h1>Listado de Semilleros</h1>
+        </figure>
+    </div>
+</div>
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+<div class="container">
     <center>
-        <table id="buscador-agregar">
-            <tr>
-                <td>
-                    <div id="contenedor-buscador" class="input-group">
-                        <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar Semilleros">
-                        </div>
-                        <div id="ic">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div id="btn-agregar">
-                        <a href="{{route('agregar_semilleros')}}" class="btn btn-success">Añadir Semilleros</a>
-                    </div>
-                </td>
-            </tr>
-        </table>    
-    </center>
+    <br>
+    <ul class="list-unstyled">
+    <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+    </ul>  
+    <br>
+    <!-- Buscador y botón Añadir semilleros  -->
+    <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+        <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
+            <div class="col-md" id="inp">
+                <input id="buscador" type="text" placeholder="Buscar Semilleros" style="width: 100%;">
+            </div>
+            <div id="ic">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="col-md-3" id="btn-agregar">
+            <a href="{{route('agregar_semilleros')}}" class="btn btn-success">Añadir Semilleros</a>
+        </div>
+    </div>
     <br>
     <hr>
-    <hr>
     <br>
-    @foreach($semilleros as $s)
-        <section>
-            <div class="container">
-               <div class="row">
+    <!-- Listado de Semilleros en cards -->
+    <div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center;" >
+        @foreach($semilleros as $s)
+        <div class="card mb-3 text-center" style="width: 95%;  margin: 10px; height: 100%; border-radius: 90px;" >
+            <div class="row g-0" style="height: 95%;" style="margin: 5px;">
+                <div class="col-md-4" style="display: flex; justify-content: center; align-items: center; background-color: #FAFAFA; border-top-left-radius: 90px; border-bottom-left-radius: 90px;">
                     <div class="col">
-                        <center><h1>{{$s->nombre}}</h1></center></div> <br>
-                        <center><p><span style="font-size: small; font-style: italic;">{{$s->descripcion}}</span></p><br></center>
-                        <center><p><span style="font-size: small; font-style: italic;"><strong>Sede:</strong>  {{$s->sede}}, Fundado en: {{$s->fecha_creacion}} según <a href="{{ Storage::url($s->resolucion)}}" target="_blank">Resolución {{$s->num_res}}</a></span></p></center>
-                        <center><p><span style="font-size: small; font-style: italic;"><strong>Contacto:</strong>  {{$s->correo}}</span></p></center>
+                        <img
+                            src= "{{ Storage::url($s->logo)}}"
+                            alt= "Foto Semillero"
+                            class="img-fluid rounded-pill"
+                            style="width: 250px; height: 250px;"
+                        />
+                        <div style="margin: 15px;" >
+                            <h4>Objetivos</h4>
+                            <p>{{$s->objetivos}}</p>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <center>
-                        <a href="{{ Storage::url($s->resolucion)}}" target="_blank" style="background-color: #6caa84;" class="btn btn-floating" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar Resolución">
-                            <i class="fas fa-download"></i>
-                        </a>
-                    </center>
-                </div><br>
-                <div class="row">
-                    <center>
+                <div class="col-md-8">
+                    <div class="card-body">
+                    <div class="row">
                         <div class="col">
-                            <a  href="{{route('actualizar_semillero', $s->id_semillero)}}" class="btn btn-primary">Actualizar</a>
-                            <a  href="{{route('participantes_semillero', $s->id_semillero)}}" class="btn btn-info">Participantes</a>
-                            <a  href="{{route('vista_coor_sem', $s->id_semillero)}}" class="btn btn-dark">Coordinador</a>
-                            <a  href="{{route('delete_sem', $s->id_semillero)}}" class="btn btn-danger">Eliminar</a>
-                        </div>
-                    </center>
-                </div>
-                <hr><br>
-                <div class="row">
-                    <div class="col">
-                        <div class="bg-image hover-overlay">
-                            <img src="{{ Storage::url($s->logo)}}" class="w-100" />
-                            <div
-                                class="mask"
-                                style="
-                                background: linear-gradient(
-                                    45deg,
-                                    hsla(168, 85%, 52%, 0.5),
-                                    hsla(263, 88%, 45%, 0.5) 100%
-                                );
-                                "
-                            ></div>
+                            <center><h1>{{$s->nombre}}</h1></center></div> <br>
+                            <center><p><span style="font-size: small; font-style: italic;">{{$s->descripcion}}</span></p></center>
+                            <center><p><span style="font-size: small; font-style: italic;"><strong>Sede:</strong>  {{$s->sede}}, Fundado en: {{$s->fecha_creacion}} según <a href="{{ Storage::url($s->resolucion)}}" target="_blank">Resolución {{$s->num_res}}</a></span></p></center>
+                            <center><p><span style="font-size: small; font-style: italic;"><strong>Contacto:</strong>  {{$s->correo}}</span></p></center>
+                            <center>
+                                <a href="{{ Storage::url($s->resolucion)}}" target="_blank" style="background-color: #6caa84;" class="btn btn-floating" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar Resolución">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </center>
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <center>
+                            <div class="col">
+                                <a  href="{{route('actualizar_semillero', $s->id_semillero)}}" class="btn btn-secondary btn-rounded">Actualizar</a>
+                                <a  href="{{route('participantes_semillero', $s->id_semillero)}}" class="btn btn-secondary btn-rounded">Participantes</a>
+                                <a  href="{{route('vista_coor_sem', $s->id_semillero)}}" class="btn btn-secondary btn-rounded">Coordinador</a>
+                                <a  href="{{route('delete_sem', $s->id_semillero)}}" class="btn btn-danger btn-rounded">Eliminar</a>
+                            </div>
+                        </center>
+                    </div>
+                    <hr>
                     <div class="col">
                         <div>
                             <h4>Presentación</h4>
                             <p>{{$s->presentacion}}</p>
-                        </div><br>
+                        </div>
+                        
+                        <div >
+                                <h4>Misión</h4>
+                                <p>{{$s->mision}}</p>
+                        </div>
+                        <div >       
+                                <h4>Visión</h4>
+                                <p>{{$s->vision}}</p>
+                        </div>
+                        <div >
+                            <h4>Valores</h4>
+                            <p>{{$s->valores}}</p>
+                        </div>
                         <div>
-                            <h4>Objetivos</h4>
-                            <p>{{$s->objetivos}}</p>
+                            <h4>Lineas de Investigación</h4>
+                            <p>{{$s->lineas_inv}}</p>
                         </div><br>
                     </div>
-                </div><br>
-                <div class="row">
-                    <div class="col">
-                        <div>
-                            <h4>Misión</h4>
-                            <p>{{$s->mision}}</p>
-                        </div><br>
+                    
                     </div>
-                    <div class="col">
-                        <div>
-                            <h4>Visión</h4>
-                            <p>{{$s->vision}}</p>
-                        </div><br>
-                    </div>
-                </div>
-                <div class="row">
-                    <div>
-                        <h4>Lineas de Investigación</h4>
-                        <p>{{$s->lineas_inv}}</p>
-                    </div><br>
-                </div><br>
-                <div class="row">
-                    <div>
-                        <h4>Valores</h4>
-                        <p>{{$s->valores}}</p>
-                    </div><br>
                 </div>
             </div>
-            <br>
-        </section>
-        <hr>
-        <hr>
-        <br>
-    @endforeach
-
+        </div>
+        @endforeach
+    </div>  
+    </center>
     @if (session('preguntarEliminar'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -180,7 +170,7 @@
             </div>
         </div>
     </div>
-    
+</div>
 @stop
 
 @section('css')

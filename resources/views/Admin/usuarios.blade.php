@@ -43,7 +43,7 @@
                 <div class="col-md-4" style="display: flex; justify-content: center; align-items: center;">
                     <img
                         src= "https://images.vexels.com/media/users/3/137047/isolated/lists/5831a17a290077c646a48c4db78a81bb-icono-de-perfil-de-usuario-azul.png"
-                        alt="Trendy Pants and Shoes"
+                        alt="Foto Usuario"
                         class="img-fluid rounded-pill"
                         style="width: 500px; height: 210px;"
                     />
