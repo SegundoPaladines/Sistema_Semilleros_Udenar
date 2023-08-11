@@ -47,7 +47,7 @@ class AdminController extends Controller
 
         if (($request->input('passwd1')) === ($request->input('passwd2'))) {
             $validator = Validator::make($request->all(), [
-                'nombre' => 'required|regex:/^[A-Za-zñÑ\s]+$/|min:2|max:50'                ,
+                'nombre' => 'required|regex:/^[A-Za-zñÑ\s]+$/|min:2|max:50',
                 'email' => 'required|email|unique:users,email|ends_with:@udenar.edu.co',
                 'passwd1' => 'required|min:6',
             ], [
@@ -129,11 +129,14 @@ class AdminController extends Controller
 
         if (($request->input('passwd1')) === ($request->input('passwd2'))) {
             $validator = Validator::make($request->all(), [
-                'nombre' => 'required',
+                'nombre' => 'required|regex:/^[A-Za-zñÑ\s]+$/|min:2|max:50',
                 'email' => 'required|email|ends_with:@udenar.edu.co',
                 'passwd1' => 'required|min:6',
             ], [
                 'nombre.required' => 'El campo nombre es obligatorio.',
+                'nombre.regex' => 'El nombre solo puede contener letras y espacios.',
+                'nombre.min' => 'El nombre debe tener al menos :min caracteres.',
+                'nombre.max' => 'El nombre no puede tener más de :max caracteres.',
                 'email.required' => 'El campo correo es obligatorio.',
                 'email.email' => 'El correo debe ser válido.',
                 'email.ends_with' => 'El correo debe terminar en @udenar.edu.co.',
