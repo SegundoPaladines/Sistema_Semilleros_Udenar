@@ -144,7 +144,7 @@ class HomeController extends Controller
         
         if (!password_verify($request->input('passwd1'), $usr_edit->password)) {
             $validator = Validator::make($request->all(), [], []);
-            $validator->errors()->add('passwd1', 'Contraseña Incorrecta.');
+            $validator->errors()->add('passwd1', 'Contraseña Actual Incorrecta.');
 
             return redirect()->back()->withErrors($validator)->withInput();
         }else{
