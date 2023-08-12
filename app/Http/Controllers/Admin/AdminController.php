@@ -309,5 +309,4 @@ class AdminController extends Controller
         
         return redirect()->route('proyectos', ['eliminado' => $proyecto_del->nombre])->with('proyectoEliminado', true);
     }
-
 }
