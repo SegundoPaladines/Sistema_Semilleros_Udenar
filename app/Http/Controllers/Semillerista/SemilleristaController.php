@@ -12,6 +12,8 @@ use App\Models\Persona;
 use App\Models\User;
 use App\Models\Semillerista;
 use App\Http\Controllers\Controller;
+use App\Models\Proyecto;
+use App\Models\Rol;
 
 class SemilleristaController extends Controller
 {
@@ -72,4 +74,17 @@ class SemilleristaController extends Controller
             return redirect()->back()->with('actualizacionExitosa', true);
         }
     }
+
+    public function listarProyectos()
+    {
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('semillerista.proyectos', $rol, new Proyecto());
+    
+        $proyectos = Proyecto::all();
+    
+        return view('proyectos', compact('proyectos', 'user'));
+    }
+
 }
