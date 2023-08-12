@@ -75,7 +75,7 @@ Route::post('/nombrar_coordinador/{semillero_id}', [AdminController::class, 'nom
 Route::get('/despedir_coordinador/{semillero_id}', [AdminController::class, 'despedirCoordinadorSemillero'])->name('destituir_coor_sem');
 
 //rutas de usuarios
-Route::get('/proyectos', [AdminController::class,'listarProyectos'])->name('proyectos');
+Route::get('/proyectos', [AdminController::class,'listarProyectos'])->name('proyectos_dir');
 
 //Agregar
 Route::get('/vista/agregar-proyectos', [AdminController::class,'vistaAgrProyectos'])->name('vista_agr_proy_dir');

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Rol;
 use App\Models\Semillerista;
 use App\Models\Persona;
+use App\Models\User;
+use App\Models\Proyecto;
 
 class CoordinadorController extends Controller
 {

@@ -7,4 +7,4 @@ Route::get('/actualizar_datos_semillerista', [SemilleristaController::class, 'vi
 Route::post('/actualizar_datos_semillerista', [SemilleristaController::class, 'actualizarDatos'])->name('actualizar_datos_semillerista');
 
 //rutas de usuarios
-Route::get('/proyectos', [SemilleristaController::class,'listarProyectos'])->name('proyectos');
+Route::get('/proyectos', [SemilleristaController::class,'listarProyectos'])->name('proyectos_sem');

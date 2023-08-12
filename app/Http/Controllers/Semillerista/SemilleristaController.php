@@ -12,6 +12,8 @@ use App\Models\Persona;
 use App\Models\User;
 use App\Models\Semillerista;
 use App\Http\Controllers\Controller;
+use App\Models\Proyecto;
+use App\Models\Rol;
 
 class SemilleristaController extends Controller
 {

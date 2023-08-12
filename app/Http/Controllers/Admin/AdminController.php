@@ -17,6 +17,7 @@ use App\Models\Semillero;
 use App\Models\Evento;
 use App\Models\Semillerista;
 use App\Models\Coordinador;
+use App\Models\Proyecto;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -1074,21 +1075,21 @@ class AdminController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('director', $rol);
+        $this->authorize('director.administracion', $rol);
     
-        return redirect()->route('proyectos', ['elimina' => $id])->with('preguntarEliminar', true);
+        return redirect()->route('proyectos_dir', ['elimina' => $id])->with('preguntarEliminar', true);
     }
 
     public function confirmacionEliminacionProyecto($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('director', $rol);
+        $this->authorize('director.administracion', $rol);
 
         $proyecto_del = Proyecto::findOrFail($id);
         $proyecto_del->delete();
         
-        return redirect()->route('proyectos', ['eliminado' => $proyecto_del->nombre])->with('proyectoEliminado', true);
+        return redirect()->route('proyectos_dir', ['eliminado' => $proyecto_del->nombre])->with('proyectoEliminado', true);
     }
 
 }
