@@ -24,7 +24,7 @@
                 </td>
                 <td>
                     <div id="btn-agregar">
-                        <a href="{{route('vista_agr_proy')}}" class="btn btn-success">Añadir Proyecto</a>
+                        <a href="{{route('vista_agr_proy_dir')}}" class="btn btn-success">Añadir Proyecto</a>
                     </div>
                 </td>
             </tr>
@@ -62,9 +62,9 @@
                     <td><a href="{{ asset($p->arc_propuesta) }}" target="_blank">Descargar PDF</a></td>
                     <td><a href="{{ asset($p->arc_adjunto) }}" target="_blank">Descargar PDF</a></td>
                     <td>
-                        <a href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-primary">Editar</a>
+                        <a href="{{route('edit_proyectos_dir', $p->id_proyecto)}}" class="btn btn-primary">Editar</a>
                         @if($p->id !== $user->id)
-                            <a href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger">Eliminar</a>
+                            <a href="{{route('eliminar_proyecto_dir', $p->id_proyecto)}}" class="btn btn-danger">Eliminar</a>
                         @endif
                     </td>
                 </tr>

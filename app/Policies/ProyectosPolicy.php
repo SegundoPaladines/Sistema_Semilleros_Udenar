@@ -9,13 +9,10 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProyectosPolicy
 {
-<<<<<<< HEAD
-=======
     /**
      * Create a new policy instance.
      */
 
->>>>>>> master
     public function director(User $user, Rol $rol, Proyecto $proyecto){
         $autorization = false;
         if($rol->name === 'admin'){
@@ -39,9 +36,6 @@ class ProyectosPolicy
         }
         return $autorization;
     }
-<<<<<<< HEAD
 
     
-=======
->>>>>>> master
 }

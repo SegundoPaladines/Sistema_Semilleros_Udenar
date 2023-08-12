@@ -20,16 +20,16 @@ Route::get('/eliminar-usuario/{id}', [AdminController::class,'eliminarUsuarioCon
 Route::get('/proyectos', [AdminController::class,'listarProyectos'])->name('proyectos');
 
 //Agregar
-Route::get('/vista/agregar-proyectos', [AdminController::class,'vistaAgrProyectos'])->name('vista_agr_proy');
-Route::post('/vista/agregar-proyectos', [AdminController::class,'agregarProyecto'])->name('agregar_proyecto');
+Route::get('/vista/agregar-proyectos', [AdminController::class,'vistaAgrProyectos'])->name('vista_agr_proy_dir');
+Route::post('/vista/agregar-proyectos', [AdminController::class,'agregarProyecto'])->name('agregar_proyecto_dir');
 
 //Editar
-Route::get('vista/editar_proyectos/{id}', [AdminController::class, 'vistaEditProyectos'])->name('edit_proyectos');
-Route::post('vista/editar_proyectos/{id}', [AdminController::class, 'editarProyectos'])->name('editar_proyecto');
+Route::get('vista/editar_proyectos/{id}', [AdminController::class, 'vistaEditProyectos'])->name('edit_proyectos_dir');
+Route::post('vista/editar_proyectos/{id}', [AdminController::class, 'editarProyectos'])->name('editar_proyecto_dir');
 
 //Eliminar
-Route::get('/eliminar_proyectos/{id}', [AdminController::class, 'eliminarProyecto'])->name('eliminar_proyecto');
-Route::get('/eliminar_proyecto/{id}', [AdminController::class, 'confirmacionEliminacionProyecto']);
+Route::get('/eliminar_proyectos/{id}', [AdminController::class, 'eliminarProyecto'])->name('eliminar_proyecto_dir');
+Route::get('/eliminar_proyecto/{id}', [AdminController::class, 'confirmacionEliminacionProyecto_dir']);
 //perfiles
 Route::get('/perfil/{id}', [AdminController::class, 'perfil'])->name('perfiles');
 Route::post('/perfil/{id}', [AdminController::class, 'actualizarPerfil'])->name('actualizar_perfiles');
