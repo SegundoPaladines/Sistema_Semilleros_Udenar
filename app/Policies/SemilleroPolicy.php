@@ -13,7 +13,11 @@ class SemilleroPolicy
 
     public function coordinador(User $user, Semillero $semillero)
     {
-        return true;
+        $autorization = false;
+        if($rol->name === 'coordinador'){
+            $autorization = true;
+        }
+        return $autorization;
     }
 
     public function director(User $user, Rol $rol, Semillero $semillero)

@@ -360,18 +360,6 @@ class AdminController extends Controller
         
         return view('Admin.agregar_semilleros', compact('user'));
     }
-    
-    public function listarEventos(){
-        $user = auth()->user();
-        $nombre_rol = $user->getRoleNames()[0];
-        $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('director', $rol, new Evento());
-        
-        $eventos = Evento::all();
-        
-        return view('Admin.eventos', compact('eventos','user'));
-    }
-
     public function vistaRegEventos(){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -380,7 +368,6 @@ class AdminController extends Controller
 
         return view('Admin.vista_reg_eventos', compact('user'));
     }
-    
     public function registrarEventos(Request $r){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -403,7 +390,6 @@ class AdminController extends Controller
         
         return redirect()->route('vista_reg_eventos')->with('registroExitoso', true);
     }
-
     public function vistaEditEventos($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -414,7 +400,6 @@ class AdminController extends Controller
 
         return view('Admin.vista_edit_eventos', compact('user','evento_id'));
     }
-
     public function editarEventos(Request $r, $id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -437,7 +422,6 @@ class AdminController extends Controller
 
         return redirect()->route('listar_eventos')->with('registroExitoso', true);
     }
-
     public function eliminarEvento($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -446,7 +430,6 @@ class AdminController extends Controller
     
         return redirect()->route('listar_eventos', ['elimina' => $id])->with('preguntarEliminar', true);
     }
-
     public function confirmacionEliminacionEvento($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -458,7 +441,6 @@ class AdminController extends Controller
         
         return redirect()->route('listar_eventos', ['eliminado' => $evento_del->nombre])->with('eventoEliminado', true);
     }
-
     public function agregarSemillero(Request $request){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
