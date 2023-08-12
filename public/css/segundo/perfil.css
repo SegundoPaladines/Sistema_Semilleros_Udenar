@@ -11,6 +11,10 @@
     border-radius: 10px;
 }
 
+#lb{
+    color: #56a347;
+}
+
 #contenedor-form {
     width: 90%;
     text-align: left;
