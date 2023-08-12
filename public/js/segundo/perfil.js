@@ -23,9 +23,9 @@ function porfavorActualizar() {
         modalExito.style.display = 'none';
       });
     }
-  }
+}
   
-  function actualizacionExitosa() {
+function actualizacionExitosa() {
     var modalExito = document.getElementById('reg_ext_emergente');
     var modalTitulo = document.getElementById('modal-titulo');
     var modalMensaje = document.getElementById('modalExitoMensaje');
@@ -51,4 +51,4 @@ function porfavorActualizar() {
       });
 
     }
-  }
+}

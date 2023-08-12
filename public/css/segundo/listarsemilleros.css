@@ -57,3 +57,10 @@
 .modal-icono-rechazo {
     font-size: 5rem;
 }
+
+.container {
+    background-color: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.56); /* Cambia los valores para ajustar la sombra */
+    padding: 20px; /* Agrega un poco de espacio al contenido dentro del contenedor */
+    border-radius: 10px;
+}

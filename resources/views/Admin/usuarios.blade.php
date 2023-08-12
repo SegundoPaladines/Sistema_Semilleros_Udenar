@@ -3,61 +3,65 @@
 @section('title', 'Usuarios')
 
 @section('content_header')
-    <h1>Listado de Usuarios</h1>
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+            <h1>Listado de Usuarios</h1>
+        </figure>
+    </div>
+</div>
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+<div class="container">
     <center>
-        <table id="buscador-agregar">
-            <tr>
-                <td>
-                    <div id="contenedor-buscador" class="input-group">
-                        <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar usuarios">
-                        </div>
-                        <div id="ic">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div id="btn-agregar">
-                        <a href="{{route('v_reg_usr')}}" class="btn btn-success">Añadir Usuarios</a>
-                    </div>
-                </td>
-            </tr>
-        </table>    
+        <br>
+        <ul class="list-unstyled">
+            <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+        </ul>  
+        <br>
+        <!-- Buscador y botón Añadir usuario  -->
+        <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+            <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
+                <div class="col-md-" id="inp">
+                    <input id="buscador" type="text" placeholder="Buscar usuarios" style="width: 100%;">
+                </div>
+                <div id="ic">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <div class="col-md-3" id="btn-agregar">
+                <a href="{{route('v_reg_usr')}}" class="btn btn-success">Añadir Usuarios</a>
+            </div>
+        </div>
     </center>
-    <br>
-    <table id= "tabla_usuarios" class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre de Usuario</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Rol</th>
-                <th scope="col">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $i=1;
-            @endphp
-            @foreach($usuarios as $u)
-                <tr>
-                    <th scope="row">{{$i}}</th>
-                    <td>{{$u->id}}</td>
-                    <td>{{$u->name}}</td>
-                    <td>{{$u->email}}</td>
-                    <td> 
+    <!-- Creación de tarjetas usuarios -->
+    <div  class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center;" >
+        @foreach($usuarios as $u)   
+        <div class="card mb-3 text-center" style="max-width: 540px;  margin: 10px; height: 250px;" >
+            <div class="row g-0" style="height: 100%;">
+                <div class="col-md-4" style="display: flex; justify-content: center; align-items: center;">
+                    <img
+                        src= "https://distrimar.s3.amazonaws.com/static/apm/img/misc/default_user.png"
+                        alt="Foto Usuario"
+                        class="img-fluid rounded-pill"
+                        style="width: 500px; height: 210px;"
+                    />
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <div style="margin: 10px;">
+                            <h5 class="card-text" >{{$u->name}}</h5>
+                        </div>
+                        <p class="card-text" style="margin: 10px;">
                         <span id="rol_{{$u->id}}"class="badge rounded-pill d-inline">
                             {{ $u->getRoleNames()->first() }}
                         </span>
-                    </td>
-                    <td>
+                        </p>
+                        <p class="card-text">
+                        <small class="text-muted">Correo: {{$u->email}}</small>
+                        </p>
+                        <hr>
                         
                         <a href="{{route('edit_usr', $u->id)}}" class="btn btn-primary">Editar</a>
 
@@ -72,17 +76,16 @@
                         @endif
 
                         @if($u->getRoleNames()->first() == 'semillerista')
-                            <a href="{{route('act_info_acad_sem', $u->id)}}" class="btn btn-dark">Inf. Acad</a>
+                            <a href="{{route('act_info_acad_sem', $u->id)}}" class="btn btn-dark" style="margin: 5px;">Inf. Acad</a>
                         @endif
-                        
-                    </td>
-                </tr>
-                @php
-                    $i++;
-                @endphp
-            @endforeach
-        </tbody>
-    </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
 
     @if (session('registroExitoso'))
         <script>
@@ -159,7 +162,7 @@
             </div>
         </div>
     </div>
-    
+</div>  
 @stop
 
 @section('css')

@@ -3,78 +3,87 @@
 @section('title', 'Editar Usuario')
 
 @section('content_header')
-    <h1>Editar Usuario</h1>
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+            <h1>Editar Usuario</h1>
+        </figure>
+    </div>
+</div>
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+<div class="container">
     <center>
+        <br>
+        <ul class="list-unstyled">
+        <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+        </ul>  
+        <br>
         <div id="contenedor-form">
-            <form method="POST" action="{{ route('editar_usr', $id) }}">
+        <form class="row g-3 needs-validation" novalidate method="POST" action="{{ route('editar_usr', $id) }}">
                 @csrf
-                <div class="row">
-                    <div class="col-md-6">
-                        <!-- Nombre de usuario -->
-                        <div>
-                            @error('nombre')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="text" id="nombre" name="nombre" class="form-control" value="{{$usr_edit->name }}" />
-                                <label class="form-label" for="nombre">Nombre de Usuario</label>
-                            </div>
-                        </div>
-                        <!-- Email  -->
-                        <div>
-                            @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="email" id="email" name="email" class="form-control" value="{{$usr_edit->email}}" />
-                                <label class="form-label" for="email">Email</label>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <div class="col-md-6">
-                        <!-- Contraseña -->
-                        <div>
-                            @error('passwd1')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="password" id="passwd1" name="passwd1" class="form-control"  placeholder="Escriba la nueva contraseña"/>
-                                <label class="form-label" for="passwd1">Contraseña</label>
-                            </div>
-                        </div>
-            
-                        <!-- Repetir Contraseña -->
-                       <div>
-                        @error('passwd2')
-                            <span class="text-danger">{{ $message }}</span>
+                <!-- Nombre de usuario -->
+                <div class="col-md-6">
+                    <div class="form-outline">
+                        <input type="text" id="nombre" name="nombre" class="form-control is-valid" value="{{$usr_edit->name }}" required />
+                        <label for="nombre" class="form-label">Nombre de Usuario</label>
+                        <div id="nombre-e" name="nombre-e" class="invalid-feedback"></div>
+                        @error('nombre')
+                        <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        <div class="mb-4 form-outline">
-                            <input type="password" id="passwd2" name="passwd2" class="form-control" placeholder="Repita la nueva contraseña"/>
-                            <label class="form-label" for="passwd2">Repita la Contraseña</label>
-                        </div>
-                       </div>
                     </div>
-                    <div class="mb-4 form-outline">
-                        <label for="rol">Rol:</label>
-                        <select id="rol" name="rol" class="form-select" aria-label="Default select example">
+                </div>
+                <!-- Email  -->
+                <div class="col-md-6">
+                    <div class="form-outline">
+                        <input type="email" id="email" name="email" class="form-control is-valid" value="{{$usr_edit->email}}" required />
+                        <label for="email" class="form-label">Email</label>
+                        <div id="email-e" name="email-e" class="invalid-feedback"></div>
+                        @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <!-- Contraseña -->
+                <div class="col-md-6">
+                    <div class="form-outline">
+                        <input type="password" id="passwd1" name="passwd1" class="form-control is-valid" placeholder="Escriba la nueva contraseña"  required />
+                        <label for="passwd1" class="form-label">Contraseña</label>
+                        <div id="passwd1-e" name="passwd1-e" class="invalid-feedback">*</div>
+                        @error('passwd1')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <!-- Repetir Contraseña -->
+                <div class="col-md-6">
+                    <div class="form-outline">
+                        <input type="password" id="passwd2" name="passwd2" class="form-control is-valid" placeholder="Repita la nueva contraseña" required />
+                        <label for="passwd2" class="form-label">Repita la Contraseña</label>
+                        <div id="passwd2-e" name="passwd2-e" class="invalid-feedback">*</div>
+                        @error('passwd2')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <!-- Seleccionar rol -->
+                <div class="col-md-12">
+                    <div class="form-outline">
+                        <label for="rol" class="form-label" id="rolb">Rol: </label>
+                        <select id ="rol" name="rol" class="form-select is-valid" aria-label="Default select example">
                             <option value="1" {{ $numRol == 1 ? 'selected' : '' }}>Semillerista</option>
                             <option value="2" {{ $numRol == 2 ? 'selected' : '' }}>Coordinador</option>
                             <option value="3" {{ $numRol == 3 ? 'selected' : '' }}>Administrador</option>
                         </select>
+                        <span id="rol-e" name="rol-e" class="text-danger">Seleccione una opción.</span>
                         @error('rol')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
-            
                 <!-- Boton Enviar -->
-                <button type="submit" class="mb-3 btn btn-success btn-block">Guardar Cambios</button>
+                <button type="submit" id="btn-submit" class="mb-3 btn btn-success btn-block">Guardar Cambios</button>
             </form>
         </div>
     </center>
@@ -86,8 +95,8 @@
         </script>
     @endif
 
-      <!-- Modal -->
-      <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+    <!-- Modal -->
+    <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -108,7 +117,7 @@
             </div>
         </div>
     </div>
-
+</div>
 @stop
 
 @section('css')

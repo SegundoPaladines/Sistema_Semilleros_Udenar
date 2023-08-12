@@ -43,6 +43,10 @@ class HomeController extends Controller
     public function registarUsuarios() {
         return redirect()->route('v_reg_usr');
     }
+    public function checkEmail($email) {
+        $user = User::where('email', $email)->first();
+        return response()->json(['exists' => !is_null($user)]);
+    }
     public function postUsuarios() {
         return redirect()->route('registar_usuario');
     }
@@ -144,7 +148,7 @@ class HomeController extends Controller
         
         if (!password_verify($request->input('passwd1'), $usr_edit->password)) {
             $validator = Validator::make($request->all(), [], []);
-            $validator->errors()->add('passwd1', 'Contraseña Incorrecta.');
+            $validator->errors()->add('passwd1', 'Contraseña Actual Incorrecta.');
 
             return redirect()->back()->withErrors($validator)->withInput();
         }else{
