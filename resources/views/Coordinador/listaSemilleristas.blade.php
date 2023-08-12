@@ -22,11 +22,11 @@
                         </div>
                     </div>
                 </td>
-                <td>
+                <!-- <td>
                     <div id="btn-agregar">
                         <a href="" class="btn btn-success">Añadir Participantes</a>
                     </div>
-                </td>
+                </td> -->
             </tr>
         </table>
     </center>
