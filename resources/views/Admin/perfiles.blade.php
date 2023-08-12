@@ -3,7 +3,14 @@
 @section('title', 'Perfil')
 
 @section('content_header')
-  <div class="row">
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+          <h1>Perfil</h1>
+        </figure>
+    </div>
+</div>
+  <!-- <div class="row">
     <div class="col">
         <h1>Perfil</h1>
     </div>
@@ -12,13 +19,80 @@
             <img class="foto-perfil" src="{{ Storage::url($persona->foto)}}" alt="Foto de Perfil">
         @endif
     </div>
-  </div>
+  </div> -->
 @stop
 
 @section('content')
-    <p> Perfil de {{$usr_edit->name }}</p>
-    <br>
+<div class="container">
+    <center>
+        <br>
+        <ul class="list-unstyled">
+        <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Perfil de {{$usr_edit->name }}</li>
+        </ul>  
+        <div class="col">
+            @if(isset($persona) && $persona->foto !== null)
+                <img class="foto-perfil" src="{{ Storage::url($persona->foto)}}" alt="Foto de Perfil">
+            @else
+                <img class="foto-perfil" src="https://distrimar.s3.amazonaws.com/static/apm/img/misc/default_user.png" alt="Imagen por Defecto">
+            @endif
+        </div>
+        <br>
+        <!-- <div id="contenedor-form">
+          <form class="row g-3 needs-validation" novalidate id="form" name="form" method="POST" action="{{ route('registar_usuario') }}">
+              @csrf -->
+              <!-- Nombre y Apellidos completos-->
+              <!-- <div class="col-md-12">
+                  <div class="form-outline">
+                      <input type="text" id="nombre" name="nombre" class="form-control is-valid" value="{{ isset($persona) ? $persona->nombre : old('nombre') }}" required />
+                      <label for="nombre" class="form-label">Nombre y Apellidos Completos</label>
+                      <div id="nombre-e" name="nombre-e" class="invalid-feedback">*</div>
+                      @error('nombre')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                  </div>
+              </div> -->
+              <!-- Seleccionar rol -->
+              <!-- <div class="col-md-6">
+                  <div class="form-outline">
+                      <select id="tipo_identificacion" name="tipo_identificacion" class="form-select " aria-label="Default select example">
+                        <option value="1" {{ isset($persona) && $persona->tipo_identificacion == 1 ? 'selected' : '' }}>CC: Cédula de Ciudadanía</option>
+                        <option value="2" {{ isset($persona) && $persona->tipo_identificacion == 2 ? 'selected' : '' }}>TI: Tarjeta de Identidad</option>
+                        <option value="3" {{ isset($persona) && $persona->tipo_identificacion == 3 ? 'selected' : '' }}>RC: Registro Civil</option>
+                        <option value="4" {{ isset($persona) && $persona->tipo_identificacion == 4 ? 'selected' : '' }}>CE: Cédula de Extranjería</option>
+                      </select>
+                      <span id="tipo_identificacion-e" name="tipo_identificacion-e" class="text-danger">Seleccione una opción.</span>
+                      @error('tipo_identificacion')
+                          <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                  </div>
+              </div> -->
+              <!-- Nombre y Apellidos completos-->
+              <!-- <div class="col-md-12">
+                  <div class="form-outline">
+                      <input type="text" id="nombre" name="nombre" class="form-control is-valid" value="{{ isset($persona) ? $persona->nombre : old('nombre') }}" required />
+                      <label for="nombre" class="form-label">Nombre y Apellidos Completos</label>
+                      <div id="nombre-e" name="nombre-e" class="invalid-feedback">*</div>
+                      @error('nombre')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                  </div>
+              </div> -->
 
+
+              <!-- Número de documento-->
+              <!-- <div class="col-md-12">
+                  <div class="form-outline">
+                      <input type = "text" id="num_identificacion" name="num_identificacion" class="form-control is-valid" value="{{ isset($persona) ? $persona->num_identificacion : old('num_identificacion') }}" required />
+                      <label for="nombre" class="form-label">Nombre y Apellidos Completos</label>
+                      <div id="num_identificacion-e" name="num_identificacion-e" class="invalid-feedback">*</div>
+                      @error('num_identificacion')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                  </div>
+              </div> -->
+          <!-- </form>
+        </div> -->
+    
     <div id="contenedor-perfil">
         <form action="{{route('actualizar_perfiles', $usr_edit->id)}}" method= "POST" enctype="multipart/form-data">
           @csrf
@@ -32,7 +106,7 @@
                     <option value="2" {{ isset($persona) && $persona->tipo_identificacion == 2 ? 'selected' : '' }}>TI: Tarjeta de Identidad</option>
                     <option value="3" {{ isset($persona) && $persona->tipo_identificacion == 3 ? 'selected' : '' }}>RC: Registro Civil</option>
                     <option value="4" {{ isset($persona) && $persona->tipo_identificacion == 4 ? 'selected' : '' }}>CE: Cédula de Extranjería</option>
-                 </select>
+                  </select>
               </div>
               <div class="col">
                 @error('num_identificacion')
@@ -133,6 +207,8 @@
             <button type="submit" class="btn btn-success btn-block mb-4">Actualizar Información</button>
         </form>
     </div>
+    </center>
+</div>
 <br><br>
     @if (session('actualizacionExitosa'))
       <script>
