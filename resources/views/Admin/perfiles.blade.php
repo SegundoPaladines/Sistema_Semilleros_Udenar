@@ -10,16 +10,6 @@
         </figure>
     </div>
 </div>
-  <!-- <div class="row">
-    <div class="col">
-        <h1>Perfil</h1>
-    </div>
-    <div class="col">
-        @if(isset($persona) && $persona->foto !== null)
-            <img class="foto-perfil" src="{{ Storage::url($persona->foto)}}" alt="Foto de Perfil">
-        @endif
-    </div>
-  </div> -->
 @stop
 
 @section('content')
@@ -37,174 +27,117 @@
             @endif
         </div>
         <br>
-        <!-- <div id="contenedor-form">
-          <form class="row g-3 needs-validation" novalidate id="form" name="form" method="POST" action="{{ route('registar_usuario') }}">
-              @csrf -->
-              <!-- Nombre y Apellidos completos-->
-              <!-- <div class="col-md-12">
-                  <div class="form-outline">
-                      <input type="text" id="nombre" name="nombre" class="form-control is-valid" value="{{ isset($persona) ? $persona->nombre : old('nombre') }}" required />
-                      <label for="nombre" class="form-label">Nombre y Apellidos Completos</label>
-                      <div id="nombre-e" name="nombre-e" class="invalid-feedback">*</div>
-                      @error('nombre')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                      @enderror
-                  </div>
-              </div> -->
-              <!-- Seleccionar rol -->
-              <!-- <div class="col-md-6">
-                  <div class="form-outline">
-                      <select id="tipo_identificacion" name="tipo_identificacion" class="form-select " aria-label="Default select example">
-                        <option value="1" {{ isset($persona) && $persona->tipo_identificacion == 1 ? 'selected' : '' }}>CC: Cédula de Ciudadanía</option>
-                        <option value="2" {{ isset($persona) && $persona->tipo_identificacion == 2 ? 'selected' : '' }}>TI: Tarjeta de Identidad</option>
-                        <option value="3" {{ isset($persona) && $persona->tipo_identificacion == 3 ? 'selected' : '' }}>RC: Registro Civil</option>
-                        <option value="4" {{ isset($persona) && $persona->tipo_identificacion == 4 ? 'selected' : '' }}>CE: Cédula de Extranjería</option>
-                      </select>
-                      <span id="tipo_identificacion-e" name="tipo_identificacion-e" class="text-danger">Seleccione una opción.</span>
-                      @error('tipo_identificacion')
-                          <span class="text-danger">{{ $message }}</span>
-                      @enderror
-                  </div>
-              </div> -->
-              <!-- Nombre y Apellidos completos-->
-              <!-- <div class="col-md-12">
-                  <div class="form-outline">
-                      <input type="text" id="nombre" name="nombre" class="form-control is-valid" value="{{ isset($persona) ? $persona->nombre : old('nombre') }}" required />
-                      <label for="nombre" class="form-label">Nombre y Apellidos Completos</label>
-                      <div id="nombre-e" name="nombre-e" class="invalid-feedback">*</div>
-                      @error('nombre')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                      @enderror
-                  </div>
-              </div> -->
-
-
-              <!-- Número de documento-->
-              <!-- <div class="col-md-12">
-                  <div class="form-outline">
-                      <input type = "text" id="num_identificacion" name="num_identificacion" class="form-control is-valid" value="{{ isset($persona) ? $persona->num_identificacion : old('num_identificacion') }}" required />
-                      <label for="nombre" class="form-label">Nombre y Apellidos Completos</label>
-                      <div id="num_identificacion-e" name="num_identificacion-e" class="invalid-feedback">*</div>
-                      @error('num_identificacion')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                      @enderror
-                  </div>
-              </div> -->
-          <!-- </form>
-        </div> -->
     
-    <div id="contenedor-perfil">
-        <form action="{{route('actualizar_perfiles', $usr_edit->id)}}" method= "POST" enctype="multipart/form-data">
+    <div id="contenedor-form">
+        <form class="row g-3 needs-validation" novalidate action="{{route('actualizar_perfiles', $usr_edit->id)}}" method= "POST" enctype="multipart/form-data">
           @csrf
-            <div class="row">
-              <div class="col">
+          <div class="col-md-6">
+              <!-- <div class="form-outline"> -->
+                <select id="tipo_identificacion" name="tipo_identificacion" class="form-select is-valid" aria-label="Default select example">
+                  <option value="1" {{ isset($persona) && $persona->tipo_identificacion == 1 ? 'selected' : '' }}>CC: Cédula de Ciudadanía</option>
+                  <option value="2" {{ isset($persona) && $persona->tipo_identificacion == 2 ? 'selected' : '' }}>TI: Tarjeta de Identidad</option>
+                  <option value="3" {{ isset($persona) && $persona->tipo_identificacion == 3 ? 'selected' : '' }}>RC: Registro Civil</option>
+                  <option value="4" {{ isset($persona) && $persona->tipo_identificacion == 4 ? 'selected' : '' }}>CE: Cédula de Extranjería</option>
+                </select>
                 @error('tipo_identificacion')
-                  <span class="text-danger">{{ $message }}</span>
+                <span class="text-danger">{{ $message }}</span>
                 @enderror
-                  <select id="tipo_identificacion" name="tipo_identificacion" class="form-select" aria-label="Default select example">
-                    <option value="1" {{ isset($persona) && $persona->tipo_identificacion == 1 ? 'selected' : '' }}>CC: Cédula de Ciudadanía</option>
-                    <option value="2" {{ isset($persona) && $persona->tipo_identificacion == 2 ? 'selected' : '' }}>TI: Tarjeta de Identidad</option>
-                    <option value="3" {{ isset($persona) && $persona->tipo_identificacion == 3 ? 'selected' : '' }}>RC: Registro Civil</option>
-                    <option value="4" {{ isset($persona) && $persona->tipo_identificacion == 4 ? 'selected' : '' }}>CE: Cédula de Extranjería</option>
-                  </select>
-              </div>
-              <div class="col">
-                @error('num_identificacion')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
+              <!-- </div> -->
+          </div>
+
+          <div class="col-md-6">
                 <div class="form-outline">
-                  <input type = "text" id="num_identificacion" name="num_identificacion" class="form-control" value="{{ isset($persona) ? $persona->num_identificacion : old('num_identificacion') }}"/>
-                  <label class="form-label" for="num_identificacion">Número del Documento de Identidad</label>
+                    <input type = "text" id="num_identificacion" name="num_identificacion" class="form-control is-valid" value="{{ isset($persona) ? $persona->num_identificacion : old('num_identificacion') }}"/>
+                    <label class="form-label" for="num_identificacion">Número del Documento de Identidad</label>
+                  </div>
+                  @error('num_identificacion')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+          </div>
+
+          <div class="col-md-12">
+              <div class="form-outline">
+                  <input  type="text" id="nombre" name="nombre" class="form-control is-valid" value="{{ isset($persona) ? $persona->nombre : old('nombre') }}" />
+                  <label class="form-label" for="nombre">Nombre y Apellidos Completos</label>
                 </div>
-              </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col">
                 @error('nombre')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <div class="form-outline">
-                  <input  type="text" id="nombre" name="nombre" class="form-control" value="{{ isset($persona) ? $persona->nombre : old('nombre') }}" />
-                  <label class="form-label" for="nombre">Nombre y Apellidos Completos</label>
-                </div>
+          </div>
+
+          <div class="col-md-12">
+              <div class="form-outline">
+                <input class="form-control is-valid" id="foto" name="foto" type="file" accept="image/*" placeholder="Cargar foto" />
+                <!-- <label class="form-label" for="foto"> Cargar Foto</label> -->
               </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col">
-                @error('foto')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-                <label class="form-label" for="foto"> Cargar Foto</label>
-                <input class="form-control form-control-lg" id="foto" name="foto" type="file" accept="image/*" placeholder="Cargar foto" />
-              </div>
-            </div>
-            <br>
-            <hr />
-            <div class="row">
-              <div class="col">
-                @error('correo')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-                <div class="form-outline">
-                  <input type="email" id="correo" class="form-control disabled" disabled value="{{ $usr_edit->email }}"/>
+              @error('foto')
+                <span class="text-danger">{{ $message }}</span>
+              @enderror
+          </div>
+
+          <div class="col-md-4">
+              <div class="form-outline">
+                  <input type="email" id="correo" class="form-control is-valid disabled" disabled value="{{ $usr_edit->email }}"/>
                   <label class="form-label" for="correo">Correo</label>
-                </div>
               </div>
-              <div class="col">
-                @error('telefono')
+              @error('correo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <div class="form-outline">
-                  <input type="text" id="telefono" name="telefono" class="form-control" value="{{ isset($persona) ? $persona->telefono : old('telefono') }}" />
+          </div>
+
+          <div class="col-md-4">
+              <div class="form-outline">
+                  <input type="text" id="telefono" name="telefono" class="form-control is-valid" value="{{ isset($persona) ? $persona->telefono : old('telefono') }}" />
                   <label class="form-label" for="telefono">Telefono</label>
-                </div>
               </div>
-              <div class="col">
-                @error('direccion')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-                <div class="form-outline">
-                  <input type="text" id="direccion" name="direccion" class="form-control" value="{{ isset($persona) ? $persona->direccion : old('direccion') }}"/>
+              @error('telefono')
+                  <span class="text-danger">{{ $message }}</span>
+              @enderror
+          </div>
+
+          <div class="col-md-4">
+              <div class="form-outline">
+                  <input type="text" id="direccion" name="direccion" class="form-control is-valid" value="{{ isset($persona) ? $persona->direccion : old('direccion') }}"/>
                   <label class="form-label" for="direccion">Dirección</label>
-                </div>
               </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col">
-                @error('sexo')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-                <select id="sexo" name="sexo" class="form-select" aria-label="Default select example">
+              @error('direccion')
+                  <span class="text-danger">{{ $message }}</span>
+              @enderror
+          </div>
+
+          <div class="col-md-4">
+              <!-- <div class="col"> -->
+                <select id="sexo" name="sexo" class="form-select is-valid" aria-label="Default select example">
                   <option value="1" {{ isset($persona) && $persona->sexo == 1 ? 'selected' : ''}} >M: Hombre</option>
                   <option value="0" {{ isset($persona) && $persona->sexo == 0 ? 'selected' : ''}}>F: Mujer</option>
                 </select>
-              </div>
-              <div class="col">
-                @error('programa')
+                @error('sexo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <div class="form-outline">
-                  <input type="text" id="programa" name="programa" class="form-control" value="{{ isset($persona) ? $persona->programa_academico : old('programa') }}"/>
+              <!-- </div> -->
+          </div>
+
+          <div class="col-md-4">
+              <div class="form-outline">
+                  <input type="text" id="programa" name="programa" class="form-control is-valid" value="{{ isset($persona) ? $persona->programa_academico : old('programa') }}"/>
                   <label class="form-label" for="programa">Programa Academico</label>
-                </div>
               </div>
-              <div class="col">
-                @error('fecha_nac')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-                <div class="form-outline">
-                  <input class="form-control" type="text" id="fecha_nac" name="fecha_nac" placeholder="Fecha de Nacimiento" value="{{ isset($persona) ? $persona->fecha_nac : old('fecha_nac')}}">
+              @error('programa')
+                  <span class="text-danger">{{ $message }}</span>
+              @enderror
+          </div>
+          <div class="col-md-4">
+              <div class="form-outline">
+                  <input class="form-control is-valid" type="text" id="fecha_nac" name="fecha_nac" placeholder="Fecha de Nacimiento" value="{{ isset($persona) ? $persona->fecha_nac : old('fecha_nac')}}">
                   <label class="form-label" for="fecha_nac">Fecha de Nacimiento</label>
-                </div>
               </div>
-            </div>
-            
-          <br>
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-success btn-block mb-4">Actualizar Información</button>
+              @error('fecha_nac')
+                  <span class="text-danger">{{ $message }}</span>
+              @enderror
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-success btn-block mb-4">Actualizar Información</button>
         </form>
     </div>
     </center>
