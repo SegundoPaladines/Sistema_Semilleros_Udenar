@@ -26,6 +26,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>"home"])->syncRoles($coordinador, $director, $semillerista);
         Permission::create(['name'=>"perfil"])->syncRoles($coordinador, $director, $semillerista);
         Permission::create(['name'=>"eventos"])->syncRoles($director, $coordinador, $semillerista);
+        Permission::create(['name'=>"proyectos"])->syncRoles($director, $coordinador, $semillerista);
 
         //coordinador y semillerista pueden ver
         Permission::create(['name'=>"coordinador-semillerista.semillero"])->syncRoles($coordinador, $semillerista);

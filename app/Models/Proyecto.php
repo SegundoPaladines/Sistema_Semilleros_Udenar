@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proyecto extends Model
 {
+    //busco proyecto por id
+    protected $primaryKey = 'id_proyecto';
     //el proyecto pertenece a un semillero
     public function semillero(){
         return $this->belongsTo(Semillero::class);
