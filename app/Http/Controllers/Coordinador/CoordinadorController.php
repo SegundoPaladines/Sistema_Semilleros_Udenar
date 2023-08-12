@@ -10,6 +10,10 @@ use App\Models\Rol;
 use App\Models\User;
 use App\Models\Persona;
 
+use App\Models\Coordinador;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CoordinadorController extends Controller
 {

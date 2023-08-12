@@ -17,4 +17,11 @@ class UsuariosPolicy
         }
         return $autorization;
     }
+    public function coordinador(User $user, Rol $rol){
+        $autorization = false;
+        if($rol->name === 'coordinador'){
+            $autorization = true;
+        }
+        return $autorization;
+    }
 }

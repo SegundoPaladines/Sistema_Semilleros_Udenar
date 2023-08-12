@@ -345,7 +345,7 @@ return [
         ],
         [
             'text' => 'Semilleros',
-            'url'  => '/semilleros',
+            'url'  => 'admin/semilleros',
             'icon' => 'fas fa-fw fa-list',
             'can'  => 'director.semilleros',
             'classes'  => 'nav-link-propio',
@@ -357,6 +357,7 @@ return [
             'can'  => 'director.proyectos',
             'classes'  => 'nav-link-propio',
         ],
+
 
         //coordinador <- solo coordinador ver
         [
@@ -397,7 +398,7 @@ return [
         //todos pueden ver
         [
             'text' => 'Eventos',
-            'url'  => '/eventos',
+            'url'  => 'admin/eventos',
             'icon' => 'fas fa-fw fa-calendar',
             'can'  => 'eventos',
             'classes'  => 'nav-link-propio',

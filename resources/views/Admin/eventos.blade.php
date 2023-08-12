@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Usuarios')
+@section('title', 'Eventos')
 
 @section('content_header')
-    <h1>Listado de Usuarios</h1>
+    <h1>Listado de Eventos</h1>
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
                 <td>
                     <div id="contenedor-buscador" class="input-group">
                         <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar usuarios">
+                            <input id ="buscador" type="text" placeholder="Buscar Eventos">
                         </div>
                         <div id="ic">
                             <i class="fas fa-search"></i>
@@ -24,21 +24,21 @@
                 </td>
                 <td>
                     <div id="btn-agregar">
-                        <a href="{{route('v_reg_usr')}}" class="btn btn-success">Añadir Usuarios</a>
+                        <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
                     </div>
                 </td>
             </tr>
         </table>    
     </center>
     <br>
-    <table id= "tabla_usuarios" class="table">
+    <table id= "tabla_eventos" class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre de Usuario</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Rol</th>
+                <th scope="col">Codigo Evento</th>
+                <th scope="col">Nombre de Evento</th>
+                <th scope="col">Fecha de Inicio</th>
+                <th scope="col">Fecha de Finalización</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
@@ -46,35 +46,16 @@
             @php
                 $i=1;
             @endphp
-            @foreach($usuarios as $u)
+            @foreach($eventos as $e)
                 <tr>
                     <th scope="row">{{$i}}</th>
-                    <td>{{$u->id}}</td>
-                    <td>{{$u->name}}</td>
-                    <td>{{$u->email}}</td>
-                    <td> 
-                        <span id="rol_{{$u->id}}"class="badge rounded-pill d-inline">
-                            {{ $u->getRoleNames()->first() }}
-                        </span>
-                    </td>
+                    <td>{{$e->codigo_evento}}</td>
+                    <td>{{$e->nombre}}</td>
+                    <td>{{$e->fecha_inicio}}</td>
+                    <td>{{$e->fecha_fin}}</td>
                     <td>
-                        
-                        <a href="{{route('edit_usr', $u->id)}}" class="btn btn-primary">Editar</a>
-
-                        @if($u->id !== $user->id)
-                            <a href="{{route('delete_usr', $u->id)}}" class="btn btn-danger">Eliminar</a>
-                        @endif
-
-                        @if($u->id !== $user->id)
-                            <a href="{{route('perfiles', $u->id)}}" class="btn btn-info">Perfil</a>
-                        @else
-                            <a href="{{route('perfil')}}" class="btn btn-info">Perfil</a>
-                        @endif
-
-                        @if($u->getRoleNames()->first() == 'semillerista')
-                            <a href="{{route('act_info_acad_sem', $u->id)}}" class="btn btn-dark">Inf. Acad</a>
-                        @endif
-                        
+                        <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
+                        <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
                 @php
@@ -83,22 +64,6 @@
             @endforeach
         </tbody>
     </table>
-
-    @if (session('registroExitoso'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡La actualización se ha realizado exitosamente!","Actualizacion Exitosa", true);
-            });
-        </script>
-    @endif
-
-    @if (session('noSuicidio'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡No puede eliminarse a si mismo!","Accion Rechazada", false);
-            });
-        </script>
-    @endif
 
     @if (session('preguntarEliminar'))
     <script>
@@ -109,10 +74,10 @@
     </script>
     @endif
 
-    @if (session('usuarioEliminado'))
+    @if (session('eventoEliminado'))
         <script>
             document.addEventListener('DOMContentLoaded', function() { 
-                mostrarAlertaRegistroExitoso("¡Usuario: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
+                mostrarAlertaRegistroExitoso("¡Evento: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
             });
         </script>
     @endif
@@ -150,16 +115,16 @@
                 <div class="modal-body">
                     <p id="usuarioEliminarNombre"></p>
                     <p id="usuarioEliminarCorreo"></p>
-                    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+                    <p>¿Estás seguro de que deseas eliminar este evento?</p>
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarUsuario()">Cancelar</button>
-                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarUsuario()">Eliminar</button>
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarEvento()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarEvento()">Eliminar</button>
                 </div>
             </div>
         </div>
     </div>
-    
+
 @stop
 
 @section('css')
@@ -170,8 +135,8 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--CSS propio-->
-    <link rel="stylesheet" href="{{asset('css/segundo/listarusuarios.css')}}">
-    <link rel="stylesheet" href="{{asset('css/segundo/reg_suarios.css')}}">
+    <link rel="stylesheet" href="{{asset('css/segundo/listarSemilleros.css')}}">
+    
 @endsection
 
 @section('js')
@@ -180,6 +145,6 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!--Js Propio-->
-    <script src="{{ asset('js/segundo/listarusuarios.js') }}"></script>
-    <script src="{{ asset('js/segundo/reg_suarios.js') }}"></script>
+    <script src="{{ asset('js/david/listarEventos.js') }}"></script>
+    <script src="{{ asset('js/david/alerta_exito.js') }}"></script>
 @stop

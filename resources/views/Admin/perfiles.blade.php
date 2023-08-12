@@ -16,11 +16,11 @@
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
+    <p> Perfil de {{$usr_edit->name }}</p>
     <br>
 
     <div id="contenedor-perfil">
-        <form action="{{ route('actualizar_perfil') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('actualizar_perfiles', $usr_edit->id)}}" method= "POST" enctype="multipart/form-data">
           @csrf
             <div class="row">
               <div class="col">
@@ -54,7 +54,7 @@
                   <input  type="text" id="nombre" name="nombre" class="form-control" value="{{ isset($persona) ? $persona->nombre : old('nombre') }}" />
                   <label class="form-label" for="nombre">Nombre y Apellidos Completos</label>
                 </div>
-              </div>             
+              </div>
             </div>
             <br>
             <div class="row">
@@ -64,7 +64,7 @@
                 @enderror
                 <label class="form-label" for="foto"> Cargar Foto</label>
                 <input class="form-control form-control-lg" id="foto" name="foto" type="file" accept="image/*" placeholder="Cargar foto" />
-              </div> 
+              </div>
             </div>
             <br>
             <hr />
@@ -74,7 +74,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
                 <div class="form-outline">
-                  <input type="email" id="correo" class="form-control disabled" disabled value="{{ $user->email }}"/>
+                  <input type="email" id="correo" class="form-control disabled" disabled value="{{ $usr_edit->email }}"/>
                   <label class="form-label" for="correo">Correo</label>
                 </div>
               </div>
@@ -133,24 +133,30 @@
             <button type="submit" class="btn btn-success btn-block mb-4">Actualizar Información</button>
         </form>
     </div>
-    <br><br>
-
-
-    @if (session('actualizarProfa'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                porfavorActualizar();
-            });
-        </script>
-    @endif
-
+<br><br>
     @if (session('actualizacionExitosa'))
       <script>
           document.addEventListener('DOMContentLoaded', function() {
-              actualizacionExitosa();
+              actualizacionExitosa({{$usr_edit->id}});
           });
       </script>
     @endif
+
+    @if (session('usuarioSinPersona'))
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              usuarioSinPersona({{$usr_edit->id}});
+          });
+      </script>
+    @endif
+
+    @if (session('noCoorSinDatos'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            noCoorSinDatos({{$usr_edit->id}});
+        });
+    </script>
+  @endif
 
     <!-- Modal -->
     <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
@@ -197,5 +203,5 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!--Js Propio-->
     <script src="{{ asset('js/segundo/campos-especiales.js') }}"></script>
-    <script src="{{ asset('js/segundo/perfil.js') }}"></script>
+    <script src="{{ asset('js/segundo/perfiles.js') }}"></script>
 @stop

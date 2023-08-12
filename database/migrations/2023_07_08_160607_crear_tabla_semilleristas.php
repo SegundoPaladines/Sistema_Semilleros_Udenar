@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('semilleristas', function (Blueprint $table) {
             $table->unsignedBigInteger('num_identificacion');
-            $table->string('semillero',10);
+            $table->string('semillero',10)->nullable();
             $table->unsignedBigInteger('cod_estudiante');
             $table->unsignedTinyInteger('semestre');
             $table->string('reporte_matricula');
-            $table->date('fecha_vinculacion');
-            $table->enum('estado',[0,1]); //0 incativo | 1 activo 
+            $table->date('fecha_vinculacion')->nullable();
+            $table->enum('estado',[0,1])->default(0); //0 incativo | 1 activo 
 
             $table->primary('num_identificacion');
             $table->foreign('num_identificacion')->references('num_identificacion')->on('personas')->onDelete('cascade');//si la persona elimina, se elimina al semillerista

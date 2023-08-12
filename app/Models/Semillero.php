@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Semillero extends Model
 {
+    protected $table = 'semilleros';
+    protected $primaryKey = 'id_semillero';
+    public $timestamps = true;
+
     //el semilerro tiene varios semilleristas
     public function semilleristas(){
         return $this->hasMany(Semillerista::class);
