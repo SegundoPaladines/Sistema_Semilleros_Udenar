@@ -1035,7 +1035,7 @@ class AdminController extends Controller
         $nuevo_proyecto->arc_adjunto = $request->input('arc_adjunto');
         $nuevo_proyecto->save();
         
-        return redirect()->route('vista_agr_proy')->with('registroExitoso', true);
+        return redirect()->route('vista_agr_proy_dir')->with('registroExitoso', true);
     }
 
     public function vistaEditProyectos($id){
@@ -1068,7 +1068,7 @@ class AdminController extends Controller
         $proyecto_id->arc_adjunto = $r->input('arc_adjunto');
         $proyecto_id->save();
 
-        return redirect()->route('proyectos')->with('registroExitoso', true);
+        return redirect()->route('proyectos_dir')->with('registroExitoso', true);
     }
 
     public function eliminarProyecto($id){
@@ -1080,7 +1080,7 @@ class AdminController extends Controller
         return redirect()->route('proyectos_dir', ['elimina' => $id])->with('preguntarEliminar', true);
     }
 
-    public function confirmacionEliminacionProyecto($id){
+    public function confirmacionEliminacionProyecto_dir($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();

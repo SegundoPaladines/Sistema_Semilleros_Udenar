@@ -11,7 +11,7 @@
     <br>
     <center>
         <div id="contenedor-form">
-            <form method="POST" action="" action="{{ route('agregar_proyecto') }}">
+            <form method="POST" action="" action="{{ route('agregar_proyecto_dir') }}">
                 @csrf
                 <div class="row">
                     <div class="col">
