@@ -11,7 +11,7 @@
     <br>
     <center>
         <div id="contenedor-form">
-            <form method="POST" action="" action="{{ route('editar_proyecto','id_proyecto') }}">
+            <form method="POST" action="" action="{{ route('editar_proyecto_dir','id_proyecto') }}">
                 @csrf
                 <div class="row">
                     <div class="col">
