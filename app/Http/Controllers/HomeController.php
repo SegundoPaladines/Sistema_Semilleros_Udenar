@@ -182,14 +182,13 @@ class HomeController extends Controller
             $persona = DB::table('personas')->where('usuario', $user->id)->first();
             $coordinador = Coordinador::findOrFail($persona->num_identificacion);
             $semillero = Semillero::findOrFail($coordinador->semillero);
-            return view('semillero', compact('semillero', 'user'));
+            return view('semillero', compact('semillero', 'user', 'coordinador'));
         } elseif ($rol->name === 'semillerista') {
             // Lógica para semilleristas
             $persona = DB::table('personas')->where('usuario', $user->id)->first();
             $semillerista = Semillerista::findOrFail($persona->num_identificacion);
             $semillero = Semillero::findOrFail($semillerista->semillero);
-            return view('semillero', compact('semillero', 'user'));
+            return view('semillero', compact('semillero', 'user', 'coordinador'));
         }
-        
     }
 }
