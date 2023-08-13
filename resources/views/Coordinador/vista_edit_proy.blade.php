@@ -20,7 +20,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="id_proyecto" name="id_proyecto" class="form-control" value="{{$proyecto_id->id_proyecto }}" />
+                                <input type="text" id="id_proyecto" name="id_proyecto" class="form-control" value="{{$proyecto_id->id_proyecto }}" readonly/>
                                 <label class="form-label" for="id_proyecto">Id del proyecto</label>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="mb-4 form-outline">
-                                <input type="text" id="semillero" name="semillero" class="form-control" value="{{$proyecto_id->semillero }}" />
+                                <input type="text" id="semillero" name="semillero" class="form-control" value="{{$proyecto_id->semillero }}" readonly/>
                                 <label class="form-label" for="semillero">Semillero</label>
                             </div>
                         </div>
