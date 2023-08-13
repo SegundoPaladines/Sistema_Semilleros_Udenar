@@ -3,74 +3,119 @@
 @section('title', 'Participantes')
 
 @section('content_header')
-    <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
+
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+            <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
+        </figure>
+    </div>
+</div>
+
+
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+<div class="container">
+
     <center>
-        <table id="buscador-agregar">
-            <tr>
-                <td>
-                    <div id="contenedor-buscador" class="input-group">
-                        <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
-                        </div>
-                        <div id="ic">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div id="btn-agregar">
-                        <a href="{{route('add_par_sem', $id)}}" class="btn btn-success">Añadir Participantes</a>
-                    </div>
-                </td>
-            </tr>
-        </table>
+
+        <br>
+        <ul class="list-unstyled">
+            <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+        </ul>  
+        <br>
+
+        <!-- Buscador y botón Añadir usuario  -->
+        <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+            <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
+                <div class="col-md-" id="inp">
+                    <input id="buscador" type="text" placeholder="Buscar Semilleristas" style="width: 100%;">
+                </div>
+                <div id="ic">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <div class="col-md-3" id="btn-agregar">
+                <a href="{{route('add_par_sem', $id)}}" class="btn btn-success">Añadir Participantes</a>
+            </div>
+        </div>
+        <br>
+
     </center>
+
     <br>
-    <table id="tabla_usuarios" class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Numero De Identificación</th>
-                <th scope="col">Codigo Estudiante</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Semestre</th>
-                <th scope="col">Fecha Vinculación</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-            $i=1;
-            @endphp
-            @foreach($participantes as $p)
-            <tr>
-                <th scope="row">{{$i}}</th>
-                <td>{{$p->num_identificacion}}</td>
-                <td>{{$p->cod_estudiante}}</td>
-                <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($p->num_identificacion)}}</td>
-                <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
-                <td>{{$p->semestre}}</td>
-                <td>{{$p->fecha_vinculacion}}</td>
-                <td>{{$p->estado}}</td>
-                <td>
-                    <a href="{{route('desvincular_sem_sem', $p->num_identificacion)}}" class="btn btn-danger">Desvincular</a>
-                    <a href="{{route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-info">Perfil</a>
-                    <a href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-primary">Inf. Acad</a>
-                </td>
-            </tr>
-            @php
-            $i++;
-            @endphp
-            @endforeach
-        </tbody>
-    </table>
+    <div class="tabla-container" style= "overflow-x: auto;">
+
+        <table id="tabla_usuarios" class="table">
+            <thead class="table-info">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Numero De Identificación</th>
+                    <th scope="col">Codigo Estudiante</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Semestre</th>
+                    <th scope="col">Fecha Vinculación</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                $i=1;
+                @endphp
+                @foreach($participantes as $p)
+                <tr>
+                    <th scope="row">{{$i}}</th>
+                    <td>{{$p->num_identificacion}}</td>
+                    <td>{{$p->cod_estudiante}}</td>
+                    <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($p->num_identificacion)}}</td>
+                    <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
+                    <td>{{$p->semestre}}</td>
+                    <td>{{$p->fecha_vinculacion}}</td>
+                    <td>{{$p->estado}}</td>
+                    <td>
+                        <center>
+                        <a style="margin: 3px;" href="{{route('desvincular_sem_sem', $p->num_identificacion)}}" class="btn btn-danger btn-sm">Desvincular</a>
+                        <a style="margin: 3px;" href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-primary btn-sm">Inf. Acad</a>
+                        <a style="margin: 3px;" href="{{route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-info btn-sm">Perfil</a>
+                        </center>
+                    </td>
+                </tr>
+                @php
+                $i++;
+                @endphp
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+
+        //buscador
+        document.addEventListener("DOMContentLoaded", function() {
+            var filtroBusqueda = document.getElementById("buscador");
+
+            filtroBusqueda.addEventListener("keyup", function() {
+                var valorBusqueda = filtroBusqueda.value.toLowerCase();
+                var filas = document.querySelectorAll("#tabla_usuarios tbody tr");
+
+                filas.forEach(function(fila) {
+                    var contenidoFila = fila.textContent.toLowerCase();
+                    if (contenidoFila.indexOf(valorBusqueda) !== -1) {
+                        fila.style.display = "table-row";
+                    } else {
+                        fila.style.display = "none";
+                    }
+                });
+            });
+        });
+
+    </script>
+
+</div>
 
     @if (session('desvinculacionExitosa'))
         <script>
@@ -102,6 +147,7 @@
             </div>
         </div>
     </div>
+
     <!-- Modal de Confirmación de Eliminación -->
     <div class="modal fade" id="delete_ext_emergente" tabindex="-1" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -122,7 +168,7 @@
             </div>
         </div>
     </div>
-    
+
 @stop
 
 @section('css')

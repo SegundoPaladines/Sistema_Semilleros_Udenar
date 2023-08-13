@@ -43,47 +43,48 @@
             </table>
             </center>
         </div>
+
         <br>
-    
-        <table id="tabla_usuarios" class="table">
-            <thead class="table-info">
-                <tr>
-                    <th scope="col"> </th>
-                    <th scope="col">Numero De Identificación</th>
-                    <th scope="col">Codigo Estudiante</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Semestre</th>
-                    <th scope="col">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $i = 1;
-                @endphp
-                @foreach($semilleristas_libres as $s)
+        <div class="tabla-container" style= "overflow-x: auto;">
+            <table id="tabla_usuarios" class="table">
+                <thead class="table-info">
                     <tr>
-                        <th scope="row">{{ $i }}</th>
-                        <td class="centered-cell">{{ $s->num_identificacion }}</td>
-                        <td class="centered-cell">{{ $s->cod_estudiante }}</td>
-                        <td class="centered-cell">{{ app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($s->num_identificacion) }}</td>
-                        <td class="centered-cell">{{ app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($s->num_identificacion) }}</td>
-                        <td class="centered-cell">{{ $s->semestre }}</td>
-                        <td class="centered-cell">
-                            <center>
-                            <a style="margin: 3px;" href="{{ route('vincular_sem_sem', ['num_identificacion' => $s->num_identificacion, 'id' => $id]) }}" class="btn btn-success btn-sm">Vincular</a>
-                            <a style="margin: 3px;" href="{{ route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion)) }}" class="btn btn-info btn-sm">Perfil</a>
-                            <a style="margin: 3px;" href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion))}}" class="btn btn-primary btn-sm">Inf. Acad</a>
-                            </center>
-                        </td>
+                        <th scope="col"> </th>
+                        <th scope="col">Numero De Identificación</th>
+                        <th scope="col">Codigo Estudiante</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Semestre</th>
+                        <th scope="col">Opciones</th>
                     </tr>
+                </thead>
+                <tbody>
                     @php
-                        $i++;
+                        $i = 1;
                     @endphp
-                @endforeach
-            </tbody>
-        </table>
-        </center>
+                    @foreach($semilleristas_libres as $s)
+                        <tr>
+                            <th scope="row">{{ $i }}</th>
+                            <td class="centered-cell">{{ $s->num_identificacion }}</td>
+                            <td class="centered-cell">{{ $s->cod_estudiante }}</td>
+                            <td class="centered-cell">{{ app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($s->num_identificacion) }}</td>
+                            <td class="centered-cell">{{ app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($s->num_identificacion) }}</td>
+                            <td class="centered-cell">{{ $s->semestre }}</td>
+                            <td class="centered-cell">
+                                <center>
+                                <a style="margin: 3px;" href="{{ route('vincular_sem_sem', ['num_identificacion' => $s->num_identificacion, 'id' => $id]) }}" class="btn btn-success btn-sm">Vincular</a>
+                                <a style="margin: 3px;" href="{{ route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion)) }}" class="btn btn-info btn-sm">Perfil</a>
+                                <a style="margin: 3px;" href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion))}}" class="btn btn-primary btn-sm">Inf. Acad</a>
+                                </center>
+                            </td>
+                        </tr>
+                        @php
+                            $i++;
+                        @endphp
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         
         <script>
             //buscador
@@ -109,6 +110,7 @@
     </center>
 
 </div>
+
     @if (session('vinculacionExitosa'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
