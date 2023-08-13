@@ -59,7 +59,7 @@
                     <td>
                         <a href="{{route('vincular_sem_proyecto', ['id_proyecto' => $p->id_proyecto, 'num_identificacion' => $num_identificacion])}}" class="btn btn-primary">Vincular</a>
                         @if($p->id !== $user->id)
-                            <a href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger">Desvincular</a>
+                        <a href="{{route('desvincular_sem_proy', ['num_identificacion' => $num_identificacion])}}" class="btn btn-danger">Desvincular</>
                         @endif
                     </td>
                 </tr>
@@ -73,7 +73,23 @@
     @if (session('vinculacionExitosa'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡Se ha vinculado el semillerita al semillero de forma correcta!","Vinculacion Exitosa", true);
+                mostrarAlertaRegistroExitoso("¡Se ha vinculado el semillerista al proyecto de forma correcta!","Vinculacion Exitosa", true);
+            });
+        </script>
+    @endif
+
+    @if (session('vinculacionDenegada'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("No se pudo vincular al semillerista porque ya está vinculado al proyecto.","Vinculación Denegada", false);
+            });
+        </script>
+    @endif
+
+    @if (session('desvinculacionExitosa'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("El semillerista ha sido desvinculado del proyecto.","Vinculación Denegada", true);
             });
         </script>
     @endif

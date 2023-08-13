@@ -214,9 +214,8 @@ class CoordinadorController extends Controller
         $persona = DB::table('personas')->where('usuario', $user->id)->first();
         $coordinador = Coordinador::findOrFail($persona->num_identificacion);
         $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
-        // return redirect()->route('add_sem_proyecto', $num_identificacion)->with('vinculacionExitosa', true);
         
-        return view('Coordinador.vista_vincular_proyecto2', compact('user','coordinador','proyectos','num_identificacion'));
+        return view('Coordinador.vista_vincular_proyecto', compact('user','coordinador','proyectos','num_identificacion'));
     }
 
     public function vincularSemProyecto($num_identificacion, $id_proyecto) {
@@ -224,24 +223,43 @@ class CoordinadorController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador.proyectos', $rol, new Integrante_Proy());
-    
+        
         // Verificar si ya existe una vinculación
         $vinculacionExistente = Integrante_Proy::where('proyecto', $id_proyecto)
-            ->where('semillerista', $num_identificacion)->exists();
-    
+        ->where('semillerista', $num_identificacion)->exists();
+        
         if ($vinculacionExistente) {
             // Redirigir con mensaje de "vinculación denegada"
             return redirect()->route('add_sem_proyecto', $num_identificacion)->with('vinculacionDenegada', true);
         }
-    
+        
         // Si no existe la vinculación, proceder a vincular
         $nuevo_proyecto_vinculado = new Integrante_Proy();
         $nuevo_proyecto_vinculado->proyecto = $id_proyecto;
         $nuevo_proyecto_vinculado->semillerista = $num_identificacion;
         $nuevo_proyecto_vinculado->campo = "Campo";
         $nuevo_proyecto_vinculado->save();
+        
+        // return redirect()->route('add_sem_proyecto', $num_identificacion)->with('vinculacionExitosa', true);
+        return redirect()->back()->with('vinculacionExitosa', true);
+    }
     
-        return redirect()->route('add_sem_proyecto', $num_identificacion)->with('vinculacionExitosa', true);
+    public function desvincularProyecto($num_identificacion){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol, new Integrante_Proy());
+        
+        // Obtener la instancia del modelo Integrante_Proy
+        $nuevo_proyecto_vinculado = Integrante_Proy::where('semillerista', $num_identificacion)->first();
+
+        if ($nuevo_proyecto_vinculado) {
+            // Eliminar la fila completa
+            $nuevo_proyecto_vinculado->delete();
+        }
+        // return redirect()->route('add_sem_proyecto', $num_identificacion)->with('vinculacionExitosa', true);
+
+        return redirect()->back()->with('desvinculacionExitosa', true);
     }
 
     public function vistaAgrProyectos(){

@@ -27,4 +27,6 @@ Route::get('/eliminar_proyecto/{id}', [CoordinadorController::class, 'confirmaci
 Route::get('vista/vincular_proyecto/{num_identificacion}', [CoordinadorController::class, 'vistaVincularProyecto'])->name('vista_proyectos_vincular');
 Route::get('vista/add_semillerista_proyecto/{num_identificacion}', [CoordinadorController::class, 'addSemProyecto'])->name('add_sem_proyecto');
 Route::get('vista/vincular_sem_proy/{num_identificacion}/{id_proyecto}', [CoordinadorController::class, 'vincularSemProyecto'])->name('vincular_sem_proyecto');
-// Route::post('vista/vincular_proyecto/{id}/{id2}', [CoordinadorController::class, 'vincularProyecto'])->name('proyectos_vincular');
+
+//Desvincular Semillerista Proyecto
+Route::get('/desvincular_sem_proy/{num_identificacion}', [CoordinadorController::class, 'desvincularProyecto'])->name('desvincular_sem_proy');
