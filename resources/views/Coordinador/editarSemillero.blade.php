@@ -11,7 +11,7 @@
     <br>
     <center>
         <div id="contenedor-form">
-            <form method="POST" action="{{ route('actualizar_semilleroC', $id_semillero) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('actualizar_semillero_cor', $id_semillero) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col">

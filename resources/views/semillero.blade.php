@@ -32,7 +32,7 @@
                 <div class="row">
                     <center>
                         <div class="col">
-                            <a  href="{{route('vista_editar_semillero', $coordinador->semillero)}}" class="btn btn-primary">Editar</a>
+                            <a  href="{{route('vista_editar_semillero_cor', $coordinador->semillero)}}" class="btn btn-primary">Editar</a>
                         </div>
                     </center>
                 </div>

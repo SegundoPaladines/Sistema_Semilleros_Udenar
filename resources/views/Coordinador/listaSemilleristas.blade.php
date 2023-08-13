@@ -60,7 +60,8 @@
                 <td>{{$p->fecha_vinculacion}}</td>
                 <td>{{$p->estado}}</td>
                 <td>
-                    <a href="{{route('desvincular_sem_sem', $p->num_identificacion)}}" class="btn btn-danger">Desvincular</a>
+                    <a href="{{route('desvincular_sem_sem_cor', $p->num_identificacion)}}" class="btn btn-danger">Desvincular</a>
+                    <a href="{{route('vista_proyectos_vincular', $p->num_identificacion)}}" class="btn btn-primary">Vincular a Proyecto</a>
                 </td>
             </tr>
             @php

@@ -81,9 +81,10 @@ class SemilleristaController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('semillerista.proyectos', $rol, new Proyecto());
-    
-        $proyectos = Proyecto::all();
-    
+        $persona = DB::table('personas')->where('usuario', $user->id)->first();
+        $semillerista = Semillerista::findOrFail($persona->num_identificacion);
+        $proyectos = Proyecto::where('semillero',$semillerista->semillero)->get();
+            
         return view('proyectos', compact('proyectos', 'user'));
     }
 
