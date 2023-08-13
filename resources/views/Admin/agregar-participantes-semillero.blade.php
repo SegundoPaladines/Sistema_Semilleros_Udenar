@@ -3,66 +3,112 @@
 @section('title', 'Participantes')
 
 @section('content_header')
-    <h1>Agregar Participantes al Semillero {{$semillero->nombre}}</h1>
+
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+            <h1>Agregar Participantes al Semillero {{$semillero->nombre}}</h1>
+        </figure>
+    </div>
+</div>
+
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+<div class="container">
+
     <center>
-        <table id="buscador-agregar">
-            <tr>
-                <td>
-                    <div id="contenedor-buscador" class="input-group">
-                        <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
-                        </div>
-                        <div id="ic">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </center>
-    <br>
-    <table id="tabla_usuarios" class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Numero De Identificación</th>
-                <th scope="col">Codigo Estudiante</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Semestre</th>
-                <th scope="col">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $i = 1;
-            @endphp
-            @foreach($semilleristas_libres as $s)
+
+        <br>
+        <ul class="list-unstyled">
+        <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+        </ul> 
+        <br>
+
+        <div id="contenedor-form">
+            <center>
+            <table id="buscador-agregar">
                 <tr>
-                    <th scope="row">{{ $i }}</th>
-                    <td>{{ $s->num_identificacion }}</td>
-                    <td>{{ $s->cod_estudiante }}</td>
-                    <td>{{ app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($s->num_identificacion) }}</td>
-                    <td>{{ app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($s->num_identificacion) }}</td>
-                    <td>{{ $s->semestre }}</td>
                     <td>
-                        <a href="{{ route('vincular_sem_sem', ['num_identificacion' => $s->num_identificacion, 'id' => $id]) }}" class="btn btn-success">Vincular</a>
-                        <a href="{{ route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion)) }}" class="btn btn-info">Perfil</a>
-                        <a href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion))}}" class="btn btn-primary">Inf. Acad</a>
+                        <div id="contenedor-buscador" class="input-group">
+                            <div id="inp">
+                                <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
+                            </div>
+                            <div id="ic">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
                     </td>
                 </tr>
+            </table>
+            </center>
+        </div>
+        <br>
+    
+        <table id="tabla_usuarios" class="table">
+            <thead class="table-info">
+                <tr>
+                    <th scope="col"> </th>
+                    <th scope="col">Numero De Identificación</th>
+                    <th scope="col">Codigo Estudiante</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Semestre</th>
+                    <th scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
                 @php
-                    $i++;
+                    $i = 1;
                 @endphp
-            @endforeach
-        </tbody>
-    </table>
+                @foreach($semilleristas_libres as $s)
+                    <tr>
+                        <th scope="row">{{ $i }}</th>
+                        <td class="centered-cell">{{ $s->num_identificacion }}</td>
+                        <td class="centered-cell">{{ $s->cod_estudiante }}</td>
+                        <td class="centered-cell">{{ app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($s->num_identificacion) }}</td>
+                        <td class="centered-cell">{{ app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($s->num_identificacion) }}</td>
+                        <td class="centered-cell">{{ $s->semestre }}</td>
+                        <td class="centered-cell">
+                            <center>
+                            <a style="margin: 3px;" href="{{ route('vincular_sem_sem', ['num_identificacion' => $s->num_identificacion, 'id' => $id]) }}" class="btn btn-success btn-sm">Vincular</a>
+                            <a style="margin: 3px;" href="{{ route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion)) }}" class="btn btn-info btn-sm">Perfil</a>
+                            <a style="margin: 3px;" href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($s->num_identificacion))}}" class="btn btn-primary btn-sm">Inf. Acad</a>
+                            </center>
+                        </td>
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
+        </center>
+        
+        <script>
+            //buscador
+            document.addEventListener("DOMContentLoaded", function() {
+                var filtroBusqueda = document.getElementById("buscador");
 
+                filtroBusqueda.addEventListener("keyup", function() {
+                    var valorBusqueda = filtroBusqueda.value.toLowerCase();
+                    var filas = document.querySelectorAll("#tabla_usuarios tbody tr");
+
+                    filas.forEach(function(fila) {
+                        var contenidoFila = fila.textContent.toLowerCase();
+                        if (contenidoFila.indexOf(valorBusqueda) !== -1) {
+                            fila.style.display = "table-row";
+                        } else {
+                            fila.style.display = "none";
+                        }
+                    });
+                });
+            });
+        </script>
+
+    </center>
+
+</div>
     @if (session('vinculacionExitosa'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
