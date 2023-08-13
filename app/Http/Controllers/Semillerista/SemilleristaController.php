@@ -14,6 +14,7 @@ use App\Models\Semillerista;
 use App\Http\Controllers\Controller;
 use App\Models\Proyecto;
 use App\Models\Rol;
+use App\Models\Integrante_Proy;
 
 class SemilleristaController extends Controller
 {
@@ -83,7 +84,15 @@ class SemilleristaController extends Controller
         $this->authorize('semillerista.proyectos', $rol, new Proyecto());
         $persona = DB::table('personas')->where('usuario', $user->id)->first();
         $semillerista = Semillerista::findOrFail($persona->num_identificacion);
-        $proyectos = Proyecto::where('semillero',$semillerista->semillero)->get();
+        $int_proyectos =  DB::table('integrantes_proy')->where('semillerista', $persona->num_identificacion)->get(); 
+        $proyectos = collect(); // Inicializar una colección vacía
+    
+        foreach ($int_proyectos as $int_proyecto) {
+            $proyecto = Proyecto::find($int_proyecto->proyecto); // Buscar cada proyecto
+            if ($proyecto) {
+                $proyectos->push($proyecto); // Agregar proyecto a la colección
+            }
+        }
             
         return view('proyectos', compact('proyectos', 'user'));
     }
