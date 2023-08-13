@@ -3,200 +3,209 @@
 @section('title', 'Actualizar Semillero')
 
 @section('content_header')
-    <h1>Actualizar Semillero</h1>
+
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+            <h1>Actualizar Semillero</h1>
+        </figure>
+    </div>
+</div>
+
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+<div class="container">
+
     <center>
-        <div id="contenedor-form">
-            <form method="POST" action="{{ route('actualizar_semillero_cor', $id_semillero) }}" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-                    <div class="col">
-                        <div>
-                            @error('id_semillero')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="text" id="id_semillero" name="id_semillero" class="form-control" value="{{ $id_semillero }}" />
-                                <label class="form-label" for="id_semillero">Id del Semillero</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div>
-                            @error('nombre')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ $semillero->nombre }}" />
-                                <label class="form-label" for="nombre">Nombre del Semillero</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        @error('sede')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <select id="sede" name="sede" class="form-select">
-                            <option value="">Sede</option>
-                            <option value="1" {{  $semillero->sede == "Pasto" ? 'selected' : '' }}>Pasto</option>
-                            <option value="2" {{  $semillero->sede == "Ipiales" ? 'selected' : '' }}>Ipiales</option>
-                            <option value="3" {{  $semillero->sede == "Túqueres" ? 'selected' : '' }}>Túquerres</option>
-                            <option value="4" {{  $semillero->sede == "Tumaco" ? 'selected' : '' }}>Tumaco</option>
-                        </select>
-                    </div>
+        
+    <br>
+    <ul class="list-unstyled">
+    <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+    </ul>  
+    <br>
+
+    <div id="contenedor-form">
+
+        <form class="row g-3 needs-validation" novalidate method="POST" action="{{ route('actualizar_semillero_cor', $id_semillero) }}" enctype="multipart/form-data">
+            @csrf
+
+            <!-- Id del Semillero -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <input type="text" id="id_semillero" name="id_semillero" class="form-control is-valid disabled"  value="{{ $id_semillero }}" />
+                    <label class="form-label" for="id_semillero">Id del Semillero</label>
                 </div>
-                <div class="row">
-                    <div class="col">
-                      @error('logo')
+                    @error('id_semillero')
                         <span class="text-danger">{{ $message }}</span>
-                      @enderror
-                      <label class="form-label" for="logo"> Cargar Logo</label>
-                      <input class="form-control form-control-lg" id="logo" name="logo" type="file" accept="image/*" placeholder="Cargar foto" />
-                    </div>
+                    @enderror
+            </div>
 
-                    <div class="col">
-                        @error('resolucion')
-                          <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <label class="form-label" for="resolucion"> Cargar Resolución</label>
-                        <input class="form-control form-control-lg" id="resolucion" name="resolucion" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx" placeholder="Cargar Resolucion" />
-                    </div>
+            <!-- Nombre del Semillero -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <input type="text" id="nombre" name="nombre" class="form-control is-valid" value="{{ $semillero->nombre }}" />
+                    <label class="form-label" for="nombre">Nombre del Semillero</label>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col">
-                        <div>
-                            @error('correo')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="text" id="correo" name="correo" class="form-control" value="{{ $semillero->correo }}" />
-                                <label class="form-label" for="correo">Correo</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div>
-                            @error('num_res')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="text" id="num_res" name="num_res" class="form-control" value="{{ $semillero->num_res }}" />
-                                <label class="form-label" for="num_res">Numero de Resolución</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div>
-                            @error('fecha_creacion')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <input class="form-control" type="text" id="fecha_creacion" name="fecha_creacion" value="{{ $semillero->fecha_creacion }}" placeholder="Fecha de Creacion">
-                                <label class="form-label" for="fecha_creacion">Fecha de Creacion</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div>
-                            @error('descripcion')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ $semillero->descripcion }}</textarea>
-                                <label class="form-label" for="descripcion">Descripción</label>
-                              </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div>
-                            @error('mision')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <textarea class="form-control" id="mision" name="mision" rows="3">{{ $semillero->mision }}</textarea>
-                                <label class="form-label" for="mision">Mision</label>
-                              </div>
-                        </div>
-                    </div>
+                @error('nombre')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
-                    <div class="col">
-                        <div>
-                            @error('vision')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <textarea class="form-control" id="vision" name="vision" rows="3">{{$semillero->vision }}</textarea>
-                                <label class="form-label" for="vision">Vision</label>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col">
-                        <div>
-                            @error('presentacion')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <textarea class="form-control" id="presentacion" name="presentacion" rows="3">{{ $semillero->presentacion }}</textarea>
-                                <label class="form-label" for="presentacion">Presentación</label>
-                              </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div>
-                            @error('objetivos')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <textarea class="form-control" id="objetivos" name="objetivos" rows="3">{{ $semillero->objetivos }}</textarea>
-                                <label class="form-label" for="objetivos">Objetivos</label>
-                              </div>
-                        </div>
-                    </div>
+            <!-- Opciones Sede -->
+            <div class="col-md-4">
+                <select id="sede" name="sede" class="form-select is-valid">
+                    <option value="">Sede</option>
+                    <option value="1" {{  $semillero->sede == "Pasto" ? 'selected' : '' }}>Pasto</option>
+                    <option value="2" {{  $semillero->sede == "Ipiales" ? 'selected' : '' }}>Ipiales</option>
+                    <option value="3" {{  $semillero->sede == "Túqueres" ? 'selected' : '' }}>Túquerres</option>
+                    <option value="4" {{  $semillero->sede == "Tumaco" ? 'selected' : '' }}>Tumaco</option>
+                </select>
+                @error('sede')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
-                    <div class="col">
-                        <div>
-                            @error('valores')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <textarea class="form-control" id="valores" name="valores" rows="3">{{ $semillero->valores }}</textarea>
-                                <label class="form-label" for="valores">Valores</label>
-                              </div>
-                        </div>
-                    </div>
+            <!-- Cargar Logo -->
+            <div class="col-md-6">
+                <label class="form-label" for="logo" id="lb">Cargar Logo</label>
+                <div class="form-outline">
+                    <input class="form-control is-valid" id="logo" name="logo" type="file" accept="image/*" placeholder="Cargar foto" />
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col">
-                        <div>
-                            @error('lineas_inv')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <textarea class="form-control" id="lineas_inv" name="lineas_inv" rows="3">{{ $semillero->lineas_inv }}</textarea>
-                                <label class="form-label" for="lineas_inv">Lineas de Investigación</label>
-                              </div>
-                        </div>
-                    </div>
+                @error('logo')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Cargar Resolución-->
+            <div class="col-md-6">
+                <label class="form-label" for="resolucion" id="lb"> Cargar Resolución</label>
+                <div class="form-outline">
+                    <input class="form-control is-valid" id="resolucion" name="resolucion" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx" placeholder="Cargar Resolucion" />
                 </div>
-                <br>
-                <!-- Boton Enviar -->
-                <button type="submit" class="mb-3 btn btn-success btn-block">Actualizar Semillero</button>
-            </form>
-        </div>
+                @error('resolucion')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Correo -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <input type="text" id="correo" name="correo" class="form-control is-valid" value="{{ $semillero->correo }}" />
+                    <label class="form-label" for="correo">Correo</label>
+                </div>
+                @error('correo')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Número de resolución -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <input type="text" id="num_res" name="num_res" class="form-control is-valid" value="{{ $semillero->num_res }}" />
+                    <label class="form-label" for="num_res">Numero de Resolución</label>
+                </div>
+                @error('num_res')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Fecha de Creación -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <input class="form-control is-valid" type="text" id="fecha_creacion" name="fecha_creacion" value="{{ $semillero->fecha_creacion }}" placeholder="Fecha de Creacion">
+                    <label class="form-label" for="fecha_creacion">Fecha de Creación</label>
+                </div>
+                @error('fecha_creacion')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Descripción -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <textarea class="form-control is-valid" id="descripcion" name="descripcion" rows="3">{{ $semillero->descripcion }}</textarea>
+                    <label class="form-label" for="descripcion">Descripción</label>
+                </div>
+                @error('descripcion')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Misión -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <textarea class="form-control is-valid" id="mision" name="mision" rows="3">{{ $semillero->mision }}</textarea>
+                    <label class="form-label" for="mision">Misión</label>
+                </div>
+                @error('mision')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Visión -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <textarea class="form-control is-valid" id="vision" name="vision" rows="3">{{$semillero->vision }}</textarea>
+                    <label class="form-label" for="vision">Vision</label>
+                </div>
+                @error('vision')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Presentación -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <textarea class="form-control is-valid" id="presentacion" name="presentacion" rows="3">{{ $semillero->presentacion }}</textarea>
+                    <label class="form-label" for="presentacion">Presentación</label>
+                </div>
+                @error('presentacion')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Objetivos -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <textarea class="form-control is-valid" id="objetivos" name="objetivos" rows="3">{{ $semillero->objetivos }}</textarea>
+                    <label class="form-label" for="objetivos">Objetivos</label>
+                </div>
+                @error('objetivos')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Valores -->
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <textarea class="form-control is-valid" id="valores" name="valores" rows="3">{{ $semillero->valores }}</textarea>
+                    <label class="form-label" for="valores">Valores</label>
+                </div>
+                @error('valores')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Lineas de Investigación -->
+            <div class="col-md-12">
+                <div class="form-outline">
+                    <textarea class="form-control is-valid" id="lineas_inv" name="lineas_inv" rows="3">{{ $semillero->lineas_inv }}</textarea>
+                    <label class="form-label" for="lineas_inv">Lineas de Investigación</label>
+                </div>
+                @error('lineas_inv')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Boton Enviar -->
+            <button type="submit" class="mb-3 btn btn-success btn-block">Actualizar Semillero</button>
+        </form>
+
+    </div>
+
     </center>
+
     @if (session('registroExitoso'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -204,6 +213,7 @@
             });
         </script>
     @endif
+    
     <!-- Modal -->
     <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -227,6 +237,7 @@
         </div>
     </div>
 
+</div>
 @stop
 
 @section('css')
@@ -239,7 +250,7 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!-- CSS Propio -->
-
+    <link href="{{ asset('css/segundo/perfil.css') }}" rel="stylesheet">
 @stop
 
 @section('js')
