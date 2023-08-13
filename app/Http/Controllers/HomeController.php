@@ -15,6 +15,7 @@ use App\Models\Evento;
 use App\Models\Semillero;
 use App\Models\Coordinador;
 use App\Models\Rol;
+use App\Models\Proyecto;
 
 class HomeController extends Controller
 {
@@ -194,5 +195,34 @@ class HomeController extends Controller
             $semillero = Semillero::findOrFail($semillerista->semillero);
             return view('semillero', compact('semillero', 'user', 'semillerista'));
         }
+    }
+
+    public function vistaProyectoEventoVinculado($codigo_evento)
+    {
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $presentaciones =  DB::table('presentaciones')->where('evento', $codigo_evento)->get();
+        $proyectos = collect(); // Inicializar una colección vacía
+    
+        foreach ($presentaciones as $presentacion) {
+            $proyecto = Proyecto::find($presentacion->proyecto); // Buscar cada proyecto
+            if ($proyecto) {
+                $proyectos->push($proyecto); // Agregar proyecto a la colección
+            }
+        }
+        $estadoOptions = [
+            '1' => 'Propuesta',
+            '2' => 'En curso',
+            '3' => 'Finalizado',
+            '4' => 'Inactivo',
+        ];
+        
+        $tipoOptions = [
+            '1' => 'Investigación',
+            '2' => 'Innovación y Desarrollo',
+            '3' => 'Emprendimiento',
+        ];        
+        return view('verProyectosVinculados', compact('proyectos', 'user','estadoOptions','tipoOptions'));
     }
 }
