@@ -5,3 +5,13 @@ $(document).ready(function() {
         $("#candidato_id").val(candidatoId);
     });
 });
+
+//Función del cuscador
+$(document).ready(function() {
+    $("#buscador").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tabla_usuarios tbody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+});

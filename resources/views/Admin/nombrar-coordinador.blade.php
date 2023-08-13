@@ -3,60 +3,76 @@
 @section('title', 'Asignar Coordinador')
 
 @section('content_header')
-    <h1>Escoger coordinador para el Semillero {{$semillero->nombre}}</h1>
+
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+            <h1>Escoger coordinador para el Semillero {{$semillero->nombre}}</h1>
+        </figure>
+    </div>
+</div>
+
 @stop
 
 @section('content')
-    <br>
+<div class="container">
     <center>
-        <table id="buscador-agregar">
-            <tr>
-                <td>
-                    <div id="contenedor-buscador" class="input-group">
-                        <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
-                        </div>
-                        <div id="ic">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+        
+        <div id="contenedor-form">
+
+            <br>
+            <br>
+            <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
+                <div class="col-md-11" id="inp">
+                    <input id="buscador" type="text" placeholder="Buscar Semilleros" style="width: 100%;">
+                </div>
+                <div id="ic">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <br>
+            <br>
+            
+            <table id= "tabla_usuarios" class="table">
+                <thead class="table-info">
+                    <tr>
+                        <th scope="col"> </th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre de Usuario</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col"><center>Opciones</center></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $i=1;
+                    @endphp
+                    @foreach($candidatos as $c)
+                        <tr>
+                            <th scope="row">{{$i}}</th>
+                            <td>{{$c->id}}</td>
+                            <td>{{$c->name}}</td>
+                            <td>{{$c->email}}</td>
+                            <td>
+                                <center>
+                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nombrarCoordinadorModal" data-candidato-id="{{$c->id}}">Nombrar</button>
+                                <a href="{{ route('perfiles', $c->id) }}" class="btn btn-info">Ver Perfil</a>
+                                </center>
+                            </td>
+                        </tr>
+                        @php
+                            $i++;
+                        @endphp
+                    @endforeach
+                </tbody>
+            </table>
+
+            <br>
+        
+        </div>
+
     </center>
-    <br>
-    <table id= "tabla_usuarios" class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre de Usuario</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $i=1;
-            @endphp
-            @foreach($candidatos as $c)
-                <tr>
-                    <th scope="row">{{$i}}</th>
-                    <td>{{$c->id}}</td>
-                    <td>{{$c->name}}</td>
-                    <td>{{$c->email}}</td>
-                    <td>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nombrarCoordinadorModal" data-candidato-id="{{$c->id}}">Nombrar</button>
-                        <a href="{{ route('perfiles', $c->id) }}" class="btn btn-info">Ver Perfil</a>
-                    </td>
-                </tr>
-                @php
-                    $i++;
-                @endphp
-            @endforeach
-        </tbody>
-    </table>
-    <br>
+</div>
     <!-- Modal -->
     <div class="modal fade" id="nombrarCoordinadorModal" tabindex="-1" aria-labelledby="nombrarCoordinadorModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -86,6 +102,7 @@
             </div>
         </div>
         </div>
+
     </div>
     
 @stop
@@ -105,6 +122,7 @@
 @section('js')
     <!-- JQery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!-- Bootstrap JS -->
