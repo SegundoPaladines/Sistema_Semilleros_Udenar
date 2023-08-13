@@ -62,6 +62,7 @@
                         </div>
                     </div>
                     <hr>
+                    @can('coordinador.administracion')
                     <div class="row">
                         <center>
                             <div class="col">
@@ -70,6 +71,7 @@
                         </center>
                     </div>
                     <hr>
+                    @endcan
                     <div class="col">
 
                         <div>
