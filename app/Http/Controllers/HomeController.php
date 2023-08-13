@@ -192,7 +192,7 @@ class HomeController extends Controller
             $persona = DB::table('personas')->where('usuario', $user->id)->first();
             $semillerista = Semillerista::findOrFail($persona->num_identificacion);
             $semillero = Semillero::findOrFail($semillerista->semillero);
-            return view('semillero', compact('semillero', 'user', 'coordinador'));
+            return view('semillero', compact('semillero', 'user', 'semillerista'));
         }
     }
 }

@@ -1003,8 +1003,20 @@ class AdminController extends Controller
         $this->authorize('director', $rol, new Proyecto());
     
         $proyectos = Proyecto::all();
+        $estadoOptions = [
+            '1' => 'Propuesta',
+            '2' => 'En curso',
+            '3' => 'Finalizado',
+            '4' => 'Inactivo',
+        ];
+        
+        $tipoOptions = [
+            '1' => 'Investigación',
+            '2' => 'Innovación y Desarrollo',
+            '3' => 'Emprendimiento',
+        ];
     
-        return view('Admin.proyectos', compact('proyectos', 'user'));
+        return view('Admin.proyectos', compact('proyectos', 'user','estadoOptions','tipoOptions'));
     }
 
     public function vistaAgrProyectos(){

@@ -59,9 +59,9 @@
                         @enderror
                         <select id ="tipo_proyecto" name="tipo_proyecto" class="form-select">
                             <option selected>Tipo</option>
-                            <option value="Investigación">Investigación</option>
-                            <option value="Innovación">Innovación y Desarrollo</option>
-                            <option value="Emprendimiento">Emprendimiento</option>
+                            <option value="1">Investigación</option>
+                            <option value="2">Innovación y Desarrollo</option>
+                            <option value="3">Emprendimiento</option>
                         </select>
                     </div>
 
@@ -89,10 +89,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                </div>
-                <br>
-                <div class="row">
                     <div class="col">
                         <div>
                             @error('feacha_fin')
@@ -105,16 +101,20 @@
                         </div>
                     </div>
                     
+                </div>
+                <br>
+                <div class="row">
+                    
                     
                     <div class="col">
                         <div>
                             @error('arc_propuesta')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="file" id="arc_propuesta" name="arc_propuesta" class="form-control" />
+                            <!-- <div class="mb-4 form-outline"> -->
                                 <label class="form-label" for="arc_propuesta">Propuesta</label>
-                            </div>
+                                <input type="file" id="arc_propuesta" name="arc_propuesta" class="form-control" />
+                            <!-- </div> -->
                         </div>
                     </div>
                     <div class="col">
@@ -122,10 +122,10 @@
                             @error('arc_adjunto')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="file" id="arc_adjunto" name="arc_adjunto" class="form-control" accept=".pdf, .doc, .docx" />
+                            <!-- <div class="mb-4 form-outline"> -->
                                 <label class="form-label" for="arc_adjunto">Proyecto Final</label>
-                            </div>
+                                <input type="file" id="arc_adjunto" name="arc_adjunto" class="form-control" accept=".pdf, .doc, .docx" />
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
