@@ -244,14 +244,15 @@ class CoordinadorController extends Controller
         return redirect()->back()->with('vinculacionExitosa', true);
     }
     
-    public function desvincularProyecto($num_identificacion){
+    public function desvincularProyecto($num_identificacion,$id_proyecto){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador', $rol, new Integrante_Proy());
         
         // Obtener la instancia del modelo Integrante_Proy
-        $nuevo_proyecto_vinculado = Integrante_Proy::where('semillerista', $num_identificacion)->first();
+        $nuevo_proyecto_vinculado = Integrante_Proy::where('semillerista', $num_identificacion)
+        ->where('proyecto', $id_proyecto)->first();
 
         if ($nuevo_proyecto_vinculado) {
             // Eliminar la fila completa

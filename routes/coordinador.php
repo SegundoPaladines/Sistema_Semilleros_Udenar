@@ -29,4 +29,4 @@ Route::get('vista/add_semillerista_proyecto/{num_identificacion}', [CoordinadorC
 Route::get('vista/vincular_sem_proy/{num_identificacion}/{id_proyecto}', [CoordinadorController::class, 'vincularSemProyecto'])->name('vincular_sem_proyecto');
 
 //Desvincular Semillerista Proyecto
-Route::get('/desvincular_sem_proy/{num_identificacion}', [CoordinadorController::class, 'desvincularProyecto'])->name('desvincular_sem_proy');
+Route::get('/desvincular_sem_proy/{num_identificacion}/{id_proyecto}', [CoordinadorController::class, 'desvincularProyecto'])->name('desvincular_sem_proy');

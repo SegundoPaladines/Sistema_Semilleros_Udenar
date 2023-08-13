@@ -59,7 +59,7 @@
                     <td>
                         <a href="{{route('vincular_sem_proyecto', ['id_proyecto' => $p->id_proyecto, 'num_identificacion' => $num_identificacion])}}" class="btn btn-primary">Vincular</a>
                         @if($p->id !== $user->id)
-                        <a href="{{route('desvincular_sem_proy', ['num_identificacion' => $num_identificacion])}}" class="btn btn-danger">Desvincular</>
+                        <a href="{{route('desvincular_sem_proy', ['id_proyecto' => $p->id_proyecto, 'num_identificacion' => $num_identificacion])}}" class="btn btn-danger">Desvincular</>
                         @endif
                     </td>
                 </tr>
