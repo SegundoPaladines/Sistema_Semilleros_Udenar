@@ -22,11 +22,6 @@
                         </div>
                     </div>
                 </td>
-                <td>
-                    <div id="btn-agregar">
-                        <a href="{{route('vista_agr_proy')}}" class="btn btn-success">Añadir Proyecto</a>
-                    </div>
-                </td>
             </tr>
         </table>    
     </center>
@@ -43,7 +38,6 @@
                 <th scope="col">Fecha Finalización</th>
                 <th scope="col">Propuesta</th>
                 <th scope="col">Proyecto Final</th>
-                <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -61,13 +55,6 @@
                     <td>{{$p->feacha_fin}}</td>
                     <td><a href="{{ asset($p->arc_propuesta) }}" target="_blank">Descargar PDF</a></td>
                     <td><a href="{{ asset($p->arc_adjunto) }}" target="_blank">Descargar PDF</a></td>
-                    <td>
-                        <a href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-primary">Editar</a>
-                        <a href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary">Vincular a Evento</a>
-                        @if($p->id !== $user->id)
-                            <a href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger">Eliminar</a>
-                        @endif
-                    </td>
                 </tr>
                 @php
                     $i++;

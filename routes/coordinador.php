@@ -30,3 +30,13 @@ Route::get('vista/vincular_sem_proy/{num_identificacion}/{id_proyecto}', [Coordi
 
 //Desvincular Semillerista Proyecto
 Route::get('/desvincular_sem_proy/{num_identificacion}/{id_proyecto}', [CoordinadorController::class, 'desvincularProyecto'])->name('desvincular_sem_proy');
+
+//Vincular Proyecto Evento
+Route::get('vista/vincular_proyecto_evento/{id_proyecto}', [CoordinadorController::class, 'vistaVincularProyectoEvento'])->name('vista_proy_evento_vincular');
+Route::get('vista/add_proyecto_evento/{id_proyecto}', [CoordinadorController::class, 'addProyectoEvento'])->name('add_proyecto_evento');
+Route::get('vista/vincular_proy_evento/{id_proyecto}/{codigo_evento}', [CoordinadorController::class, 'vincularProyectoEvento'])->name('vincular_proyecto_evento');
+
+//Desvincular Proyecto Evento
+Route::get('/desvincular_proy_evento/{id_proyecto}/{codigo_evento}', [CoordinadorController::class, 'desvincularProyectoEvento'])->name('desvincular_proy_evento');
+
+// Route::get('vista/proyectos_vinculados_evento/{codigo_evento}', [CoordinadorController::class, 'vistaProyectoEventoVinculado'])->name('vista_proy_vinculado_evento');

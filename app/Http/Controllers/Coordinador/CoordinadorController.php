@@ -14,6 +14,8 @@ use App\Models\Semillerista;
 use App\Models\Persona;
 use App\Models\User;
 use App\Models\Proyecto;
+use App\Models\Evento;
+use App\Models\Presentacion;
 use App\Models\Integrante_Proy;
 
 class CoordinadorController extends Controller
@@ -216,7 +218,7 @@ class CoordinadorController extends Controller
         $coordinador = Coordinador::findOrFail($persona->num_identificacion);
         $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
         
-        return view('Coordinador.vista_vincular_proyecto', compact('user','coordinador','proyectos','num_identificacion'));
+        return view('Coordinador.vista_vincular_proyecto', compact('user','proyectos','num_identificacion'));
     }
     public function addSemProyecto($num_identificacion){
         $user = auth()->user();
@@ -227,9 +229,9 @@ class CoordinadorController extends Controller
         $coordinador = Coordinador::findOrFail($persona->num_identificacion);
         $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
         
-        return view('Coordinador.vista_vincular_proyecto', compact('user','coordinador','proyectos','num_identificacion'));
+        return view('Coordinador.vista_vincular_proyecto', compact('user','proyectos','num_identificacion'));
     }
-
+    
     public function vincularSemProyecto($num_identificacion, $id_proyecto) {
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -252,7 +254,6 @@ class CoordinadorController extends Controller
         $nuevo_proyecto_vinculado->campo = "Campo";
         $nuevo_proyecto_vinculado->save();
         
-        // return redirect()->route('add_sem_proyecto', $num_identificacion)->with('vinculacionExitosa', true);
         return redirect()->back()->with('vinculacionExitosa', true);
     }
     
@@ -265,15 +266,109 @@ class CoordinadorController extends Controller
         // Obtener la instancia del modelo Integrante_Proy
         $nuevo_proyecto_vinculado = Integrante_Proy::where('semillerista', $num_identificacion)
         ->where('proyecto', $id_proyecto)->first();
-
+        
         if ($nuevo_proyecto_vinculado) {
             // Eliminar la fila completa
             $nuevo_proyecto_vinculado->delete();
         }
-        // return redirect()->route('add_sem_proyecto', $num_identificacion)->with('vinculacionExitosa', true);
-
+        
         return redirect()->back()->with('desvinculacionExitosa', true);
     }
+    
+    
+    public function vistaVincularProyectoEvento($id_proyecto){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $eventos = Evento::all();        
+        return view('Coordinador.vista_vincular_evento', compact('user','id_proyecto','eventos'));
+    }
+    
+    public function addProyectoEvento($id_proyecto){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $eventos = Evento::all(); 
+        return view('Coordinador.vista_vincular_evento', compact('user','eventos','id_proyecto'));
+    }
+    
+    public function vincularProyectoEvento($id_proyecto,$codigo_evento) {
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador.proyectos', $rol, new Presentacion());
+        
+        // Verificar si ya existe una vinculación
+        $vinculacionExistente = Presentacion::where('proyecto', $id_proyecto)
+        ->where('evento', $codigo_evento)->exists();
+        
+        if ($vinculacionExistente) {
+            // Redirigir con mensaje de "vinculación denegada"
+            return redirect()->route('add_proyecto_evento', $codigo_evento)->with('vinculacionDenegada', true);
+        }
+        
+        // Si no existe la vinculación, proceder a vincular
+        $nuevo_proyecto_vinculado = new Presentacion();
+        $nuevo_proyecto_vinculado->proyecto = $id_proyecto;
+        $nuevo_proyecto_vinculado->evento = $codigo_evento;
+        $nuevo_proyecto_vinculado->save();
+        
+        return redirect()->back()->with('vinculacionExitosa', true);
+    }
+    
+    public function desvincularProyectoEvento($id_proyecto,$codigo_evento){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol, new Presentacion());
+        
+        // Obtener la instancia del modelo Presentacion
+        $nuevo_proyecto_vinculado = Presentacion::where('proyecto', $id_proyecto)
+        ->where('evento', $codigo_evento)->first();
+        
+        if ($nuevo_proyecto_vinculado) {
+            $nuevo_proyecto_vinculado->delete();
+        }
+        
+        return redirect()->back()->with('desvinculacionExitosa', true);
+    }
+    
+    // public function vistaProyectoEventoVinculado($codigo_evento)
+    // {
+    //     $user = auth()->user();
+    //     $nombre_rol = $user->getRoleNames()[0];
+    //     $rol = Rol::where('name', $nombre_rol)->first();
+    //     $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+
+    //     // dd($codigo_evento); 
+    //     $presentaciones =  DB::table('presentaciones')->where('evento', $codigo_evento)->get();
+    //     // dd($presentaciones); 
+    //     $proyectos = collect(); // Inicializar una colección vacía
+    
+    //     foreach ($presentaciones as $presentacion) {
+    //         $proyecto = Proyecto::find($presentacion->proyecto); // Buscar cada proyecto
+    //         if ($proyecto) {
+    //             $proyectos->push($proyecto); // Agregar proyecto a la colección
+    //         }
+    //     }
+    //     $estadoOptions = [
+    //         '1' => 'Propuesta',
+    //         '2' => 'En curso',
+    //         '3' => 'Finalizado',
+    //         '4' => 'Inactivo',
+    //     ];
+        
+    //     $tipoOptions = [
+    //         '1' => 'Investigación',
+    //         '2' => 'Innovación y Desarrollo',
+    //         '3' => 'Emprendimiento',
+    //     ];
+    //     // $proyectos = Proyecto::all(); 
+        
+    //     return view('Coordinador.proyectosVinculadosEvento', compact('proyectos', 'user','estadoOptions','tipoOptions'));
+    // }
 
     public function vistaAgrProyectos(){
         $user = auth()->user();

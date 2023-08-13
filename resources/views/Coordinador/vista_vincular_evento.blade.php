@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Proyectos')
+@section('title', 'Eventos')
 
 @section('content_header')
-    <h1>Listado de Proyectos</h1>
+    <h1>Listado de Eventos</h1>
 @stop
 
 @section('content')
@@ -15,58 +15,55 @@
                 <td>
                     <div id="contenedor-buscador" class="input-group">
                         <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar proyecto">
+                            <input id ="buscador" type="text" placeholder="Buscar Eventos">
                         </div>
                         <div id="ic">
                             <i class="fas fa-search"></i>
                         </div>
                     </div>
                 </td>
+                @can('director.administracion')
                 <td>
                     <div id="btn-agregar">
-                        <a href="{{route('vista_agr_proy')}}" class="btn btn-success">Añadir Proyecto</a>
+                        <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
                     </div>
                 </td>
+                @endcan
             </tr>
         </table>    
     </center>
     <br>
-    <table id= "tabla_usuarios" class="table">
+    <table id= "tabla_eventos" class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre del Proyecto</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Tipo de Proyecto</th>
-                <th scope="col">Fecha inicio</th>
-                <th scope="col">Fecha Finalización</th>
-                <th scope="col">Propuesta</th>
-                <th scope="col">Proyecto Final</th>
+                <th scope="col">Codigo Evento</th>
+                <th scope="col">Nombre de Evento</th>
+                <th scope="col">Fecha de Inicio</th>
+                <th scope="col">Fecha de Finalización</th>
+                @can('director-coordinador.eventos')
                 <th scope="col">Opciones</th>
+                @endcan
             </tr>
         </thead>
         <tbody>
             @php
                 $i=1;
             @endphp
-            @foreach($proyectos as $p)
+            @foreach($eventos as $e)
                 <tr>
                     <th scope="row">{{$i}}</th>
-                    <td>{{$p->id_proyecto}}</td>
-                    <td>{{$p->titulo}}</td>
-                    <td>{{$estadoOptions[$p->estado]}}</td>
-                    <td>{{$estadoOptions[$p->tipo_proyecto]}}</td>
-                    <td>{{$p->feacha_inicio}}</td>
-                    <td>{{$p->feacha_fin}}</td>
-                    <td><a href="{{ asset($p->arc_propuesta) }}" target="_blank">Descargar PDF</a></td>
-                    <td><a href="{{ asset($p->arc_adjunto) }}" target="_blank">Descargar PDF</a></td>
+                    <td>{{$e->codigo_evento}}</td>
+                    <td>{{$e->nombre}}</td>
+                    <td>{{$e->fecha_inicio}}</td>
+                    <td>{{$e->fecha_fin}}</td>
                     <td>
-                        <a href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-primary">Editar</a>
-                        <a href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary">Vincular a Evento</a>
-                        @if($p->id !== $user->id)
-                            <a href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger">Eliminar</a>
-                        @endif
+                        <a href="{{route('vincular_proyecto_evento', ['codigo_evento' => $e->codigo_evento, 'id_proyecto' => $id_proyecto])}}" class="btn btn-primary">Vincular</a>
+                        <a href="{{route('desvincular_proy_evento', ['codigo_evento' => $e->codigo_evento, 'id_proyecto' => $id_proyecto])}}" class="btn btn-danger">Desvincular</>
+                        @can('director.administracion')
+                        <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
+                        <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
+                        @endcan
                     </td>
                 </tr>
                 @php
@@ -75,14 +72,6 @@
             @endforeach
         </tbody>
     </table>
-
-    @if (session('registroExitoso'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡La actualización se ha realizado exitosamente!","Actualizacion Exitosa", true);
-            });
-        </script>
-    @endif
 
     @if (session('preguntarEliminar'))
     <script>
@@ -93,10 +82,34 @@
     </script>
     @endif
 
-    @if (session('usuarioEliminado'))
+    @if (session('eventoEliminado'))
         <script>
             document.addEventListener('DOMContentLoaded', function() { 
-                mostrarAlertaRegistroExitoso("¡Usuario: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
+                mostrarAlertaRegistroExitoso("¡Evento: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
+            });
+        </script>
+    @endif
+
+    @if (session('vinculacionExitosa'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡Se ha vinculado el proyecto al evento de forma correcta!","Vinculacion Exitosa", true);
+            });
+        </script>
+    @endif
+
+    @if (session('vinculacionDenegada'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("No se pudo vincular al proyecto porque ya está vinculado al evento.","Vinculación Denegada", false);
+            });
+        </script>
+    @endif
+
+    @if (session('desvinculacionExitosa'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("El proyecto ha sido desvinculado del evento.","Vinculación Denegada", true);
             });
         </script>
     @endif
@@ -129,20 +142,21 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p id="usuarioEliminarNombre"></p>
                     <p id="usuarioEliminarCorreo"></p>
-                    <p>¿Estás seguro de que deseas eliminar este proyecto?</p>
+                    <p>¿Estás seguro de que deseas eliminar este evento?</p>
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarProyecto()">Cancelar</button>
-                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarProyecto()">Eliminar</button>
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarEvento()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarEvento()">Eliminar</button>
                 </div>
             </div>
         </div>
     </div>
-    
+
 @stop
 
 @section('css')
@@ -153,8 +167,8 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--CSS propio-->
-    <link rel="stylesheet" href="{{asset('css/segundo/listarusuarios.css')}}">
-    <link rel="stylesheet" href="{{asset('css/segundo/reg_suarios.css')}}">
+    <link rel="stylesheet" href="{{asset('css/segundo/listarSemilleros.css')}}">
+    
 @endsection
 
 @section('js')
@@ -163,6 +177,6 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!--Js Propio-->
-    <script src="{{ asset('js/juan/listarProyectos.js') }}"></script>
-    <script src="{{ asset('js/juan/alert.js') }}"></script>
+    <script src="{{ asset('js/david/listarEventos.js') }}"></script>
+    <script src="{{ asset('js/david/alerta_exito.js') }}"></script>
 @stop

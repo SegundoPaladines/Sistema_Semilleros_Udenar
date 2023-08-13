@@ -57,12 +57,13 @@
                     <td>{{$e->nombre}}</td>
                     <td>{{$e->fecha_inicio}}</td>
                     <td>{{$e->fecha_fin}}</td>
-                    @can('director.administracion')
                     <td>
+                        <a href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary">Ver Proyectos</a>
+                        @can('director-coordinador.eventos')
                         <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
                         <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
+                        @endcan
                     </td>
-                    @endcan
                 </tr>
                 @php
                     $i++;

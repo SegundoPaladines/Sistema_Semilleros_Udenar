@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Presentacion extends Model
 {
+    protected $table = 'presentaciones';
     //la presentacion perteneces a un evento
     public function evento(){
         return $this->belongsTo(Evento::class);
