@@ -143,15 +143,15 @@ class CoordinadorController extends Controller
         $participantes = Semillerista::where('semillero', $id)->get();
         return view('Coordinador.listaSemilleristas',compact('participantes', 'semillero', 'user', 'id'));
     }
-
+    
     public function obtenerNombrePersona($num_identificacion){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador', $rol);
-
+        
         $persona = Persona::where('num_identificacion', $num_identificacion)->first();
-
+        
         return $persona->nombre;
     }
     public function obtenerCorreoUsuario($num_identificacion){
@@ -161,16 +161,16 @@ class CoordinadorController extends Controller
         $this->authorize('coordinador', $rol);
 
         $persona = Persona::where('num_identificacion', $num_identificacion)->first();
-
+        
         return $persona->correo;
     }
-
+    
     public function desvincularSemillero($num_identificacion){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador', $rol, new Semillero());
-
+        
         $semillerista = Semillerista::findOrFail($num_identificacion);
         $semillerista->semillero = null;
         $semillerista->fecha_vinculacion = null;
@@ -187,9 +187,10 @@ class CoordinadorController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador.proyectos', $rol, new Proyecto());
-    
-        $proyectos = Proyecto::all();
-    
+        $persona = DB::table('personas')->where('usuario', $user->id)->first();
+        $coordinador = Coordinador::findOrFail($persona->num_identificacion);
+        $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
+        
         return view('Coordinador.proyectos', compact('proyectos', 'user'));
     }
 
@@ -198,8 +199,10 @@ class CoordinadorController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $persona = DB::table('personas')->where('usuario', $user->id)->first();
+        $coordinador = Coordinador::findOrFail($persona->num_identificacion);
     
-        return view('Coordinador.vista_agr_proy', compact('user'));
+        return view('Coordinador.vista_agr_proy', compact('user','coordinador'));
     }
 
     public function agregarProyecto(Request $request){
