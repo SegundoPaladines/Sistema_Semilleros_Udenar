@@ -93,8 +93,20 @@ class SemilleristaController extends Controller
                 $proyectos->push($proyecto); // Agregar proyecto a la colección
             }
         }
+        $estadoOptions = [
+            '1' => 'Propuesta',
+            '2' => 'En curso',
+            '3' => 'Finalizado',
+            '4' => 'Inactivo',
+        ];
+        
+        $tipoOptions = [
+            '1' => 'Investigación',
+            '2' => 'Innovación y Desarrollo',
+            '3' => 'Emprendimiento',
+        ];
             
-        return view('proyectos', compact('proyectos', 'user'));
+        return view('proyectos', compact('proyectos', 'user','estadoOptions','tipoOptions'));
     }
 
 }

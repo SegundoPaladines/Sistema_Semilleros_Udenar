@@ -59,9 +59,9 @@
                         @enderror
                         <select id ="tipo_proyecto" name="tipo_proyecto" class="form-select">
                             <option selected>Tipo</option>
-                            <option value="Investigación">Investigación</option>
-                            <option value="Innovación">Innovación y Desarrollo</option>
-                            <option value="Emprendimiento">Emprendimiento</option>
+                            <option value="1">Investigación</option>
+                            <option value="2">Innovación y Desarrollo</option>
+                            <option value="3">Emprendimiento</option>
                         </select>
                     </div>
 
