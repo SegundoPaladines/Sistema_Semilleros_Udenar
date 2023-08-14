@@ -80,9 +80,11 @@
                     @endcan
                     @can('director.administracion')
                     <td>
+                    <center>
                     <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>
                     <a style="margin: 3px;" href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Editar</a>
                     <a style="margin: 3px;" href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </center>
                     </td>
                     @endcan
                 </tr>
