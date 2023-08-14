@@ -12,6 +12,12 @@ use App\Models\Persona;
 use App\Models\User;
 use App\Models\Semillerista;
 use App\Models\Evento;
+<<<<<<< HEAD
+=======
+use App\Models\Semillero;
+use App\Models\Coordinador;
+use App\Models\Rol;
+>>>>>>> master
 
 class HomeController extends Controller
 {
@@ -39,6 +45,10 @@ class HomeController extends Controller
     }
     public function registarUsuarios() {
         return redirect()->route('v_reg_usr');
+    }
+    public function checkEmail($email) {
+        $user = User::where('email', $email)->first();
+        return response()->json(['exists' => !is_null($user)]);
     }
     public function postUsuarios() {
         return redirect()->route('registar_usuario');
@@ -141,7 +151,7 @@ class HomeController extends Controller
         
         if (!password_verify($request->input('passwd1'), $usr_edit->password)) {
             $validator = Validator::make($request->all(), [], []);
-            $validator->errors()->add('passwd1', 'Contraseña Incorrecta.');
+            $validator->errors()->add('passwd1', 'Contraseña Actual Incorrecta.');
 
             return redirect()->back()->withErrors($validator)->withInput();
         }else{
@@ -166,8 +176,33 @@ class HomeController extends Controller
         }
     }
     public function listarEventos(){
+<<<<<<< HEAD
         $user = auth()->user();
         $eventos = Evento::all();
         return view('eventos', compact('eventos','user'));
     }
+=======
+        $user = auth()->user();        
+        $eventos = Evento::all();
+        return view('eventos', compact('eventos','user'));
+    }
+    public function verSemillero(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        if ($rol->name === 'coordinador') {
+            // Lógica para coordinadores
+            $persona = DB::table('personas')->where('usuario', $user->id)->first();
+            $coordinador = Coordinador::findOrFail($persona->num_identificacion);
+            $semillero = Semillero::findOrFail($coordinador->semillero);
+            return view('semillero', compact('semillero', 'user', 'coordinador'));
+        } elseif ($rol->name === 'semillerista') {
+            // Lógica para semilleristas
+            $persona = DB::table('personas')->where('usuario', $user->id)->first();
+            $semillerista = Semillerista::findOrFail($persona->num_identificacion);
+            $semillero = Semillero::findOrFail($semillerista->semillero);
+            return view('semillero', compact('semillero', 'user', 'coordinador'));
+        }
+    }
+>>>>>>> master
 }

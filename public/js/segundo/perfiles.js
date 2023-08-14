@@ -23,9 +23,9 @@ function actualizacionExitosa(id) {
         window.location.href = '/admin/perfil/'+id;
       });
     }
-  }
+}
 
-  function usuarioSinPersona(id) {
+function usuarioSinPersona(id) {
     var modalExito = document.getElementById('reg_ext_emergente');
     var modalTitulo = document.getElementById('modal-titulo');
     var modalMensaje = document.getElementById('modalExitoMensaje');
@@ -50,8 +50,8 @@ function actualizacionExitosa(id) {
         window.location.href = '/admin/perfil/'+id;
       });
     }
-  }
-  function noCoorSinDatos(id) {
+}
+function noCoorSinDatos(id) {
     var modalExito = document.getElementById('reg_ext_emergente');
     var modalTitulo = document.getElementById('modal-titulo');
     var modalMensaje = document.getElementById('modalExitoMensaje');
@@ -76,4 +76,4 @@ function actualizacionExitosa(id) {
         window.location.href = '/admin/perfil/'+id;
       });
     }
-  }
+}

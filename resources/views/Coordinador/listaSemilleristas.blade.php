@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Eventos')
+@section('title', 'Participantes')
 
 @section('content_header')
-    <h1>Listado de Eventos</h1>
+    <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
 @stop
 
 @section('content')
@@ -15,94 +15,65 @@
                 <td>
                     <div id="contenedor-buscador" class="input-group">
                         <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar Eventos">
+                            <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
                         </div>
                         <div id="ic">
                             <i class="fas fa-search"></i>
                         </div>
                     </div>
                 </td>
-                @can('director.administracion')
-<<<<<<< HEAD
-                    <td>
-                        <div id="btn-agregar">
-                            <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
-                        </div>
-                    </td>
-=======
-                <td>
+                <!-- <td>
                     <div id="btn-agregar">
-                        <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
+                        <a href="" class="btn btn-success">Añadir Participantes</a>
                     </div>
-                </td>
->>>>>>> master
-                @endcan
+                </td> -->
             </tr>
-        </table>    
+        </table>
     </center>
     <br>
-    <table id= "tabla_eventos" class="table">
+    <table id="tabla_usuarios" class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Codigo Evento</th>
-                <th scope="col">Nombre de Evento</th>
-                <th scope="col">Fecha de Inicio</th>
-                <th scope="col">Fecha de Finalización</th>
-<<<<<<< HEAD
-                @can('director.administracion')<th scope="col">Opciones</th>@endcan
-=======
-                @can('director.administracion')
+                <th scope="col">Numero De Identificación</th>
+                <th scope="col">Codigo Estudiante</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Semestre</th>
+                <th scope="col">Fecha Vinculación</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Opciones</th>
-                @endcan
->>>>>>> master
             </tr>
         </thead>
         <tbody>
             @php
-                $i=1;
+            $i=1;
             @endphp
-            @foreach($eventos as $e)
-                <tr>
-                    <th scope="row">{{$i}}</th>
-                    <td>{{$e->codigo_evento}}</td>
-                    <td>{{$e->nombre}}</td>
-                    <td>{{$e->fecha_inicio}}</td>
-                    <td>{{$e->fecha_fin}}</td>
-                    @can('director.administracion')
-<<<<<<< HEAD
-                        <td>
-                            <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
-                            <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
-                        </td>
-=======
-                    <td>
-                        <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
-                        <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
-                    </td>
->>>>>>> master
-                    @endcan
-                </tr>
-                @php
-                    $i++;
-                @endphp
+            @foreach($participantes as $p)
+            <tr>
+                <th scope="row">{{$i}}</th>
+                <td>{{$p->num_identificacion}}</td>
+                <td>{{$p->cod_estudiante}}</td>
+                <td>{{app('App\Http\Controllers\Coordinador\CoordinadorController')->obtenerNombrePersona($p->num_identificacion)}}</td>
+                <td>{{app('App\Http\Controllers\Coordinador\CoordinadorController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
+                <td>{{$p->semestre}}</td>
+                <td>{{$p->fecha_vinculacion}}</td>
+                <td>{{$p->estado}}</td>
+                <td>
+                    <a href="{{route('desvincular_sem_sem', $p->num_identificacion)}}" class="btn btn-danger">Desvincular</a>
+                </td>
+            </tr>
+            @php
+            $i++;
+            @endphp
             @endforeach
         </tbody>
     </table>
 
-    @if (session('preguntarEliminar'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elimina = '{{ request()->query('elimina') }}';
-            mostrarModalEliminar(elimina);
-        });
-    </script>
-    @endif
-
-    @if (session('eventoEliminado'))
+    @if (session('desvinculacionExitosa'))
         <script>
             document.addEventListener('DOMContentLoaded', function() { 
-                mostrarAlertaRegistroExitoso("¡Evento: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
+                mostrarAlertaRegistroExitoso("Se desvinculo el usuario del semillero con Exito!", "Desvinculación Exitosa", true);
             });
         </script>
     @endif
@@ -140,16 +111,16 @@
                 <div class="modal-body">
                     <p id="usuarioEliminarNombre"></p>
                     <p id="usuarioEliminarCorreo"></p>
-                    <p>¿Estás seguro de que deseas eliminar este evento?</p>
+                    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarEvento()">Cancelar</button>
-                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarEvento()">Eliminar</button>
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarUsuario()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarUsuario()">Eliminar</button>
                 </div>
             </div>
         </div>
     </div>
-
+    
 @stop
 
 @section('css')
@@ -160,8 +131,8 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--CSS propio-->
-    <link rel="stylesheet" href="{{asset('css/segundo/listarSemilleros.css')}}">
-    
+    <link rel="stylesheet" href="{{asset('css/segundo/listarusuarios.css')}}">
+    <link rel="stylesheet" href="{{asset('css/segundo/reg_suarios.css')}}">
 @endsection
 
 @section('js')
@@ -170,6 +141,6 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!--Js Propio-->
-    <script src="{{ asset('js/david/listarEventos.js') }}"></script>
-    <script src="{{ asset('js/david/alerta_exito.js') }}"></script>
+    <script src="{{ asset('js/segundo/listarusuarios.js') }}"></script>
+    <script src="{{ asset('js/segundo/reg_suarios.js') }}"></script>
 @stop

@@ -3,63 +3,63 @@
 @section('title', 'Cambiar Contraseña')
 
 @section('content_header')
-    <h1>Cambiar Contraseña</h1>
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+            <h1>Cambiar Contraseña</h1>
+        </figure>
+    </div>
+</div>
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+<div class="container">
     <center>
-        <div id="contenedor-form">
-            <!--"-->
-            <form method="POST" action="{{ route('cambio-contrasena') }}">
-                @csrf
-                <div class="row">
-                    <div class="col">
-                        <!-- Contraseña -->
-                        <div>
-                            @error('passwd1')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="password" id="passwd1" name="passwd1" class="form-control"  placeholder="Escriba la vieja contraseña"/>
-                                <label class="form-label" for="passwd1">Contraseña Actual</label>
-                            </div>
-                        </div>
-                    </div>
+    <br>
+    <ul class="list-unstyled">
+    <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+    </ul>  
+    <br>
+    <div id="contenedor-form">
+        <form class="row g-3 needs-validation" novalidate method="POST" action="{{ route('cambio-contrasena') }}">
+            @csrf
+            <!-- Contraseña Actual-->
+            <div class="col-md-12">
+                <div class="form-outline">
+                    <input type="password" id="passwd1" name="passwd1" class="form-control is-valid" placeholder="Escriba la contraseña actual" required />
+                    <label for="passwd1" class="form-label">Contraseña Actual</label>
+                    <div id="passwd1-e" name="passwd1-e" class="invalid-feedback">*</div>
                 </div>
-
-                <div class="row">
-                    <div class="col">
-                        <!-- Contraseña -->
-                        <div>
-                            @error('passwd2')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="password" id="passwd2" name="passwd2" class="form-control"  placeholder="Escriba la nueva contraseña"/>
-                                <label class="form-label" for="passwd2">Nueva Contraseña</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <!-- Contraseña -->
-                        <div>
-                            @error('passwd3')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="password" id="passwd3" name="passwd3" class="form-control"  placeholder="Repita la nueva contraseña"/>
-                                <label class="form-label" for="passwd3">Repita la Nueva Contraseña</label>
-                            </div>
-                        </div>
-                    </div>
+                @error('passwd1')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <!-- Nueva Contraseña -->
+            <div class="col-md-6">
+                <div class="form-outline">
+                    <input type="password" id="passwd2" name="passwd2" class="form-control is-valid" placeholder="Escriba la nueva contraseña" required />
+                    <label for="passwd2" class="form-label">Nueva Contraseña</label>
+                    <div id="passwd2-e" name="passwd2-e" class="invalid-feedback">*</div>
                 </div>
-            
-                <!-- Boton Enviar -->
-                <button type="submit" class="mb-3 btn btn-success btn-block">Guardar Cambios</button>
-            </form>
-        </div>
+                @error('passwd2')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <!-- Repetición Nueva Contraseña -->
+            <div class="col-md-6">
+                <div class="form-outline">
+                    <input type="password" id="passwd3" name="passwd3" class="form-control is-valid" placeholder="Repita la nueva contraseña" required />
+                    <label for="passwd3" class="form-label">Repita la Nueva Contraseña</label>
+                    <div id="passwd3-e" name="passwd3-e" class="invalid-feedback">*</div>
+                </div>
+                @error('passwd3')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <!-- Boton Guardar Cambios -->
+            <button type="submit" id="btn-submit" class="mb-3 btn btn-success btn-block">Guardar Cambios</button>
+        </form>
+    </div>
     </center>
     @if (session('cambioExitoso'))
         <script>
@@ -91,7 +91,7 @@
             </div>
         </div>
     </div>
-
+</div>
 @stop
 
 @section('css')

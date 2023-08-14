@@ -12,26 +12,27 @@ spans.forEach((span) => {
       span.classList.add('badge-warning');
     }
 });
+//Filtro buscar usuarios
+const searchInput = document.getElementById('buscador');
+const cards = document.querySelectorAll('.card-container .card');
 
-const searchInput = document.querySelector('#buscador');
-const rows = document.querySelectorAll('#tabla_usuarios tbody tr');
+searchInput.addEventListener('input', filterCards);
 
-searchInput.addEventListener('input', function () {
-    const searchTerm = this.value.trim().toLowerCase();
+function filterCards() {
+    const searchTerm = searchInput.value.toLowerCase();
 
-    rows.forEach(row => {
-        const id = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-        const name = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
-        const email = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
-        const rol = row.querySelector('td:nth-child(5)').textContent.toLowerCase();
+    cards.forEach(card => {
+        const name = card.querySelector('.card-text').textContent.toLowerCase();
+        const role = card.querySelector('.badge').textContent.toLowerCase();
+        const email = card.querySelector('.text-muted').textContent.toLowerCase();
 
-        if (name.includes(searchTerm) || email.includes(searchTerm) || id.includes(searchTerm) || rol.includes(searchTerm)) {
-            row.style.display = '';
+        if (name.includes(searchTerm) || role.includes(searchTerm) || email.includes(searchTerm)) {
+            card.style.display = 'block';
         } else {
-            row.style.display = 'none';
+            card.style.display = 'none';
         }
     });
-});
+}
 
 var usuarioId;
 function mostrarModalEliminar(id) {
@@ -48,3 +49,4 @@ function cancerlarEliminarUsuario() {
 function confirmarEliminarUsuario(){
     window.location.href = 'eliminar-usuario/' + usuarioId;
 }
+
