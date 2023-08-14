@@ -3,138 +3,143 @@
 @section('title', 'Agregar proyecto')
 
 @section('content_header')
-    <h1>Agregar proyecto</h1>
+
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+        <h1>Agregar proyecto</h1>
+        </figure>
+    </div>
+</div>
+
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+<div class="container">
+
     <center>
-        <div id="contenedor-form">
-            <form method="POST" action="" action="{{ route('agregar_proyecto_dir') }}">
-                @csrf
-                <div class="row">
-                    <div class="col">
-                        <div>
-                            @error('id_proyecto')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="text" id="id_proyecto" name="id_proyecto" class="form-control" />
-                                <label class="form-label" for="id_proyecto">Id del Proyecto</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div>
-                            @error('semillero')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="text" id="semillero" name="semillero" class="form-control" />
-                                <label class="form-label" for="semillero">Id del Semillero</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div>
-                            @error('titulo')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-4 form-outline">
-                                <input type="text" id="titulo" name="titulo" class="form-control" />
-                                <label class="form-label" for="titulo">Titulo</label>
-                            </div>
-                        </div>
-                    </div>
-                   
-                    
-                </div>
 
-                <div class="row">
+    <br>
+    <ul class="list-unstyled">
+    <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+    </ul> 
+    <br>
+    
+    <div id="contenedor-form">
+        <form class="row g-3 needs-validation" novalidate method="POST" action="" action="{{ route('agregar_proyecto_dir') }}">
+            @csrf
 
-                <div class="col">
-                        @error('tipo_proyecto')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <select id ="tipo_proyecto" name="tipo_proyecto" class="form-select">
-                            <option selected>Tipo</option>
-                            <option value="1">Investigación</option>
-                            <option value="2">Innovación y Desarrollo</option>
-                            <option value="3">Emprendimiento</option>
-                        </select>
-                    </div>
+            <!-- Id del proyecto -->
+            <div class="col-md-6">
+                <div class="form-outline">
+                    <input type="text" id="id_proyecto" name="id_proyecto" class="form-control is-valid"/>
+                    <label class="form-label" for="id_proyecto">Id del Proyecto</label>
+                </div>
+                @error('id_proyecto')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
-                    <div class="col">
-                        @error('estado')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <select id ="estado" name="estado" class="form-select">
-                            <option selected>Estado</option>
-                            <option value="1">Propuesta</option>
-                            <option value="2">En curso</option>
-                            <option value="3">Finalizado</option>
-                            <option value="4">Inactivo</option>
-                        </select>
-                    </div>
-                    
-                    <div class="col">
-                        <div>
-                            @error('feacha_inicio')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <input class="form-control" type="date" id="feacha_inicio" name="feacha_inicio" placeholder="Fecha de inicio">
-                                <label class="form-label" for="feacha_inicio">Fecha de Inicio</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div>
-                            @error('feacha_fin')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline">
-                                <input class="form-control" type="date" id="feacha_fin" name="feacha_fin" placeholder="Fecha de fin">
-                                <label class="form-label" for="feacha_fin">Fecha de Finalización</label>
-                            </div>
-                        </div>
-                    </div>
-                    
+            <!-- Id del semillero -->
+            <div class="col-md-6">
+                <div class="form-outline">
+                    <input type="text" id="semillero" name="semillero" class="form-control is-valid"/>
+                    <label class="form-label" for="semillero">Id del Semillero</label>
                 </div>
-                <br>
-                <div class="row">
-                    
-                    
-                    <div class="col">
-                        <div>
-                            @error('arc_propuesta')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <!-- <div class="mb-4 form-outline"> -->
-                                <label class="form-label" for="arc_propuesta">Propuesta</label>
-                                <input type="file" id="arc_propuesta" name="arc_propuesta" class="form-control" />
-                            <!-- </div> -->
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div>
-                            @error('arc_adjunto')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <!-- <div class="mb-4 form-outline"> -->
-                                <label class="form-label" for="arc_adjunto">Proyecto Final</label>
-                                <input type="file" id="arc_adjunto" name="arc_adjunto" class="form-control" accept=".pdf, .doc, .docx" />
-                            <!-- </div> -->
-                        </div>
-                    </div>
+                @error('semillero')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Titulo-->
+            <div class="col-md-12">
+                <div class="form-outline">
+                    <input type="text" id="titulo" name="titulo" class="form-control is-valid"/>
+                    <label class="form-label" for="titulo">Titulo</label>
                 </div>
-                <br>
-                <!-- Boton Enviar -->
-                <button type="submit" class="mb-3 btn btn-success btn-block">Agregar proyecto</button>
-            </form>
-        </div>
+                @error('titulo')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Opciones tipo de proyecto -->
+            <div class="col-md-6">
+            <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+                <select id ="tipo_proyecto" name="tipo_proyecto" class="form-select is-valid">
+                    <option selected>Tipo</option>
+                    <option value="1">Investigación</option>
+                    <option value="2">Innovación y Desarrollo</option>
+                    <option value="3">Emprendimiento</option>
+                </select>
+                @error('tipo_proyecto')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Opciones estado -->
+            <div class="col-md-6">
+            <label class="form-label" for="estado" id="lb">Seleccione: </label>
+                <select id ="estado" name="estado" class="form-select is-valid">
+                    <option selected>Estado</option>
+                    <option value="1">Propuesta</option>
+                    <option value="2">En curso</option>
+                    <option value="3">Finalizado</option>
+                    <option value="4">Inactivo</option>
+                </select>
+                @error('estado')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Fecha inicio -->
+            <div class="col-md-6">
+                <label class="form-label" for="feacha_inicio" id="lb">Fecha de Inicio</label>
+                <input class="form-control is-valid" type="date" id="feacha_inicio" name="feacha_inicio" placeholder="Fecha de inicio">
+                @error('feacha_inicio')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Fecha de finalización -->
+            <div class="col-md-6">
+                <label class="form-label" for="feacha_fin" id="lb">Fecha de Finalización</label>
+                <input class="form-control is-valid" type="date" id="feacha_fin" name="feacha_fin" placeholder="Fecha de fin">
+                @error('feacha_fin')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Propuesta -->
+            <div class="col-md-6">
+                <label class="form-label" for="arc_propuesta" id="lb">Propuesta</label>
+                <div class="form-outline">
+                    <input class="form-control is-valid" id="arc_propuesta" name="arc_propuesta" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx" placeholder="Cargar Propuesta"/>
+                </div>
+                @error('arc_propuesta')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Proyecto Final -->
+            <div class="col-md-6">
+                <label class="form-label" for="arc_adjunto" id="lb">Proyecto Final</label>
+                <div class="form-outline">
+                    <input class="form-control is-valid" id="arc_adjunto" name="arc_adjunto" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx" placeholder="Cargar Propuesta"/>
+                </div>
+                @error('arc_adjunto')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <br>
+            <!-- Boton Enviar -->
+            <button type="submit" class="mb-3 btn btn-success btn-block">Agregar proyecto</button>
+        </form>
+    </div>
+    
     </center>
+
+</div>
     @if (session('registroExitoso'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -166,6 +171,7 @@
         </div>
     </div>
 
+
 @stop
 
 @section('css')
@@ -178,7 +184,7 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--CSS Propio-->
-
+    <link rel="stylesheet" href="{{asset('css/segundo/perfil.css')}}">
 @endsection
 
 @section('js')
