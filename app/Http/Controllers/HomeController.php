@@ -185,16 +185,24 @@ class HomeController extends Controller
         if ($rol->name === 'coordinador') {
             // Lógica para coordinadores
             $persona = DB::table('personas')->where('usuario', $user->id)->first();
-            $coordinador = Coordinador::findOrFail($persona->num_identificacion);
-            $semillero = Semillero::findOrFail($coordinador->semillero);
-            return view('semillero', compact('semillero', 'user', 'coordinador'));
+            if($persona !== null){
+                $coordinador = Coordinador::findOrFail($persona->num_identificacion);
+                $semillero = Semillero::findOrFail($coordinador->semillero);
+                return view('semillero', compact('semillero', 'user', 'coordinador'));
+            }else{
+                return redirect()->route('perfil')->with('actualizarProfa', true);
+            }
         } elseif ($rol->name === 'semillerista') {
             // Lógica para semilleristas
             $persona = DB::table('personas')->where('usuario', $user->id)->first();
-            $semillerista = Semillerista::findOrFail($persona->num_identificacion);
-            $semillero = Semillero::findOrFail($semillerista->semillero);
-            $coordinador = Coordinador::where('semillero', $semillero->id_semillero)->first();
-            return view('semillero', compact('semillero', 'user', 'coordinador'));
+            if($persona !== null){
+                $semillerista = Semillerista::findOrFail($persona->num_identificacion);
+                $semillero = Semillero::findOrFail($semillerista->semillero);
+                $coordinador = Coordinador::where('semillero', $semillero->id_semillero)->first();
+                return view('semillero', compact('semillero', 'user', 'coordinador'));
+            }else{
+                return redirect()->route('perfil')->with('actualizarProfa', true);
+            }
         }
     }
     public function vistaProyectoEventoVinculado($codigo_evento){

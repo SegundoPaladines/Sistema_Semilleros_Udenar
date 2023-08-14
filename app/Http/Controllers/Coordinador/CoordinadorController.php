@@ -136,11 +136,15 @@ class CoordinadorController extends Controller
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador', $rol);
         $persona = DB::table('personas')->where('usuario', $user->id)->first();
-        $coordinador = Coordinador::findOrFail($persona->num_identificacion);
-        $semillero = Semillero::findOrFail($coordinador->semillero);
-        $id = $semillero->id_semillero;
-        $participantes = Semillerista::where('semillero', $id)->get();
-        return view('Coordinador.listaSemilleristas',compact('participantes', 'semillero', 'user', 'id'));
+        if($persona !== null){
+            $coordinador = Coordinador::findOrFail($persona->num_identificacion);
+            $semillero = Semillero::findOrFail($coordinador->semillero);
+            $id = $semillero->id_semillero;
+            $participantes = Semillerista::where('semillero', $id)->get();
+            return view('Coordinador.listaSemilleristas',compact('participantes', 'semillero', 'user', 'id'));
+        }else{
+            return redirect()->route('perfil')->with('actualizarProfa', true);
+        }
     }
     public function obtenerNombrePersona($num_identificacion){
         $user = auth()->user();

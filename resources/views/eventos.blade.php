@@ -17,30 +17,6 @@
 @section('content')
 <div class="container">
 
-    <center>
-        <table id="buscador-agregar">
-            <tr>
-                <td>
-                    <div id="contenedor-buscador" class="input-group">
-                        <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar Eventos">
-                        </div>
-                        <div id="ic">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                </td>
-                @can('director.administracion')
-                    <td>
-                        <div id="btn-agregar">
-                            <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
-                        </div>
-                    </td>
-                @endcan
-            </tr>
-        </table>    
-    
-    <br>
     <ul class="list-unstyled">
         <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
     </ul>  
@@ -76,11 +52,8 @@
                 <th scope="col">Fecha de Inicio</th>
                 <th scope="col">Fecha de Finalización</th>
                 @can('director.administracion')<th scope="col">Opciones</th>@endcan
-                @can('director.administracion')
-                <th scope="col">Opciones</th>
-                @endcan
                 @can('coordinador.administracion')
-                <th scope="col">Opción</th>
+                    <th scope="col">Opción</th>
                 @endcan
             </tr>
         </thead>
@@ -96,21 +69,15 @@
                     <td>{{$e->fecha_inicio}}</td>
                     <td>{{$e->fecha_fin}}</td>
                     @can('coordinador.administracion')
-                    <td>
-                    <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>
-                    </td>
+                        <td>
+                            <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>
+                        </td>
                     @endcan
                     @can('director.administracion')
-                        <td>
-                            <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
-                            <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
-                        </td>
                     <td>
-                    <center>
-                    <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>
-                    <a style="margin: 3px;" href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Editar</a>
-                    <a style="margin: 3px;" href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger btn-sm">Eliminar</a>
-                    </center>
+                        <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>
+                        <a style="margin: 3px;" href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Editar</a>
+                        <a style="margin: 3px;" href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger btn-sm">Eliminar</a>
                     </td>
                     @endcan
                 </tr>
