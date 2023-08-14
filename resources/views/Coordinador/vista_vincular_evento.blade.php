@@ -7,7 +7,7 @@
 <div class="container">
     <div class="note note-success mb-3">
         <figure class="text-center">
-        <h1>Listado de Eventos</h1>
+            <h1>Listado de Eventos</h1>
         </figure>
     </div>
 </div>
@@ -16,8 +16,16 @@
 
 @section('content')
 <div class="container">
-
+    
     <center>
+
+    <br>
+    <ul class="list-unstyled">
+        <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+    </ul>  
+    <br>
+
+    <br>
         <table id="buscador-agregar">
             <tr>
                 <td>
@@ -31,95 +39,62 @@
                     </div>
                 </td>
                 @can('director.administracion')
-                    <td>
-                        <div id="btn-agregar">
-                            <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
-                        </div>
-                    </td>
+                <td>
+                    <div id="btn-agregar">
+                        <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
+                    </div>
+                </td>
                 @endcan
             </tr>
         </table>    
-    
-    <br>
-    <ul class="list-unstyled">
-        <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
-    </ul>  
-    <br>
-
-    <br>
-    <!-- Buscador y botón Añadir usuario  -->
-    <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
-        <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
-            <div class="col-md-" id="inp">
-                <input id="buscador" type="text" placeholder="Buscar Eventos" style="width: 100%;">
-            </div>
-            <div id="ic">
-                <i class="fas fa-search"></i>
-            </div>
-        </div>
-        @can('director.administracion')
-        <div class="col-md-3" id="btn-agregar">
-            <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
-        </div>
-        @endcan
-    </div>
-
     </center>
+
     <br>
     <div class="tabla-container" style= "overflow-x: auto;">
-    <table id= "tabla_eventos" class="table">
-        <thead class="table-info">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Codigo Evento</th>
-                <th scope="col">Nombre de Evento</th>
-                <th scope="col">Fecha de Inicio</th>
-                <th scope="col">Fecha de Finalización</th>
-                @can('director.administracion')<th scope="col">Opciones</th>@endcan
-                @can('director.administracion')
-                <th scope="col">Opciones</th>
-                @endcan
-                @can('coordinador.administracion')
-                <th scope="col">Opción</th>
-                @endcan
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $i=1;
-            @endphp
-            @foreach($eventos as $e)
+
+        <table id= "tabla_eventos" class="table">
+            <thead class="table-info">
                 <tr>
-                    <th scope="row">{{$i}}</th>
-                    <td>{{$e->codigo_evento}}</td>
-                    <td>{{$e->nombre}}</td>
-                    <td>{{$e->fecha_inicio}}</td>
-                    <td>{{$e->fecha_fin}}</td>
-                    @can('coordinador.administracion')
-                    <td>
-                    <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>
-                    </td>
-                    @endcan
-                    @can('director.administracion')
-                        <td>
-                            <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
-                            <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
-                        </td>
-                    <td>
-                    <center>
-                    <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>
-                    <a style="margin: 3px;" href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Editar</a>
-                    <a style="margin: 3px;" href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger btn-sm">Eliminar</a>
-                    </center>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">Codigo Evento</th>
+                    <th scope="col">Nombre de Evento</th>
+                    <th scope="col">Fecha de Inicio</th>
+                    <th scope="col">Fecha de Finalización</th>
+                    <th scope="col">Opciones</th>
+                    @can('director-coordinador.eventos')
+                    <th scope="col">Opciones</th>
                     @endcan
                 </tr>
+            </thead>
+            <tbody>
                 @php
-                    $i++;
+                    $i=1;
                 @endphp
-            @endforeach
-        </tbody>
-    </table>
+                @foreach($eventos as $e)
+                    <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$e->codigo_evento}}</td>
+                        <td>{{$e->nombre}}</td>
+                        <td>{{$e->fecha_inicio}}</td>
+                        <td>{{$e->fecha_fin}}</td>
+                        <td>
+                            <center>
+                            <a style="margin: 3px;" href="{{route('vincular_proyecto_evento', ['codigo_evento' => $e->codigo_evento, 'id_proyecto' => $id_proyecto])}}" class="btn btn-primary btn-sm">Vincular</a>
+                            <a style="margin: 3px;" href="{{route('desvincular_proy_evento', ['codigo_evento' => $e->codigo_evento, 'id_proyecto' => $id_proyecto])}}" class="btn btn-danger btn-sm">Desvincular</a>
+                            @can('director.administracion')
+                            <a style="margin: 3px;" href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Editar</a>
+                            <a style="margin: 3px;" href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger btn-sm">Eliminar</a>
+                            @endcan
+                            </center>
+                        </td>
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
+
     </div>
 
     <script>
@@ -146,7 +121,6 @@
     </script>
 
 </div>
-
     @if (session('preguntarEliminar'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -160,6 +134,30 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() { 
                 mostrarAlertaRegistroExitoso("¡Evento: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
+            });
+        </script>
+    @endif
+
+    @if (session('vinculacionExitosa'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡Se ha vinculado el proyecto al evento de forma correcta!","Vinculacion Exitosa", true);
+            });
+        </script>
+    @endif
+
+    @if (session('vinculacionDenegada'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("No se pudo vincular al proyecto porque ya está vinculado al evento.","Vinculación Denegada", false);
+            });
+        </script>
+    @endif
+
+    @if (session('desvinculacionExitosa'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("El proyecto ha sido desvinculado del evento.","Vinculación Denegada", true);
             });
         </script>
     @endif

@@ -1,17 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Participantes')
+@section('title', 'Proyectos')
 
 @section('content_header')
 
 <div class="container">
     <div class="note note-success mb-3">
         <figure class="text-center">
-            <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
+        <h1>Listado de Proyectos</h1>
         </figure>
     </div>
 </div>
-
 
 @stop
 
@@ -30,62 +29,60 @@
         <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
             <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
                 <div class="col-md-" id="inp">
-                    <input id="buscador" type="text" placeholder="Buscar Semilleristas" style="width: 100%;">
+                    <input id="buscador" type="text" placeholder="Buscar proyecto" style="width: 100%;">
                 </div>
                 <div id="ic">
                     <i class="fas fa-search"></i>
                 </div>
             </div>
             <div class="col-md-3" id="btn-agregar">
-                <a href="{{route('add_par_sem', $id)}}" class="btn btn-success">Añadir Participantes</a>
+                <a href="{{route('vista_agr_proy_dir')}}" class="btn btn-success">Añadir Proyecto</a>
             </div>
         </div>
-        <br>
 
     </center>
-
     <br>
     <div class="tabla-container" style= "overflow-x: auto;">
-
-        <table id="tabla_usuarios" class="table">
+        <table id= "tabla_usuarios" class="table">
             <thead class="table-info">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Numero De Identificación</th>
-                    <th scope="col">Codigo Estudiante</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Semestre</th>
-                    <th scope="col">Fecha Vinculación</th>
+                    <th scope="col"></th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre del Proyecto</th>
                     <th scope="col">Estado</th>
+                    <th scope="col">Tipo de Proyecto</th>
+                    <th scope="col">Fecha inicio</th>
+                    <th scope="col">Fecha Finalización</th>
+                    <th scope="col">Propuesta</th>
+                    <th scope="col">Proyecto Final</th>
                     <th scope="col">Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 @php
-                $i=1;
+                    $i=1;
                 @endphp
-                @foreach($participantes as $p)
-                <tr>
-                    <th scope="row">{{$i}}</th>
-                    <td>{{$p->num_identificacion}}</td>
-                    <td>{{$p->cod_estudiante}}</td>
-                    <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($p->num_identificacion)}}</td>
-                    <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
-                    <td>{{$p->semestre}}</td>
-                    <td>{{$p->fecha_vinculacion}}</td>
-                    <td>{{$p->estado}}</td>
-                    <td>
-                        <center>
-                        <a style="margin: 3px;" href="{{route('desvincular_sem_sem', $p->num_identificacion)}}" class="btn btn-danger btn-sm">Desvincular</a>
-                        <a style="margin: 3px;" href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-primary btn-sm">Inf. Acad</a>
-                        <a style="margin: 3px;" href="{{route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-info btn-sm">Perfil</a>
-                        </center>
-                    </td>
-                </tr>
-                @php
-                $i++;
-                @endphp
+                @foreach($proyectos as $p)
+                    <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$p->id_proyecto}}</td>
+                        <td>{{$p->titulo}}</td>
+                        <td>{{$estadoOptions[$p->estado]}}</td>
+                        <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
+                        <td>{{$p->feacha_inicio}}</td>
+                        <td>{{$p->feacha_fin}}</td>
+                        <td><a href="{{ asset($p->arc_propuesta) }}" target="_blank">Descargar PDF</a></td>
+                        <td><a href="{{ asset($p->arc_adjunto) }}" target="_blank">Descargar PDF</a></td>
+                        <td>
+                            <a style="margin: 3px;" href="{{route('edit_proyectos_dir', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Editar</a>
+                            @if($p->id !== $user->id)
+                                <a style="margin: 3px;" href="{{route('eliminar_proyecto_dir', $p->id_proyecto)}}" class="btn btn-danger btn-sm">Eliminar</a>
+                            @endif
+                        </td>
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
                 @endforeach
             </tbody>
         </table>
@@ -115,12 +112,30 @@
 
     </script>
 
+
 </div>
 
-    @if (session('desvinculacionExitosa'))
+    @if (session('registroExitoso'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡La actualización se ha realizado exitosamente!","Actualizacion Exitosa", true);
+            });
+        </script>
+    @endif
+
+    @if (session('preguntarEliminar'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elimina = '{{ request()->query('elimina') }}';
+            mostrarModalEliminar(elimina);
+        });
+    </script>
+    @endif
+
+    @if (session('usuarioEliminado'))
         <script>
             document.addEventListener('DOMContentLoaded', function() { 
-                mostrarAlertaRegistroExitoso("Se desvinculo el usuario del semillero con Exito!", "Desvinculación Exitosa", true);
+                mostrarAlertaRegistroExitoso("¡Usuario: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
             });
         </script>
     @endif
@@ -147,28 +162,26 @@
             </div>
         </div>
     </div>
-
     <!-- Modal de Confirmación de Eliminación -->
     <div class="modal fade" id="delete_ext_emergente" tabindex="-1" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p id="usuarioEliminarNombre"></p>
                     <p id="usuarioEliminarCorreo"></p>
-                    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+                    <p>¿Estás seguro de que deseas eliminar este proyecto?</p>
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarUsuario()">Cancelar</button>
-                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarUsuario()">Eliminar</button>
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarProyecto()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarProyecto()">Eliminar</button>
                 </div>
             </div>
         </div>
     </div>
-
+    
 @stop
 
 @section('css')
@@ -189,6 +202,6 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!--Js Propio-->
-    <script src="{{ asset('js/segundo/listarusuarios.js') }}"></script>
-    <script src="{{ asset('js/segundo/reg_suarios.js') }}"></script>
+    <script src="{{ asset('js/juan/listarProyectos.js') }}"></script>
+    <script src="{{ asset('js/juan/alert.js') }}"></script>
 @stop

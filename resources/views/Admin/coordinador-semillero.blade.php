@@ -3,65 +3,81 @@
 @section('title', 'Perfil')
 
 @section('content_header')
-  <div class="row">
-    <div class="col">
+
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+        <h1>Coordinador Semillero</h1>
+        </figure>
     </div>
-        @if (isset($coordinador))
-            @if (isset($persona) && $persona->foto !== null)
-                <center>
-                    <div class="row">
-                        <div class="col">
-                            <h1>{{ $persona->nombre }} Coordinador del Semillero {{ $semillero->nombre }}</h1>
-                        </div>
-                    </div>    
-                    <br>
-                    <div class="row">
-                        <div class="col">
-                            <img class="foto-perfil" src="{{ Storage::url($persona->foto) }}" alt="Foto de Perfil">
-                        </div>
-                    </div> 
-                </center>
-                
-            @endif
-        @else
-            <h1>El Semillero {{ $semillero->nombre }} no tiene un coordinador</h1>
-        @endif
-  </div>
+</div>
+
 @stop
 
 @section('content')
 
+<div class="container">
+
     @if (isset($coordinador))
-        <center>
-            <div>
+
+        <div class="card text-center">
+            <div class="card-header">
+                <h4>{{ $persona->nombre }} - Coordinador del Semillero {{ $semillero->nombre }}</h4>
+            </div>
+            <div class="card-body">
+                @if(isset($persona) && $persona->foto !== null)
+                    <img class="foto-perfil" src="{{ Storage::url($persona->foto) }}" alt="Foto de Perfil">
+                @else
+                    <img class="foto-perfil" src="https://distrimar.s3.amazonaws.com/static/apm/img/misc/default_user.png" alt="Imagen por Defecto">
+                @endif
                 <div>
-                    Nombre: {{$persona->nombre}}
+                    <strong>Nombre: </strong>{{$persona->nombre}}
                 </div>
                 <div>
-                    Identificacion: {{$coordinador->num_identificacion}}
+                    <strong>Identificacion: </strong>{{$coordinador->num_identificacion}}
                 </div>
                 <div>
-                    Area del Conocimiento: {{$coordinador->area_con}}
+                    <strong>Area del Conocimiento: </strong>{{$coordinador->area_con}}
                 </div>
                 <div>
-                    Feccha Vinculacion: {{$coordinador->fecha_vinculacion}}
+                    <strong>Fecha Vinculacion: </strong>{{$coordinador->fecha_vinculacion}}
                 </div>
                 <div>
-                    <a href="{{ Storage::url($coordinador->acuerdo_nombramiento)}}" target="_blank">Acuerdo de nombramiento: </a>
+                    <strong>Correo: </strong>{{$persona->correo}}
+                </div>
+                <div>
+                    <a href="{{ Storage::url($coordinador->acuerdo_nombramiento)}}" target="_blank">Acuerdo de nombramiento </a>
+                </div>
+                <div>
                     <a href="{{ Storage::url($coordinador->acuerdo_nombramiento)}}" target="_blank" style="background-color: #6caa84;" class="btn btn-floating" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar Acuerdo">
                         <i class="fas fa-download"></i>
                     </a>
                 </div>
             </div>
-        </center>
-        <hr>
-        <br>
-        <center><a  href="{{route('perfiles', $persona->usuario)}}" class="btn btn-info">Perfil</a>
-        <br>
-        <center><a  href="{{route('destituir_coor_sem', $id)}}" class="btn btn-danger">Destituir</a></center>
+            <div class="card-footer text-muted">
+                <center><a  href="{{route('perfiles', $persona->usuario)}}" class="btn btn-primary">Perfil</a>
+                <a  href="{{route('destituir_coor_sem', $id)}}" class="btn btn-danger">Destituir</a></center>
+            </div>
+        </div>
+
     @else
-        <center> <div> <a href="{{route('vencular_coor_sem', $id)}}" class="btn btn-success">Nombrar un Coordinador</a> </div></center>
+
+        <div class="card text-center">
+            <div class="card-header">
+                <br>
+                <h4><mark>El Semillero {{ $semillero->nombre }} no tiene un coordinador</mark></h4>
+                <br>
+            </div>
+            <div class="card-footer text-muted">
+                <center>
+                <a href="{{route('vencular_coor_sem', $id)}}" class="btn btn-success">Nombrar un Coordinador</a>
+                </center>
+            </div>
+        </div>
+
     @endif
+
+</div>
 
     @if (session('coordinadorVinculado'))
         <script>
@@ -87,8 +103,8 @@
         </script>
     @endif
 
-      <!-- Modal -->
-      <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+    <!-- Modal -->
+    <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

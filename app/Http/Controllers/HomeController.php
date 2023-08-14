@@ -15,6 +15,7 @@ use App\Models\Evento;
 use App\Models\Semillero;
 use App\Models\Coordinador;
 use App\Models\Rol;
+use App\Models\Proyecto;
 
 class HomeController extends Controller
 {
@@ -27,7 +28,6 @@ class HomeController extends Controller
             return redirect()->route('perfil')->with('actualizarProfa', true);
         }
     }
-
     public function login(){
         if (auth()->check()) {
             $user = auth()->user();
@@ -37,16 +37,13 @@ class HomeController extends Controller
             return view('welcome');
         }
     }
-
     public function welcome() {
         session()->forget('openModal');
         return view('welcome');
     }
-
     public function registarUsuarios() {
         return redirect()->route('v_reg_usr');
     }
-
     public function checkEmail($email) {
         $user = User::where('email', $email)->first();
         return response()->json(['exists' => !is_null($user)]);
@@ -199,5 +196,32 @@ class HomeController extends Controller
             $coordinador = Coordinador::where('semillero', $semillero->id_semillero)->first();
             return view('semillero', compact('semillero', 'user', 'coordinador'));
         }
+    }
+    public function vistaProyectoEventoVinculado($codigo_evento){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $presentaciones =  DB::table('presentaciones')->where('evento', $codigo_evento)->get();
+        $proyectos = collect(); // Inicializar una colección vacía
+    
+        foreach ($presentaciones as $presentacion) {
+            $proyecto = Proyecto::find($presentacion->proyecto); // Buscar cada proyecto
+            if ($proyecto) {
+                $proyectos->push($proyecto); // Agregar proyecto a la colección
+            }
+        }
+        $estadoOptions = [
+            '1' => 'Propuesta',
+            '2' => 'En curso',
+            '3' => 'Finalizado',
+            '4' => 'Inactivo',
+        ];
+        
+        $tipoOptions = [
+            '1' => 'Investigación',
+            '2' => 'Innovación y Desarrollo',
+            '3' => 'Emprendimiento',
+        ];        
+        return view('verProyectosVinculados', compact('proyectos', 'user','estadoOptions','tipoOptions'));
     }
 }

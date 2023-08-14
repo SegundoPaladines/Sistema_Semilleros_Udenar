@@ -3,11 +3,25 @@
 @section('title', 'Semilleros Sistemas Udenar')
 
 @section('content_header')
-    <h1>Sistema de Semilleros</h1>
+
+    <div class="container">
+        <div class="note note-success mb-3">
+            <figure class="text-center">
+                <h1>Sistema de Semilleros</h1>
+            </figure>
+        </div>
+        <center>
+        <br>
+        <ul class="list-unstyled">
+            <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+        </ul>  
+        <br>
+        </center>
+    </div>
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
+    <!-- <p>Bienvenido {{ $user->name }}</p> -->
 @stop
 
 @section('css')
@@ -18,6 +32,7 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--Css Propio-->
+    <link rel="stylesheet" href="{{asset('css/segundo/reg_suarios.css')}}">
 @stop
 
 @section('js')

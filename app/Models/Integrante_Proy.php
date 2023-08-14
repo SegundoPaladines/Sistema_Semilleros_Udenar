@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Integrante_Proy extends Model
 {
+    protected $table = 'integrantes_proy';
     //el participante es de un proyecto
     public function proyecto(){
         return $this->belongsTo(Proyecto::class);

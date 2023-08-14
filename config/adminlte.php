@@ -352,7 +352,7 @@ return [
         ],
         [
             'text' => 'Proyectos',
-            'url'  => '/proyectos',
+            'url'  => 'admin/proyectos',
             'icon' => 'fas fa-fw fa-archive',
             'can'  => 'director.proyectos',
             'classes'  => 'nav-link-propio',
@@ -381,7 +381,7 @@ return [
         ],
         [
             'text' => 'Proyectos',
-            'url'  => 'semillero/proyectos',
+            'url'  => 'coordinador/proyectos',
             'icon' => 'fas fa-fw fa-archive',
             'can'  => 'coordinador.proyectos',
             'classes'  => 'nav-link-propio',

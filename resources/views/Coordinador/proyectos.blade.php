@@ -1,95 +1,96 @@
 @extends('adminlte::page')
 
-@section('title', 'Participantes')
+@section('title', 'Proyectos')
 
 @section('content_header')
 
 <div class="container">
     <div class="note note-success mb-3">
         <figure class="text-center">
-            <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
+        <h1>Listado de Proyectos</h1>
         </figure>
     </div>
 </div>
 
-
 @stop
 
 @section('content')
+
 <div class="container">
 
     <center>
 
-        <br>
-        <ul class="list-unstyled">
-            <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
-        </ul>  
-        <br>
+    <br>
+    <ul class="list-unstyled">
+        <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+    </ul>  
+    <br>
 
-        <!-- Buscador y botón Añadir usuario  -->
-        <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
-            <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
-                <div class="col-md-" id="inp">
-                    <input id="buscador" type="text" placeholder="Buscar Semilleristas" style="width: 100%;">
-                </div>
-                <div id="ic">
-                    <i class="fas fa-search"></i>
-                </div>
+    <!-- Buscador y botón Añadir usuario  -->
+    <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+        <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
+            <div class="col-md-" id="inp">
+                <input id="buscador" type="text" placeholder="Buscar proyecto" style="width: 100%;">
             </div>
-            <div class="col-md-3" id="btn-agregar">
-                <a href="{{route('add_par_sem', $id)}}" class="btn btn-success">Añadir Participantes</a>
+            <div id="ic">
+                <i class="fas fa-search"></i>
             </div>
         </div>
-        <br>
-
+        <div class="col-md-3" id="btn-agregar">
+            <a href="{{route('vista_agr_proy')}}" class="btn btn-success">Añadir Proyecto</a>
+        </div>
+    </div>
+    <br>
+    
     </center>
 
     <br>
     <div class="tabla-container" style= "overflow-x: auto;">
-
-        <table id="tabla_usuarios" class="table">
-            <thead class="table-info">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Numero De Identificación</th>
-                    <th scope="col">Codigo Estudiante</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Semestre</th>
-                    <th scope="col">Fecha Vinculación</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
+    <table id= "tabla_usuarios" class="table">
+        <thead class="table-info">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre del Proyecto</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Tipo de Proyecto</th>
+                <th scope="col">Fecha inicio</th>
+                <th scope="col">Fecha Finalización</th>
+                <th scope="col">Semillero</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
                 $i=1;
-                @endphp
-                @foreach($participantes as $p)
+            @endphp
+            @foreach($proyectos as $p)
                 <tr>
                     <th scope="row">{{$i}}</th>
-                    <td>{{$p->num_identificacion}}</td>
-                    <td>{{$p->cod_estudiante}}</td>
-                    <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerNombrePersona($p->num_identificacion)}}</td>
-                    <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
-                    <td>{{$p->semestre}}</td>
-                    <td>{{$p->fecha_vinculacion}}</td>
-                    <td>{{$p->estado}}</td>
+                    <td>{{$p->id_proyecto}}</td>
+                    <td>{{$p->titulo}}</td>
+                    <td>{{$estadoOptions[$p->estado]}}</td>
+                    <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
+                    <td>{{$p->feacha_inicio}}</td>
+                    <td>{{$p->feacha_fin}}</td>
+                    <td>{{$p->semillero}}</td>
+                    
                     <td>
                         <center>
-                        <a style="margin: 3px;" href="{{route('desvincular_sem_sem', $p->num_identificacion)}}" class="btn btn-danger btn-sm">Desvincular</a>
-                        <a style="margin: 3px;" href="{{route('act_info_acad_sem', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-primary btn-sm">Inf. Acad</a>
-                        <a style="margin: 3px;" href="{{route('perfiles', app('App\Http\Controllers\Admin\AdminController')->obtenerIdUsuario($p->num_identificacion))}}" class="btn btn-info btn-sm">Perfil</a>
+                        <a style="margin: 3px;" href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Vincular a Evento</a>
+                        <a style="margin: 3px;" href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-info btn-sm">Editar</a>
+                        @if($p->id !== $user->id)
+                            <a style="margin: 3px;" href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger btn-sm">Eliminar</a>
+                        @endif
                         </center>
                     </td>
                 </tr>
                 @php
-                $i++;
+                    $i++;
                 @endphp
-                @endforeach
-            </tbody>
-        </table>
-
+            @endforeach
+        </tbody>
+    </table>
     </div>
 
     <script>
@@ -116,11 +117,27 @@
     </script>
 
 </div>
+    @if (session('registroExitoso'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡La actualización se ha realizado exitosamente!","Actualizacion Exitosa", true);
+            });
+        </script>
+    @endif
 
-    @if (session('desvinculacionExitosa'))
+    @if (session('preguntarEliminar'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elimina = '{{ request()->query('elimina') }}';
+            mostrarModalEliminar(elimina);
+        });
+    </script>
+    @endif
+
+    @if (session('usuarioEliminado'))
         <script>
             document.addEventListener('DOMContentLoaded', function() { 
-                mostrarAlertaRegistroExitoso("Se desvinculo el usuario del semillero con Exito!", "Desvinculación Exitosa", true);
+                mostrarAlertaRegistroExitoso("¡Usuario: '{{ request()->query('eliminado') }}' eliminado con Éxito!", "Eliminado", true);
             });
         </script>
     @endif
@@ -147,28 +164,26 @@
             </div>
         </div>
     </div>
-
     <!-- Modal de Confirmación de Eliminación -->
     <div class="modal fade" id="delete_ext_emergente" tabindex="-1" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p id="usuarioEliminarNombre"></p>
                     <p id="usuarioEliminarCorreo"></p>
-                    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+                    <p>¿Estás seguro de que deseas eliminar este proyecto?</p>
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarUsuario()">Cancelar</button>
-                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarUsuario()">Eliminar</button>
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarProyecto()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarProyecto()">Eliminar</button>
                 </div>
             </div>
         </div>
     </div>
-
+    
 @stop
 
 @section('css')
@@ -189,6 +204,6 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <!--Js Propio-->
-    <script src="{{ asset('js/segundo/listarusuarios.js') }}"></script>
-    <script src="{{ asset('js/segundo/reg_suarios.js') }}"></script>
+    <script src="{{ asset('js/juan/listarProyectos.js') }}"></script>
+    <script src="{{ asset('js/juan/alert.js') }}"></script>
 @stop

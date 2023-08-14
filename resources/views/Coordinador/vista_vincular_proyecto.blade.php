@@ -7,10 +7,11 @@
 <div class="container">
     <div class="note note-success mb-3">
         <figure class="text-center">
-            <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
+            <h1>Listado de Proyectos </h1>
         </figure>
     </div>
 </div>
+
 
 @stop
 
@@ -31,7 +32,7 @@
             <td>
                 <div id="contenedor-buscador" class="input-group">
                     <div id="inp">
-                        <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
+                        <input id ="buscador" type="text" placeholder="Buscar proyecto">
                     </div>
                     <div id="ic">
                         <i class="fas fa-search"></i>
@@ -39,56 +40,61 @@
                 </div>
             </td>
         </tr>
-    </table>
-    
+    </table>   
+
     </center>
 
     <br>
     <div class="tabla-container" style= "overflow-x: auto;">
 
-    <table id="tabla_usuarios" class="table">
-        <thead class="table-info">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Numero De Identificación</th>
-                <th scope="col">Codigo Estudiante</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Semestre</th>
-                <th scope="col">Fecha Vinculación</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-            $i=1;
-            @endphp
-            @foreach($participantes as $p)
-            <tr>
-                <th scope="row">{{$i}}</th>
-                <td>{{$p->num_identificacion}}</td>
-                <td>{{$p->cod_estudiante}}</td>
-                <td>{{app('App\Http\Controllers\Coordinador\CoordinadorController')->obtenerNombrePersona($p->num_identificacion)}}</td>
-                <td>{{app('App\Http\Controllers\Coordinador\CoordinadorController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
-                <td>{{$p->semestre}}</td>
-                <td>{{$p->fecha_vinculacion}}</td>
-                <td>{{$p->estado}}</td>
-                <td>
-                    <center>
-                    <a style="margin: 3px;" href="{{route('desvincular_sem_sem_cor', $p->num_identificacion)}}" class="btn btn-danger btn-sm">Desvincular</a>
-                    <a style="margin: 3px;" href="{{route('vista_proyectos_vincular', $p->num_identificacion)}}" class="btn btn-primary btn-sm">Vincular a Proyecto</a>
-                    </center>
-                </td>
-            </tr>
-            @php
-            $i++;
-            @endphp
-            @endforeach
-        </tbody>
-    </table>
+        <table id= "tabla_usuarios" class="table">
+            <thead class="table-info">
+                <tr>
+                    <th scope="col"> </th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre del Proyecto</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Tipo de Proyecto</th>
+                    <th scope="col">Fecha inicio</th>
+                    <th scope="col">Fecha Finalización</th>
+                    <th scope="col">Propuesta</th>
+                    <th scope="col">Proyecto Final</th>
+                    <th scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $i=1;
+                @endphp
+                @foreach($proyectos as $p)
+                    <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$p->id_proyecto}}</td>
+                        <td>{{$p->titulo}}</td>
+                        <td>{{$estadoOptions[$p->estado]}}</td>
+                        <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
+                        <td>{{$p->feacha_inicio}}</td>
+                        <td>{{$p->feacha_fin}}</td>
+                        <td><a href="{{ asset($p->arc_propuesta) }}" target="_blank">Descargar PDF</a></td>
+                        <td><a href="{{ asset($p->arc_adjunto) }}" target="_blank">Descargar PDF</a></td>
+                        <td>
+                            <center>
+                            <a style="margin: 3px;" href="{{route('vincular_sem_proyecto', ['id_proyecto' => $p->id_proyecto, 'num_identificacion' => $num_identificacion])}}" class="btn btn-primary btn-sm">Vincular</a>
+                            @if($p->id !== $user->id)
+                            <a style="margin: 3px;" href="{{route('desvincular_sem_proy', ['id_proyecto' => $p->id_proyecto, 'num_identificacion' => $num_identificacion])}}" class="btn btn-danger btn-sm">Desvincular</a>
+                            @endif
+                            </center>
+                        </td>
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
 
-    </div>    
+    </div>
+
 
     <script>
 
@@ -113,13 +119,27 @@
 
     </script>
 
+</div>
+    @if (session('vinculacionExitosa'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡Se ha vinculado el semillerista al proyecto de forma correcta!","Vinculacion Exitosa", true);
+            });
+        </script>
+    @endif
 
+    @if (session('vinculacionDenegada'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("No se pudo vincular al semillerista porque ya está vinculado al proyecto.","Vinculación Denegada", false);
+            });
+        </script>
+    @endif
 
-</div>    
     @if (session('desvinculacionExitosa'))
         <script>
-            document.addEventListener('DOMContentLoaded', function() { 
-                mostrarAlertaRegistroExitoso("Se desvinculo el usuario del semillero con Exito!", "Desvinculación Exitosa", true);
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("El semillerista ha sido desvinculado del proyecto.","Vinculación Denegada", true);
             });
         </script>
     @endif
@@ -142,26 +162,6 @@
                 </div>
                 <div class="modal-footer">
                     <button widht="60%" type="button" id="btnCerrarModal" class="btn">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal de Confirmación de Eliminación -->
-    <div class="modal fade" id="delete_ext_emergente" tabindex="-1" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="usuarioEliminarNombre"></p>
-                    <p id="usuarioEliminarCorreo"></p>
-                    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
-                </div>
-                <div class="modal-footer">
-                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancerlarEliminarUsuario()">Cancelar</button>
-                    <button type="button" class="btn btn-danger" onclick="confirmarEliminarUsuario()">Eliminar</button>
                 </div>
             </div>
         </div>
