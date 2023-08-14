@@ -30,7 +30,7 @@
             @csrf
 
             <!-- Id del proyecto -->
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-outline">
                     <input type="text" id="id_proyecto" name="id_proyecto" class="form-control is-valid"/>
                     <label class="form-label" for="id_proyecto">Id del Proyecto</label>
@@ -41,7 +41,7 @@
             </div>
 
             <!-- Id del semillero -->
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-outline">
                     <input type="text" id="semillero" name="semillero" class="form-control is-valid"/>
                     <label class="form-label" for="semillero">Id del Semillero</label>
@@ -52,7 +52,7 @@
             </div>
 
             <!-- Titulo-->
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="form-outline">
                     <input type="text" id="titulo" name="titulo" class="form-control is-valid"/>
                     <label class="form-label" for="titulo">Titulo</label>
@@ -63,7 +63,7 @@
             </div>
 
             <!-- Opciones tipo de proyecto -->
-            <div class="col-md-3">
+            <div class="col-md-6">
             <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
                 <select id ="tipo_proyecto" name="tipo_proyecto" class="form-select is-valid">
                     <option selected>Tipo</option>
@@ -77,7 +77,7 @@
             </div>
 
             <!-- Opciones estado -->
-            <div class="col-md-3">
+            <div class="col-md-6">
             <label class="form-label" for="estado" id="lb">Seleccione: </label>
                 <select id ="estado" name="estado" class="form-select is-valid">
                     <option selected>Estado</option>
@@ -92,7 +92,7 @@
             </div>
 
             <!-- Fecha inicio -->
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <label class="form-label" for="feacha_inicio" id="lb">Fecha de Inicio</label>
                 <input class="form-control is-valid" type="date" id="feacha_inicio" name="feacha_inicio" placeholder="Fecha de inicio">
                 @error('feacha_inicio')
@@ -101,7 +101,7 @@
             </div>
 
             <!-- Fecha de finalización -->
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <label class="form-label" for="feacha_fin" id="lb">Fecha de Finalización</label>
                 <input class="form-control is-valid" type="date" id="feacha_fin" name="feacha_fin" placeholder="Fecha de fin">
                 @error('feacha_fin')

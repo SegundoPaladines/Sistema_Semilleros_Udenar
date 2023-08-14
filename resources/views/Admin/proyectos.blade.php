@@ -68,7 +68,7 @@
                         <td>{{$p->id_proyecto}}</td>
                         <td>{{$p->titulo}}</td>
                         <td>{{$estadoOptions[$p->estado]}}</td>
-                        <td>{{$estadoOptions[$p->tipo_proyecto]}}</td>
+                        <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
                         <td>{{$p->feacha_inicio}}</td>
                         <td>{{$p->feacha_fin}}</td>
                         <td><a href="{{ asset($p->arc_propuesta) }}" target="_blank">Descargar PDF</a></td>
