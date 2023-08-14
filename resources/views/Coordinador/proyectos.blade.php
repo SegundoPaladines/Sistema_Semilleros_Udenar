@@ -3,36 +3,51 @@
 @section('title', 'Proyectos')
 
 @section('content_header')
-    <h1>Listado de Proyectos</h1>
+
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+        <h1>Listado de Proyectos</h1>
+        </figure>
+    </div>
+</div>
+
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+
+<div class="container">
+
     <center>
-        <table id="buscador-agregar">
-            <tr>
-                <td>
-                    <div id="contenedor-buscador" class="input-group">
-                        <div id="inp">
-                            <input id ="buscador" type="text" placeholder="Buscar proyecto">
-                        </div>
-                        <div id="ic">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div id="btn-agregar">
-                        <a href="{{route('vista_agr_proy')}}" class="btn btn-success">Añadir Proyecto</a>
-                    </div>
-                </td>
-            </tr>
-        </table>    
-    </center>
+
     <br>
+    <ul class="list-unstyled">
+        <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+    </ul>  
+    <br>
+
+    <!-- Buscador y botón Añadir usuario  -->
+    <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+        <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
+            <div class="col-md-" id="inp">
+                <input id="buscador" type="text" placeholder="Buscar proyecto" style="width: 100%;">
+            </div>
+            <div id="ic">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="col-md-3" id="btn-agregar">
+            <a href="{{route('vista_agr_proy')}}" class="btn btn-success">Añadir Proyecto</a>
+        </div>
+    </div>
+    <br>
+    
+    </center>
+
+    <br>
+    <div class="tabla-container" style= "overflow-x: auto;">
     <table id= "tabla_usuarios" class="table">
-        <thead>
+        <thead class="table-info">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Id</th>
@@ -61,11 +76,13 @@
                     <td>{{$p->semillero}}</td>
                     
                     <td>
-                        <a href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-primary">Editar</a>
-                        <a href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary">Vincular a Evento</a>
+                        <center>
+                        <a style="margin: 3px;" href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Vincular a Evento</a>
+                        <a style="margin: 3px;" href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-info btn-sm">Editar</a>
                         @if($p->id !== $user->id)
-                            <a href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger">Eliminar</a>
+                            <a style="margin: 3px;" href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger btn-sm">Eliminar</a>
                         @endif
+                        </center>
                     </td>
                 </tr>
                 @php
@@ -74,7 +91,32 @@
             @endforeach
         </tbody>
     </table>
+    </div>
 
+    <script>
+
+        //buscador
+        document.addEventListener("DOMContentLoaded", function() {
+            var filtroBusqueda = document.getElementById("buscador");
+
+            filtroBusqueda.addEventListener("keyup", function() {
+                var valorBusqueda = filtroBusqueda.value.toLowerCase();
+                var filas = document.querySelectorAll("#tabla_usuarios tbody tr");
+
+                filas.forEach(function(fila) {
+                    var contenidoFila = fila.textContent.toLowerCase();
+                    if (contenidoFila.indexOf(valorBusqueda) !== -1) {
+                        fila.style.display = "table-row";
+                    } else {
+                        fila.style.display = "none";
+                    }
+                });
+            });
+        });
+
+    </script>
+
+</div>
     @if (session('registroExitoso'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
