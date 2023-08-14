@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('semillero',10);
             $table->string('titulo');
             $table->string('tipo_proyecto',20);
-            $table->enum('estado',[0,1]); //o inactivo, 1 activo
+            $table->string('estado',20); //o inactivo, 1 activo
             $table->date('feacha_inicio');
             $table->date('feacha_fin');
             $table->string('arc_propuesta');
