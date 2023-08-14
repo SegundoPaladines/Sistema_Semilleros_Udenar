@@ -217,8 +217,20 @@ class CoordinadorController extends Controller
         $persona = DB::table('personas')->where('usuario', $user->id)->first();
         $coordinador = Coordinador::findOrFail($persona->num_identificacion);
         $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
+        $estadoOptions = [
+            '1' => 'Propuesta',
+            '2' => 'En curso',
+            '3' => 'Finalizado',
+            '4' => 'Inactivo',
+        ];
         
-        return view('Coordinador.vista_vincular_proyecto', compact('user','proyectos','num_identificacion'));
+        $tipoOptions = [
+            '1' => 'Investigación',
+            '2' => 'Innovación y Desarrollo',
+            '3' => 'Emprendimiento',
+        ];
+        
+        return view('Coordinador.vista_vincular_proyecto', compact('user','proyectos','num_identificacion','estadoOptions','tipoOptions'));
     }
     public function addSemProyecto($num_identificacion){
         $user = auth()->user();
