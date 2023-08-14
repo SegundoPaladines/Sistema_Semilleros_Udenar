@@ -3,13 +3,29 @@
 @section('title', 'Eventos')
 
 @section('content_header')
-    <h1>Listado de Eventos</h1>
+
+<div class="container">
+    <div class="note note-success mb-3">
+        <figure class="text-center">
+            <h1>Listado de Eventos</h1>
+        </figure>
+    </div>
+</div>
+
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}</p>
-    <br>
+<div class="container">
+    
     <center>
+
+    <br>
+    <ul class="list-unstyled">
+        <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+    </ul>  
+    <br>
+
+    <br>
         <table id="buscador-agregar">
             <tr>
                 <td>
@@ -32,47 +48,79 @@
             </tr>
         </table>    
     </center>
-    <br>
-    <table id= "tabla_eventos" class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Codigo Evento</th>
-                <th scope="col">Nombre de Evento</th>
-                <th scope="col">Fecha de Inicio</th>
-                <th scope="col">Fecha de Finalización</th>
-                @can('director-coordinador.eventos')
-                <th scope="col">Opciones</th>
-                @endcan
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $i=1;
-            @endphp
-            @foreach($eventos as $e)
-                <tr>
-                    <th scope="row">{{$i}}</th>
-                    <td>{{$e->codigo_evento}}</td>
-                    <td>{{$e->nombre}}</td>
-                    <td>{{$e->fecha_inicio}}</td>
-                    <td>{{$e->fecha_fin}}</td>
-                    <td>
-                        <a href="{{route('vincular_proyecto_evento', ['codigo_evento' => $e->codigo_evento, 'id_proyecto' => $id_proyecto])}}" class="btn btn-primary">Vincular</a>
-                        <a href="{{route('desvincular_proy_evento', ['codigo_evento' => $e->codigo_evento, 'id_proyecto' => $id_proyecto])}}" class="btn btn-danger">Desvincular</>
-                        @can('director.administracion')
-                        <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
-                        <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
-                        @endcan
-                    </td>
-                </tr>
-                @php
-                    $i++;
-                @endphp
-            @endforeach
-        </tbody>
-    </table>
 
+    <br>
+    <div class="tabla-container" style= "overflow-x: auto;">
+
+        <table id= "tabla_eventos" class="table">
+            <thead class="table-info">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Codigo Evento</th>
+                    <th scope="col">Nombre de Evento</th>
+                    <th scope="col">Fecha de Inicio</th>
+                    <th scope="col">Fecha de Finalización</th>
+                    <th scope="col">Opciones</th>
+                    @can('director-coordinador.eventos')
+                    <th scope="col">Opciones</th>
+                    @endcan
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $i=1;
+                @endphp
+                @foreach($eventos as $e)
+                    <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$e->codigo_evento}}</td>
+                        <td>{{$e->nombre}}</td>
+                        <td>{{$e->fecha_inicio}}</td>
+                        <td>{{$e->fecha_fin}}</td>
+                        <td>
+                            <center>
+                            <a style="margin: 3px;" href="{{route('vincular_proyecto_evento', ['codigo_evento' => $e->codigo_evento, 'id_proyecto' => $id_proyecto])}}" class="btn btn-primary btn-sm">Vincular</a>
+                            <a style="margin: 3px;" href="{{route('desvincular_proy_evento', ['codigo_evento' => $e->codigo_evento, 'id_proyecto' => $id_proyecto])}}" class="btn btn-danger btn-sm">Desvincular</a>
+                            @can('director.administracion')
+                            <a style="margin: 3px;" href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Editar</a>
+                            <a style="margin: 3px;" href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger btn-sm">Eliminar</a>
+                            @endcan
+                            </center>
+                        </td>
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+
+        //buscador
+        document.addEventListener("DOMContentLoaded", function() {
+            var filtroBusqueda = document.getElementById("buscador");
+
+            filtroBusqueda.addEventListener("keyup", function() {
+                var valorBusqueda = filtroBusqueda.value.toLowerCase();
+                var filas = document.querySelectorAll("#tabla_eventos tbody tr");
+
+                filas.forEach(function(fila) {
+                    var contenidoFila = fila.textContent.toLowerCase();
+                    if (contenidoFila.indexOf(valorBusqueda) !== -1) {
+                        fila.style.display = "table-row";
+                    } else {
+                        fila.style.display = "none";
+                    }
+                });
+            });
+        });
+
+    </script>
+
+</div>
     @if (session('preguntarEliminar'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
