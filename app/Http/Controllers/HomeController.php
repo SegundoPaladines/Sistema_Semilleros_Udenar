@@ -12,12 +12,9 @@ use App\Models\Persona;
 use App\Models\User;
 use App\Models\Semillerista;
 use App\Models\Evento;
-<<<<<<< HEAD
-=======
 use App\Models\Semillero;
 use App\Models\Coordinador;
 use App\Models\Rol;
->>>>>>> master
 
 class HomeController extends Controller
 {
@@ -30,6 +27,7 @@ class HomeController extends Controller
             return redirect()->route('perfil')->with('actualizarProfa', true);
         }
     }
+
     public function login(){
         if (auth()->check()) {
             $user = auth()->user();
@@ -39,13 +37,16 @@ class HomeController extends Controller
             return view('welcome');
         }
     }
+
     public function welcome() {
         session()->forget('openModal');
         return view('welcome');
     }
+
     public function registarUsuarios() {
         return redirect()->route('v_reg_usr');
     }
+
     public function checkEmail($email) {
         $user = User::where('email', $email)->first();
         return response()->json(['exists' => !is_null($user)]);
@@ -176,13 +177,7 @@ class HomeController extends Controller
         }
     }
     public function listarEventos(){
-<<<<<<< HEAD
         $user = auth()->user();
-        $eventos = Evento::all();
-        return view('eventos', compact('eventos','user'));
-    }
-=======
-        $user = auth()->user();        
         $eventos = Evento::all();
         return view('eventos', compact('eventos','user'));
     }
@@ -201,8 +196,8 @@ class HomeController extends Controller
             $persona = DB::table('personas')->where('usuario', $user->id)->first();
             $semillerista = Semillerista::findOrFail($persona->num_identificacion);
             $semillero = Semillero::findOrFail($semillerista->semillero);
+            $coordinador = Coordinador::where('semillero', $semillero->id_semillero)->first();
             return view('semillero', compact('semillero', 'user', 'coordinador'));
         }
     }
->>>>>>> master
 }

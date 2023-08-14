@@ -41,7 +41,4 @@ Route::middleware([
     Route::post('/cambiar_contrasena', [HomeController::class, 'cambiarContrasena'])->name('cambio-contrasena');
     Route::get('/eventos', [HomeController::class, 'listarEventos'])->name('listar_eventos');
     Route::get('/semillero', [HomeController::class, 'verSemillero'])->name('ver_semillero');
-    // Route::get('/eventos', [AdminController::class, 'listarEventos'])->name('listar_eventos');
-
-    //Route::get('/cambiar_contrasena', [HomeController::class, 'contrasena'])-name('contrasena');
 });

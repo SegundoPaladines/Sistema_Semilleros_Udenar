@@ -366,8 +366,6 @@ class AdminController extends Controller
         
         return view('Admin.agregar_semilleros', compact('user'));
     }
-    
-
     public function vistaRegEventos(){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];

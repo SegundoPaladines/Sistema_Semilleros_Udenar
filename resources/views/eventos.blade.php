@@ -23,19 +23,11 @@
                     </div>
                 </td>
                 @can('director.administracion')
-<<<<<<< HEAD
                     <td>
                         <div id="btn-agregar">
                             <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
                         </div>
                     </td>
-=======
-                <td>
-                    <div id="btn-agregar">
-                        <a href="{{route('vista_reg_eventos')}}" class="btn btn-success">Añadir eventos</a>
-                    </div>
-                </td>
->>>>>>> master
                 @endcan
             </tr>
         </table>    
@@ -49,14 +41,7 @@
                 <th scope="col">Nombre de Evento</th>
                 <th scope="col">Fecha de Inicio</th>
                 <th scope="col">Fecha de Finalización</th>
-<<<<<<< HEAD
                 @can('director.administracion')<th scope="col">Opciones</th>@endcan
-=======
-                @can('director.administracion')
-                <th scope="col">Opciones</th>
-                @endcan
->>>>>>> master
-            </tr>
         </thead>
         <tbody>
             @php
@@ -70,17 +55,10 @@
                     <td>{{$e->fecha_inicio}}</td>
                     <td>{{$e->fecha_fin}}</td>
                     @can('director.administracion')
-<<<<<<< HEAD
                         <td>
                             <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
                             <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
                         </td>
-=======
-                    <td>
-                        <a href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-primary">Editar</a>
-                        <a href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger">Eliminar</a>
-                    </td>
->>>>>>> master
                     @endcan
                 </tr>
                 @php
