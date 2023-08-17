@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="container">
-    <div class="note note-success mb-3">
+    <div class="mb-3 note note-success">
         <figure class="text-center">
             <h1>Listado de Usuarios</h1>
         </figure>
@@ -38,7 +38,7 @@
     <!-- Creación de tarjetas usuarios -->
     <div  class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center;" >
         @foreach($usuarios as $u)   
-        <div class="card mb-3 text-center" style="max-width: 540px;  margin: 10px; height: 250px;" >
+        <div class="mb-3 text-center card" style="max-width: 540px;  margin: 10px; height: 250px;" >
             <div class="row g-0" style="height: 100%;">
                 <div class="col-md-4" style="display: flex; justify-content: center; align-items: center;">
                     <img
@@ -175,6 +175,7 @@
     <!--CSS propio-->
     <link rel="stylesheet" href="{{asset('css/segundo/listarusuarios.css')}}">
     <link rel="stylesheet" href="{{asset('css/segundo/reg_suarios.css')}}">
+    <link href="{{ asset('css/segundo/general.css') }}" rel="stylesheet">
 @endsection
 
 @section('js')

@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="container">
-    <div class="note note-success mb-3">
+    <div class="mb-3 note note-success">
         <figure class="text-center">
         <h1>Registrar Semillero</h1>
         </figure>
@@ -243,6 +243,7 @@
     <!-- CSS Propio -->
     <link href="{{ asset('css/segundo/campos-especiales.css') }}" rel="stylesheet">
     <link href="{{ asset('css/segundo/perfil.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/segundo/general.css') }}" rel="stylesheet">
 @stop
 
 @section('js')

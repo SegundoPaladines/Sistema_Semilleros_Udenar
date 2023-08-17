@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -64,5 +65,37 @@ class User extends Authenticatable
     //relacion uno a uno de vuelta con persona
     public function persona(){
         return $this->belongsTo(Persona::class);
+    }
+
+    public function adminlte_image(){
+        $user = auth()->user();
+        $persona = Persona::where('usuario', $user->id)->first();
+        if($persona !== null){
+            $foto = $persona->foto;
+            if($foto !== null){
+                $foto= Storage::url($persona->foto);
+                return $foto;
+            }else{
+                return 'https://distrimar.s3.amazonaws.com/static/apm/img/misc/default_user.png';
+            }
+        }else{
+            return 'https://distrimar.s3.amazonaws.com/static/apm/img/misc/default_user.png';
+        }
+    }
+    public function adminlte_desc(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = '';
+        if($nombre_rol == 'admin'){
+            $rol='Administrador';
+        }else if($nombre_rol == 'coordinador'){
+            $rol='Coordinador';
+        }else if($nombre_rol == 'semillerista'){
+            $rol='Semillerista';
+        }
+        return $rol;
+    }
+    public function adminlte_profile_url(){
+        return 'perfil';
     }
 }

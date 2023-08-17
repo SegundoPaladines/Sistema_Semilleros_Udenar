@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="container">
-    <div class="note note-success mb-3">
+    <div class="mb-3 note note-success">
         <figure class="text-center">
             <h1>Cambiar Contraseña</h1>
         </figure>
@@ -103,6 +103,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--CSS Propio-->
     <link rel="stylesheet" href="{{asset('css/segundo/ress-passwd.css')}}">
+    <link href="{{ asset('css/segundo/general.css') }}" rel="stylesheet">
 @endsection
 
 @section('js')

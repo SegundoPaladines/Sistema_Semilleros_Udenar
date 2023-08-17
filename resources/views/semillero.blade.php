@@ -5,7 +5,7 @@
 @section('content_header')
 
 <div class="container">
-    <div class="note note-success mb-3">
+    <div class="mb-3 note note-success">
         <figure class="text-center">
             <h1>Semillero</h1>
         </figure>
@@ -29,7 +29,7 @@
     <br>
 
     <div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center;" >
-        <div class="card mb-3 text-center" style="width: 95%;  margin: 10px; height: 100%; border-radius: 90px;" >
+        <div class="mb-3 text-center card" style="width: 95%;  margin: 10px; height: 100%; border-radius: 90px;" >
             <div class="row g-0" style="height: 95%;" style="margin: 5px;">
                 <div class="col-md-4" style="display: flex; justify-content: center; align-items: center; background-color: #FAFAFA; border-top-left-radius: 90px; border-bottom-left-radius: 90px;">
                     <div class="col">
@@ -173,7 +173,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--CSS propio-->
     <link rel="stylesheet" href="{{asset('css/segundo/listarsemilleros.css')}}">
-    
+    <link href="{{ asset('css/segundo/general.css') }}" rel="stylesheet">
 @endsection
 
 @section('js')

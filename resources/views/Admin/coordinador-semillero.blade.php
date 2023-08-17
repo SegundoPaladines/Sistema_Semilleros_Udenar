@@ -5,7 +5,7 @@
 @section('content_header')
 
 <div class="container">
-    <div class="note note-success mb-3">
+    <div class="mb-3 note note-success">
         <figure class="text-center">
         <h1>Coordinador Semillero</h1>
         </figure>
@@ -20,7 +20,7 @@
 
     @if (isset($coordinador))
 
-        <div class="card text-center">
+        <div class="text-center card">
             <div class="card-header">
                 <h4>{{ $persona->nombre }} - Coordinador del Semillero {{ $semillero->nombre }}</h4>
             </div>
@@ -62,7 +62,7 @@
 
     @else
 
-        <div class="card text-center">
+        <div class="text-center card">
             <div class="card-header">
                 <br>
                 <h4><mark>El Semillero {{ $semillero->nombre }} no tiene un coordinador</mark></h4>
@@ -137,6 +137,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--CSS Propio-->
     <link rel="stylesheet" href="{{asset('css/segundo/perfil.css')}}">
+    <link href="{{ asset('css/segundo/general.css') }}" rel="stylesheet">
 @endsection
 
 @section('js')
