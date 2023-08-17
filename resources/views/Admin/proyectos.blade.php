@@ -53,8 +53,7 @@
                     <th scope="col">Tipo de Proyecto</th>
                     <th scope="col">Fecha inicio</th>
                     <th scope="col">Fecha Finalización</th>
-                    <th scope="col">Propuesta</th>
-                    <th scope="col">Proyecto Final</th>
+                    <th scope="col">Semillero</th>
                     <th scope="col">Opciones</th>
                 </tr>
             </thead>
@@ -71,8 +70,7 @@
                         <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
                         <td>{{$p->feacha_inicio}}</td>
                         <td>{{$p->feacha_fin}}</td>
-                        <td><a href="{{ asset($p->arc_propuesta) }}" target="_blank">Descargar PDF</a></td>
-                        <td><a href="{{ asset($p->arc_adjunto) }}" target="_blank">Descargar PDF</a></td>
+                        <td>{{$p->semillero}}</td>
                         <td>
                             <a style="margin: 3px;" href="{{route('edit_proyectos_dir', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Editar</a>
                             @if($p->id !== $user->id)
