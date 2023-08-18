@@ -12,15 +12,15 @@ spans.forEach((span) => {
       span.classList.add('badge-warning');
     }
 });
+
 //Filtro buscar usuarios
 const searchInput = document.getElementById('buscador');
-const cards = document.querySelectorAll('.card-container .card');
+const cards = document.querySelectorAll('.card-flip');
 
 searchInput.addEventListener('input', filterCards);
 
 function filterCards() {
     const searchTerm = searchInput.value.toLowerCase();
-
     cards.forEach(card => {
         const name = card.querySelector('.card-text').textContent.toLowerCase();
         const role = card.querySelector('.badge').textContent.toLowerCase();

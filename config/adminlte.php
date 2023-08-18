@@ -136,7 +136,7 @@ return [
     'usermenu_header_class' => 'foto_usr',
     'usermenu_image' => true,
     'usermenu_desc' => true,
-    'usermenu_profile_url' => true,
+    'usermenu_profile_url' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -213,7 +213,7 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -235,12 +235,12 @@ return [
     */
 
     'right_sidebar' => false,
-    'right_sidebar_icon' => 'fas fa-cogs',
-    'right_sidebar_theme' => 'dark',
+    'right_sidebar_icon' => 'fas fa-cog',
+    'right_sidebar_theme' => 'light',
     'right_sidebar_slide' => true,
     'right_sidebar_push' => true,
     'right_sidebar_scrollbar_theme' => 'os-theme-light',
-    'right_sidebar_scrollbar_auto_hide' => 'l',
+    'right_sidebar_scrollbar_auto_hide' => '1',
 
     /*
     |--------------------------------------------------------------------------
@@ -297,34 +297,40 @@ return [
             'text' => 'search',
         ],*/
         //Perfil <- todos ven
+        //barra de configuracion del panel de usuario
         [
-            'text'    => 'Perfil',
+            'text'    => 'Datos Personales',
             'icon'    => 'fas fa-fw fa-user',
-            'classes'  => 'nav-link-propio',
-            'submenu' => [
-                [
-                    'text' => 'Datos Personales',
-                    'url'  => 'perfil',
-                    'icon' => 'fas fa-fw fa-address-card',
-                    'classes'  => 'nav-link-propio',
-                    //'can'  => 'perfil',
-                ],
-                [
-                    'text' => 'Cambiar Contraseña',
-                    'url'  => 'cambiar_contrasena',
-                    'icon' => 'fas fa-fw fa-lock',
-                    'classes'  => 'nav-link-propio',
-                    //'can'  => 'perfil',
-                ],
-            ],
-            'can'  => 'perfil',
+            'icon_color' => 'info',
+            'classes'  => 'link_usr info',
+            'url' => 'perfil',
+            'topnav_user' => true,
+            //'can'  => 'perfil',
         ],
-
-        //Director <- solo director ve
+        //puede el semillerista
         [
+            'text' => 'Datos Academicos',
+            'url'  => 'semillerista/actualizar_datos_semillerista',
+            'icon_color' => 'info',
+            'icon' => 'fas fa-fw fa-address-card',
+            'classes'  => 'link_usr',
+            'topnav_user' => true,
+            'can'  => 'semillerista.proyectos',
+        ],
+        [
+            'text' => 'Cambiar Contraseña',
+            'url'  => 'cambiar_contrasena',
+            'icon' => 'fas fa-fw fa-lock',
+            'icon_color' => 'info',
+            'classes'  => 'link_usr',
+            'topnav_user' => true,
+            //'can'  => 'perfil',
+        ],
+        //Director <- solo director ve
+        /*[
             'header' => 'ADMINISTRACIÓN',
             'can'  => 'director.administracion',
-        ],
+        ],*/
         [
             'text' => 'Usuarios',
             'url'  => 'admin/usuarios',
@@ -349,10 +355,10 @@ return [
 
 
         //coordinador <- solo coordinador ver
-        [
+        /*[
             'header' => 'ADMINISTRACIÓN',
             'can'  => 'coordinador.administracion',
-        ],
+        ],*/
         [
             'text' => 'Semillero',
             'url'  => '/semillero',
@@ -393,7 +399,7 @@ return [
             'icon' => 'fas fa-fw fa-calendar',
             'can'  => 'eventos',
             'classes'  => 'nav-link-propio',
-        ],
+        ],        
     ],
 
     /*

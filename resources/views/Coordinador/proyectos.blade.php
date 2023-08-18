@@ -196,6 +196,7 @@
     <!--CSS propio-->
     <link rel="stylesheet" href="{{asset('css/segundo/listarusuarios.css')}}">
     <link rel="stylesheet" href="{{asset('css/segundo/reg_suarios.css')}}">
+    <link href="{{ asset('css/segundo/general.css') }}" rel="stylesheet">
 @endsection
 
 @section('js')

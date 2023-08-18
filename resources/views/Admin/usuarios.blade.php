@@ -37,52 +37,50 @@
     </center>
     <!-- Creación de tarjetas usuarios -->
     <div  class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center;" >
-        @foreach($usuarios as $u)   
-        <div class="mb-3 text-center card" style="max-width: 540px;  margin: 10px; height: 250px;" >
-            <div class="row g-0" style="height: 100%;">
-                <div class="col-md-4" style="display: flex; justify-content: center; align-items: center;">
-                    <img
-                        src= "https://distrimar.s3.amazonaws.com/static/apm/img/misc/default_user.png"
-                        alt="Foto Usuario"
-                        class="img-fluid rounded-pill"
-                        style="width: 500px; height: 210px;"
-                    />
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <div style="margin: 10px;">
+        @foreach($usuarios as $u)
+            <div class="card-flip">
+                <div class="card-inner">
+                    <div class="card-front" style="width: 15em; background-image: linear-gradient(to top right, rgba(10, 10, 22, 0.6), rgba(139, 135, 125, 0.6)), url('{{ app('App\Http\Controllers\Admin\AdminController')->obtenerFoto($u->id) }}');">
+                        <div>
                             <h5 class="card-text" >{{$u->name}}</h5>
                         </div>
-                        <p class="card-text" style="margin: 10px;">
-                        <span id="rol_{{$u->id}}"class="badge rounded-pill d-inline">
-                            {{ $u->getRoleNames()->first() }}
-                        </span>
-                        </p>
-                        <p class="card-text">
-                        <small class="text-muted">Correo: {{$u->email}}</small>
-                        </p>
+                    </div>
+                    <div class="card-back">
+                        <div>
+                            <br>
+                            <h5 class="card-text2" >{{$u->name}}</h5>
+                        </div>
+                        <div>
+                            <p class="card-text" style="margin: 10px;">
+                                <span id="rol_{{$u->id}}"class="badge rounded-pill d-inline">
+                                    {{ $u->getRoleNames()->first() }}
+                                </span>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Correo: {{$u->email}}</small>
+                            </p>
+                            <hr>
+                        </div>
                         <hr>
-                        
-                        <a href="{{route('edit_usr', $u->id)}}" class="btn btn-primary">Editar</a>
+                        <div>
+                            <a href="{{route('edit_usr', $u->id)}}" class="btn btn-primary">Editar</a>
+                            @if($u->id !== $user->id)
+                                <a href="{{route('delete_usr', $u->id)}}" class="btn btn-danger">Eliminar</a>
+                            @endif
 
-                        @if($u->id !== $user->id)
-                            <a href="{{route('delete_usr', $u->id)}}" class="btn btn-danger">Eliminar</a>
-                        @endif
+                            @if($u->id !== $user->id)
+                                <a href="{{route('perfiles', $u->id)}}" class="btn btn-info">Perfil</a>
+                            @else
+                                <a href="{{route('perfil')}}" class="btn btn-info">Perfil</a>
+                            @endif
 
-                        @if($u->id !== $user->id)
-                            <a href="{{route('perfiles', $u->id)}}" class="btn btn-info">Perfil</a>
-                        @else
-                            <a href="{{route('perfil')}}" class="btn btn-info">Perfil</a>
-                        @endif
-
-                        @if($u->getRoleNames()->first() == 'semillerista')
-                            <a href="{{route('act_info_acad_sem', $u->id)}}" class="btn btn-dark" style="margin: 5px;">Inf. Acad</a>
-                        @endif
-
+                            @if($u->getRoleNames()->first() == 'semillerista')
+                                <a href="{{route('act_info_acad_sem', $u->id)}}" class="btn btn-dark">Inf. Acad</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endforeach
     </div>
 

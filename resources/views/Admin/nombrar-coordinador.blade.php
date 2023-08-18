@@ -17,7 +17,6 @@
 @section('content')
 <div class="container">
     <center>
-        
         <div id="contenedor-form">
 
             <br>
@@ -68,13 +67,11 @@
             </table>
 
             <br>
-        
         </div>
-
     </center>
 </div>
     <!-- Modal -->
-    <div class="modal fade" id="nombrarCoordinadorModal" tabindex="-1" aria-labelledby="nombrarCoordinadorModalLabel" aria-hidden="true">
+    <div class="modal fade" id="nombrarCoordinadorModal">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -102,7 +99,6 @@
             </div>
         </div>
         </div>
-
     </div>
     
 @stop

@@ -1087,4 +1087,18 @@ class AdminController extends Controller
         
         return redirect()->route('proyectos_dir', ['eliminado' => $proyecto_del->nombre])->with('proyectoEliminado', true);
     }
+    public function obtenerFoto($id){
+        $persona = Persona::where('usuario', $id)->first();
+        if($persona !== null){
+            $foto = $persona->foto;
+            if($foto !== null){
+                $foto= Storage::url($persona->foto);
+                return $foto;
+            }else{
+                return 'https://distrimar.s3.amazonaws.com/static/apm/img/misc/default_user.png';
+            }
+        }else{
+            return 'https://distrimar.s3.amazonaws.com/static/apm/img/misc/default_user.png';
+        }
+    }
 }
