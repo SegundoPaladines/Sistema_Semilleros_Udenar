@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\ReportController;
 
 //rutas de usuarios
 Route::get('/usuarios', [AdminController::class,'listarUsuarios'])->name('usuarios');
@@ -88,3 +89,8 @@ Route::post('vista/editar_proyectos/{id}', [AdminController::class, 'editarProye
 //Eliminar
 Route::get('/eliminar_proyectos/{id}', [AdminController::class, 'eliminarProyecto'])->name('eliminar_proyecto_dir');
 Route::get('/eliminar_proyecto/{id}', [AdminController::class, 'confirmacionEliminacionProyecto_dir']);
+
+//GENERAR REPORTES
+
+//Generar reporte usuarios
+Route::get('/reporte_usuarios', [ReportController::class, 'generarReporteUsuarios'])->name('usr_report');

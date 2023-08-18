@@ -83,7 +83,13 @@
             </div>
         @endforeach
     </div>
-
+    <br><br><br>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-warning btn-rounded" href="{{route('usr_report')}}" target="_blank">
+            <i class="fas fa-download"></i> Generar Reporte
+        </a>
+    </div>
+    <br>
 
     @if (session('registroExitoso'))
         <script>
