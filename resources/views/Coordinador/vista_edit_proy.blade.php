@@ -187,6 +187,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
     <!--CSS Propio-->
     <link rel="stylesheet" href="{{asset('css/segundo/perfil.css')}}">
+    <link href="{{ asset('css/segundo/general.css') }}" rel="stylesheet">
 
 @endsection
 

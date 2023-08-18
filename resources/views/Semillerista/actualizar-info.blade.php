@@ -3,73 +3,84 @@
 @section('title', 'Perfil')
 
 @section('content_header')
-  <div class="row">
-    <div class="col">
-        <h1>Informacion Académica</h1>
+    <div class="container">
+        <div class="row">
+            <center>
+                <div class="col">
+                    @if(isset($persona) && $persona->foto !== null)
+                        <img class="foto-perfil" src="{{ Storage::url($persona->foto)}}" alt="Foto de Perfil">
+                    @endif
+                    <center>
+                        <div>
+                            <p>Bienvenido {{ $user->name }}, Su rol es Semillerista</p>
+                        </div>
+                    </center>
+                </div>
+            </center>
+        </div>
     </div>
-    <div class="col">
-        @if(isset($persona) && $persona->foto !== null)
-            <img class="foto-perfil" src="{{ Storage::url($persona->foto)}}" alt="Foto de Perfil">
-        @endif
-    </div>
-  </div>
 @stop
 
 @section('content')
-    <p>Bienvenido {{ $user->name }}, Su rol es Semillerista</p>
-    <br>
-
-    <h3>Por favor asegurece de que sus datos Académicos Esten Actualizados</h3>
-    <div id="contenedor-perfil">
-        <form action="{{ route('actualizar_datos_semillerista') }}" method="POST" enctype="multipart/form-data">
-          @csrf
-            <div class="row">
-              <div class="col">
-                @error('cod_estudiante')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-                <div class="form-outline">
-                  <input type = "text" id="cod_estudiante" name="cod_estudiante" class="form-control" value="{{ isset($semillerista) ? $semillerista->cod_estudiante : old('cod_estudiante') }}"/>
-                  <label class="form-label" for="cod_estudiante">Código Estudiantil</label>
-                </div>
-              </div>
-              <div class="col">
-                @error('semestre')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-                <div class="form-outline">
-                    <select id="semestre" name="semestre" class="form-select">
-                        <option value="">Seleccione el semestre</option>
-                        @for($i = 1; $i <= 10; $i++)
-                            @if(isset($semillerista) && $semillerista->semestre == $i)
-                                <option value="{{ $i }}" selected> Semetre{{ $i }}</option>
-                            @elseif(old('semestre') == $i)
-                                <option value="{{ $i }}" selected> Semetre{{ $i }}</option>
-                            @else
-                                <option value="{{ $i }}"> Semetre {{ $i }}</option>
-                            @endif
-                        @endfor
-                    </select>
-                </div>
+    <div class="container">
+        <br>
+        <center>
+            <div class="col">
+                <h1>Informacion Académica</h1>
             </div>
-            </div>
-            <br>
-            <div class="row">
+        </center>
+        <p>Por favor asegurece de que sus datos Académicos Esten Actualizados</p>
+        <br>
+        <div id="contenedor-perfil">
+            <form action="{{ route('actualizar_datos_semillerista') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+                <div class="row">
                 <div class="col">
-                    @error('reporte_matricula')
+                    @error('cod_estudiante')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                    <label class="form-label" for="reporte_matricula">Cargar Reporte de Matrícula (PDF)</label>
-                    <input class="form-control form-control-lg" id="reporte_matricula" name="reporte_matricula" type="file" accept=".pdf" placeholder="Cargar Reporte de Matrícula (PDF)" />
-                </div> 
-            </div>
-          <br>
-            <!-- Submit button -->
-            <button type="submit" class="mb-4 btn btn-success btn-block">Actualizar Información</button>
-        </form>
+                    <div class="form-outline">
+                    <input type = "text" id="cod_estudiante" name="cod_estudiante" class="form-control" value="{{ isset($semillerista) ? $semillerista->cod_estudiante : old('cod_estudiante') }}"/>
+                    <label class="form-label" for="cod_estudiante">Código Estudiantil</label>
+                    </div>
+                </div>
+                <div class="col">
+                    @error('semestre')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <div class="form-outline">
+                        <select id="semestre" name="semestre" class="form-select">
+                            <option value="">Seleccione el semestre</option>
+                            @for($i = 1; $i <= 10; $i++)
+                                @if(isset($semillerista) && $semillerista->semestre == $i)
+                                    <option value="{{ $i }}" selected> Semetre{{ $i }}</option>
+                                @elseif(old('semestre') == $i)
+                                    <option value="{{ $i }}" selected> Semetre{{ $i }}</option>
+                                @else
+                                    <option value="{{ $i }}"> Semetre {{ $i }}</option>
+                                @endif
+                            @endfor
+                        </select>
+                    </div>
+                </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        @error('reporte_matricula')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        <label class="form-label" for="reporte_matricula">Cargar Reporte de Matrícula (PDF)</label>
+                        <input class="form-control form-control-lg" id="reporte_matricula" name="reporte_matricula" type="file" accept=".pdf" placeholder="Cargar Reporte de Matrícula (PDF)" />
+                    </div> 
+                </div>
+            <br>
+                <!-- Submit button -->
+                <button type="submit" class="mb-4 btn btn-success btn-block">Actualizar Información</button>
+            </form>
+        </div>
+        <br><br>
     </div>
-    <br><br>
-
     @if (session('actualizacionExitosa'))
       <script>
           document.addEventListener('DOMContentLoaded', function() {
@@ -113,7 +124,7 @@
     <!--CSS Propio-->
     <link rel="stylesheet" href="{{asset('css/segundo/perfil.css')}}">
     <link href="{{ asset('css/segundo/general.css') }}" rel="stylesheet">
-@endsection
+@stop
 
 @section('js')
     <!-- JQery -->

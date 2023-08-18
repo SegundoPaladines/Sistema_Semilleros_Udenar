@@ -6,7 +6,7 @@ $(document).ready(function() {
     });
 });
 
-//Función del cuscador
+//Función del buscador
 $(document).ready(function() {
     $("#buscador").on("keyup", function() {
         var value = $(this).val().toLowerCase();
