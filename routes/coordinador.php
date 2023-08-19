@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Coordinador\CoordinadorController;
+use App\Http\Controllers\ReportController;
 
 Route::get('', [CoordinadorController::class, 'index'])->name("coordinador.home");
 Route::get('vista/editar_semillero/{id}', [CoordinadorController::class, 'editarSemillero'])->name('vista_editar_semillero_cor');
@@ -40,3 +41,6 @@ Route::get('vista/vincular_proy_evento/{id_proyecto}/{codigo_evento}', [Coordina
 Route::get('/desvincular_proy_evento/{id_proyecto}/{codigo_evento}', [CoordinadorController::class, 'desvincularProyectoEvento'])->name('desvincular_proy_evento');
 
 // Route::get('vista/proyectos_vinculados_evento/{codigo_evento}', [CoordinadorController::class, 'vistaProyectoEventoVinculado'])->name('vista_proy_vinculado_evento');
+
+//Generar reporte semillero
+Route::get('/reporte_semillero', [ReportController::class, 'generarReporteSemillero_coor'])->name('sem_report_coor');

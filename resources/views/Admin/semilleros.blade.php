@@ -78,6 +78,7 @@
                                 <a  href="{{route('actualizar_semillero', $s->id_semillero)}}" class="btn btn-secondary btn-rounded">Actualizar</a>
                                 <a  href="{{route('participantes_semillero', $s->id_semillero)}}" class="btn btn-secondary btn-rounded">Participantes</a>
                                 <a  href="{{route('vista_coor_sem', $s->id_semillero)}}" class="btn btn-secondary btn-rounded">Coordinador</a>
+                                <a  href="{{route('sem_report_dir', $s->id_semillero)}}" class="btn btn-secondary btn-rounded" target="_blank">Generar Reporte</a>
                                 <a  href="{{route('delete_sem', $s->id_semillero)}}" class="btn btn-danger btn-rounded">Eliminar</a>
                             </div>
                         </center>

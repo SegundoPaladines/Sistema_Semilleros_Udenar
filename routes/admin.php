@@ -94,3 +94,6 @@ Route::get('/eliminar_proyecto/{id}', [AdminController::class, 'confirmacionElim
 
 //Generar reporte usuarios
 Route::get('/reporte_usuarios', [ReportController::class, 'generarReporteUsuarios'])->name('usr_report');
+
+//Generar reporte semilleros
+Route::get('/reporte_semillero/{id}', [ReportController::class, 'generarReporteSemillero_admin'])->name('sem_report_dir');
