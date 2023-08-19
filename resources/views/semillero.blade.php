@@ -67,10 +67,21 @@
                         <center>
                             <div class="col">
                                 <a  href="{{route('vista_editar_semillero_cor', $coordinador->semillero)}}" class="btn btn-secondary btn-rounded">Editar</a>
+                                <a  href="{{route('sem_report_coor')}}" class="btn btn-secondary btn-rounded" target="_blank">Generar Reporte</a>
                             </div>
                         </center>
                     </div>
                     <hr>
+                    @endcan
+                    @can('semillerista.proyectos')
+                        <div class="row">
+                            <center>
+                                <div class="col">
+                                    <a  href="{{route('sem_report_sem')}}" class="btn btn-secondary btn-rounded" target="_blank">Generar Reporte</a>
+                                </div>
+                            </center>
+                        </div>
+                        <hr>
                     @endcan
                     <div class="col">
 

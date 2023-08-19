@@ -13,6 +13,9 @@ use App\Models\Rol;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use App\Models\Persona;
+use App\Models\Coordinador;
+use App\Models\Semillerista;
 
 class ReportController extends Controller
 {
@@ -54,6 +57,79 @@ class ReportController extends Controller
             
             $pdf = Pdf::loadView('Reportes.semillero', compact('semillero', 'fecha', 'foto'));
             return $pdf->stream('Reporte_Semillero.pdf');
+        }else{
+            return redirect('home');
+        }
+    }
+    public function generarReporteSemillero_coor(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol);
+
+        $persona = Persona::where('usuario', $user->id)->first();
+        if($persona !== null){
+            $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+            if($coordinador !== null){
+                $semillero = Semillero::where('id_semillero', $coordinador->semillero)->first();
+                if($semillero !== null){
+                    date_default_timezone_set('America/Bogota');
+                    $fechaActual = date("d-m-Y");
+                    $horaActual = date("h:i A");
+                    $fecha = $fechaActual.' | '.$horaActual;
+
+                    $logo = $semillero->logo;
+                    $foto = '';
+                    if($logo !== null){
+                        $foto= public_path().Storage::url($logo);
+                    }else{
+                        $foto = public_path().'/vendor/adminlte/dist/img/logo.png';
+                    }
+                    
+                    $pdf = Pdf::loadView('Reportes.semillero', compact('semillero', 'fecha', 'foto'));
+                    return $pdf->stream('Reporte_Semillero.pdf');
+                    
+                }else{
+                    return redirect('home');
+                }
+            }else{
+                return redirect('home');
+            }
+        }else{
+            return redirect('home');
+        }
+    }
+    public function generarReporteSemillero_sem(){
+        $user = auth()->user();
+
+        $persona = Persona::where('usuario', $user->id)->first();
+        if($persona !== null){
+            $semillerista = Semillerista::where('num_identificacion', $persona->num_identificacion)->first();
+            if($semillerista !== null){
+                $semillero = Semillero::where('id_semillero', $semillerista->semillero)->first();
+                if($semillero !== null){
+                    date_default_timezone_set('America/Bogota');
+                    $fechaActual = date("d-m-Y");
+                    $horaActual = date("h:i A");
+                    $fecha = $fechaActual.' | '.$horaActual;
+
+                    $logo = $semillero->logo;
+                    $foto = '';
+                    if($logo !== null){
+                        $foto= public_path().Storage::url($logo);
+                    }else{
+                        $foto = public_path().'/vendor/adminlte/dist/img/logo.png';
+                    }
+                    
+                    $pdf = Pdf::loadView('Reportes.semillero', compact('semillero', 'fecha', 'foto'));
+                    return $pdf->stream('Reporte_Semillero.pdf');
+                    
+                }else{
+                    return redirect('home');
+                }
+            }else{
+                return redirect('home');
+            }
         }else{
             return redirect('home');
         }
