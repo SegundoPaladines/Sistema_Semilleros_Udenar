@@ -925,7 +925,7 @@ class AdminController extends Controller
         if ($persona !== null) {
             $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
             if ($coordinador !== null) {
-                if ($coordinador->semillero == null) {
+                if ($coordinador->semillero === null) {
                     $coordinador->semillero = $semillero_id;
 
                     if ($coordinador->acuerdo_nombramiento !== null) {
@@ -941,7 +941,7 @@ class AdminController extends Controller
                     $coordinador->save();
 
                     return redirect()->route('vista_coor_sem', $semillero_id)->with('coordinadorVinculado', true);
-                } else {
+                }else {
                     return redirect()->back()->with('yaesCoordinador', true);
                 }
             } else {
