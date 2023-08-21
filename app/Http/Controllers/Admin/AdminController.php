@@ -882,16 +882,14 @@ class AdminController extends Controller
                 if ($u->getRoleNames()[0] == 'coordinador') {
                     $persona = Persona::where('usuario', $u->id)->first();
                     if ($persona !== null) {
-                        $coordinador = Coordinador::where('semillero', $u->id)->first();
+                        $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
                         if ($coordinador !== null) {
-                            if ($coordinador->semillero == null) {
+                            if ($coordinador->semillero === null) {
                                 $candidatos[] = $u;
                             }
                         } else {
                             $candidatos[] = $u;
                         }
-                    } else {
-                        $candidatos[] = $u;
                     }
                 }
             }
