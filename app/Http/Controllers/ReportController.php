@@ -90,13 +90,13 @@ class ReportController extends Controller
                     return $pdf->stream('Reporte_Semillero.pdf');
                     
                 }else{
-                    return redirect('home');
+                    return redirect()->route('ver_semillero');
                 }
             }else{
-                return redirect('home');
+                return redirect()->route('ver_semillero');
             }
         }else{
-            return redirect('home');
+            return redirect()->route('perfil')->with('actualizarProfa', true);
         }
     }
     public function generarReporteSemillero_sem(){
@@ -132,6 +132,45 @@ class ReportController extends Controller
             }
         }else{
             return redirect('home');
+        }
+    }
+    public function generarReporteSemilleristas(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol);
+
+        $persona = Persona::where('usuario', $user->id)->first();
+        if($persona !== null){
+            $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+            if($coordinador !== null){
+                $semillero = DB::table('semilleros')->where('id_semillero', $coordinador->semillero)->first();
+                if($semillero !== null){
+                    date_default_timezone_set('America/Bogota');
+                    $fechaActual = date("d-m-Y");
+                    $horaActual = date("h:i A");
+                    $fecha = $fechaActual.' | '.$horaActual;
+            
+                    $logo = $semillero->logo;
+                    $foto = '';
+                    if($logo !== null){
+                        $foto= public_path().Storage::url($logo);
+                    }else{
+                        $foto = public_path().'/vendor/adminlte/dist/img/logo.png';
+                    }
+
+                    $semilleristas = Semillerista::where('semillero',$semillero->id_semillero)->get();
+            
+                    $pdf = Pdf::loadView('Reportes.semilleristas', compact('semillero', 'semilleristas', 'fecha', 'foto'));
+                    return $pdf->stream('Reporte_Semilleristas.pdf');
+                }else{
+                    return redirect()->route('ver_semillero');
+                }
+            }else{
+                return redirect()->route('ver_semillero');
+            }
+        }else{
+            return redirect()->route('perfil')->with('actualizarProfa', true);
         }
     }
 }

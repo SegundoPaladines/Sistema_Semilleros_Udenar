@@ -54,7 +54,13 @@
                 </td>
             </tr>
         </table>
-        
+        <br>
+        <div class="gap-2 d-grid d-md-flex justify-content-md-center">
+            <a class="btn btn-warning btn-rounded" href="{{route('reporte_semilleristas')}}" target="_blank">
+                <i class="fas fa-download"></i> Generar Reporte
+            </a>
+        </div>
+        <br>
         </center>
 
         <br>

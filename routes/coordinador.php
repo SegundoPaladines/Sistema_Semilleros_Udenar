@@ -44,6 +44,8 @@ Route::get('/desvincular_proy_evento/{id_proyecto}/{codigo_evento}', [Coordinado
 
 //Generar reporte semillero
 Route::get('/reporte_semillero', [ReportController::class, 'generarReporteSemillero_coor'])->name('sem_report_coor');
+//Generar reporte semilleristas
+Route::get('/reporte_semilleristas', [ReportController::class, 'generarReporteSemilleristas'])->name('reporte_semilleristas');
 
 //agregar participantes de semillero
 Route::get('/agregar_participantes', [CoordinadorController::class, 'agregarParticipantes'])->name('agregar_participantes_semillero');
