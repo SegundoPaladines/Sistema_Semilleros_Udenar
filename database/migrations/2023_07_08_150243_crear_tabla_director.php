@@ -15,7 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('num_identificacion');
 
             $table->primary('num_identificacion');
-            $table->foreign('num_identificacion')->references('num_identificacion')->on('personas')->onDelete('cascade');//si la persona elimina, se elimina al director
+            $table->foreign('num_identificacion')->references('num_identificacion')->on('personas')->onDelete('cascade')->onUpdate('cascade');//si la persona elimina o actualiza, se elimina o actualiza al director
 
             $table->timestamps();
         });

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('arc_adjunto');
 
             $table->primary('id_proyecto');
-            $table->foreign('semillero')->references('id_semillero')->on('semilleros')->onDelete('cascade');//si el semillero se elimina, se elimina al semillerista
+            $table->foreign('semillero')->references('id_semillero')->on('semilleros')->onDelete('cascade')->onUpdate('cascade');//si el semillero se elimina o actualiza, se elimina o actualiza al semillerista
 
             $table->timestamps();
         });

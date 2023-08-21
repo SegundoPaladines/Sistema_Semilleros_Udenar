@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('semillerista');
             $table->string('campo');
 
-            $table->foreign('proyecto')->references('id_proyecto')->on('proyectos')->onDelete('cascade');//si se lemimina el protecto tamnbien a los integrantes
-            $table->foreign('semillerista')->references('num_identificacion')->on('semilleristas')->onDelete('cascade');//si se lemimina al semillerista tamnbien al integrante
+            $table->foreign('proyecto')->references('id_proyecto')->on('proyectos')->onDelete('cascade')->onUpdate('cascade');//si se emimina o actualiza el protecto tamnbien a los integrantes
+            $table->foreign('semillerista')->references('num_identificacion')->on('semilleristas')->onDelete('cascade')->onUpdate('cascade');//si se emimina  o actualiza al semillerista tamnbien al integrante
 
             $table->timestamps();
         });

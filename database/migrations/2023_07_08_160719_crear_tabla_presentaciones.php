@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('proyecto');
             $table->string('evento',20);
 
-            $table->foreign('proyecto')->references('id_proyecto')->on('proyectos')->onDelete('cascade'); // si se ilimina el proyecto se eliminan las presentaciones
-            $table->foreign('evento')->references('codigo_evento')->on('eventos')->onDelete('cascade'); // si se ilimina el evento se eliminan las presentaciones
+            $table->foreign('proyecto')->references('id_proyecto')->on('proyectos')->onDelete('cascade')->onUpdate('cascade'); // si se ilimina o acutaliza el proyecto se eliminan o actualizan las presentaciones
+            $table->foreign('evento')->references('codigo_evento')->on('eventos')->onDelete('cascade')->onUpdate('cascade'); // si se ilimina o actualiza el evento se eliminan o actualozan las presentaciones
 
             $table->timestamps();
         });
