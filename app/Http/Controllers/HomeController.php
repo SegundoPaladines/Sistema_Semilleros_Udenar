@@ -186,8 +186,11 @@ class HomeController extends Controller
             // Lógica para coordinadores
             $persona = DB::table('personas')->where('usuario', $user->id)->first();
             if($persona !== null){
-                $coordinador = Coordinador::findOrFail($persona->num_identificacion);
-                $semillero = Semillero::findOrFail($coordinador->semillero);
+                $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+                $semillero = null;
+                if($coordinador !== null){
+                    $semillero = Semillero::where('id_semillero', $coordinador->semillero)->first();
+                }
                 return view('semillero', compact('semillero', 'user', 'coordinador'));
             }else{
                 return redirect()->route('perfil')->with('actualizarProfa', true);
@@ -196,10 +199,17 @@ class HomeController extends Controller
             // Lógica para semilleristas
             $persona = DB::table('personas')->where('usuario', $user->id)->first();
             if($persona !== null){
-                $semillerista = Semillerista::findOrFail($persona->num_identificacion);
-                $semillero = Semillero::findOrFail($semillerista->semillero);
-                $coordinador = Coordinador::where('semillero', $semillero->id_semillero)->first();
-                return view('semillero', compact('semillero', 'user', 'coordinador'));
+                $semillerista = Semillerista::where('num_identificacion', $persona->num_identificacion)->first();
+                if($semillerista !== null){
+                    $semillero = Semillero::where('id_semillero', $semillerista->semillero)->first();
+                    $coordinador = null;
+                    if($semillero !== null){
+                        $coordinador = Coordinador::where('semillero', $semillero->id_semillero)->first();
+                    }
+                    return view('semillero', compact('semillero', 'user', 'coordinador'));
+                }else{
+                    return redirect()->route('perfil')->with('actualizarProfa', true);
+                }
             }else{
                 return redirect()->route('perfil')->with('actualizarProfa', true);
             }

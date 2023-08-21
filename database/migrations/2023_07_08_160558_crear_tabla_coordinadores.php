@@ -20,8 +20,8 @@ return new class extends Migration
 
 
             $table->primary('num_identificacion');
-            $table->foreign('num_identificacion')->references('num_identificacion')->on('personas')->onDelete('cascade');//si la persona elimina, se elimina al coordinador
-            $table->foreign('semillero')->references('id_semillero')->on('semilleros')->onDelete('cascade');//si el semillero se elimina, se elimina al coordinador
+            $table->foreign('num_identificacion')->references('num_identificacion')->on('personas')->onDelete('cascade')->onUpdate('cascade');//si la persona elimina o actualiza, se elimina o actualiza al coordinador
+            $table->foreign('semillero')->references('id_semillero')->on('semilleros')->onDelete('cascade')->onUpdate('cascade');//si el semillero se elimina o actualiza, se elimina o actualiza al coordinador
 
             $table->timestamps();
         });

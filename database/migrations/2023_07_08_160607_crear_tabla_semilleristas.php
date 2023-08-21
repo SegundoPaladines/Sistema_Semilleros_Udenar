@@ -21,8 +21,8 @@ return new class extends Migration
             $table->enum('estado',[0,1])->default(0); //0 incativo | 1 activo 
 
             $table->primary('num_identificacion');
-            $table->foreign('num_identificacion')->references('num_identificacion')->on('personas')->onDelete('cascade');//si la persona elimina, se elimina al semillerista
-            $table->foreign('semillero')->references('id_semillero')->on('semilleros')->onDelete('cascade');//si el semillero se elimina, se elimina al semillerista
+            $table->foreign('num_identificacion')->references('num_identificacion')->on('personas')->onDelete('cascade')->onUpdate('cascade');//si la persona elimina, se elimina al semillerista
+            $table->foreign('semillero')->references('id_semillero')->on('semilleros')->onDelete('cascade')->onUpdate('cascade');//si el semillero se elimina, se elimina al semillerista
             
             $table->timestamps();
         });

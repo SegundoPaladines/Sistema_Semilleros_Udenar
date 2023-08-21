@@ -70,6 +70,14 @@
         </div>
     </center>
 </div>
+    @if (session('yaesCoordinador'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡El usuario es coordinador de otro semillero!","Fallo al Nombrar Coordinador", false);
+            });
+        </script>
+    @endif
+    
     <!-- Modal -->
     <div class="modal fade" id="nombrarCoordinadorModal">
         <div class="modal-dialog">

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('programa_academico');
 
             $table->primary('num_identificacion');
-            $table->foreign('usuario')->references('id')->on('users')->onDelete('cascade');//si el usuario se elimina, se elimina a la persona
+            $table->foreign('usuario')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');//si el usuario se elimina o actualiza, se elimina a la persona
 
             $table->timestamps();
         });
