@@ -135,12 +135,21 @@ class CoordinadorController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador', $rol);
+
         $persona = DB::table('personas')->where('usuario', $user->id)->first();
         if($persona !== null){
-            $coordinador = Coordinador::findOrFail($persona->num_identificacion);
-            $semillero = Semillero::findOrFail($coordinador->semillero);
-            $id = $semillero->id_semillero;
-            $participantes = Semillerista::where('semillero', $id)->get();
+            $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+            $semillero = null;
+            $id = null;
+            $participantes = null;
+
+            if($coordinador !== null){
+                $semillero = Semillero::where('id_semillero', $coordinador->semillero)->first();
+                if($semillero !== null){
+                    $id = $semillero->id_semillero;
+                    $participantes = Semillerista::where('semillero', $id)->get();
+                }
+            }
             return view('Coordinador.listaSemilleristas',compact('participantes', 'semillero', 'user', 'id'));
         }else{
             return redirect()->route('perfil')->with('actualizarProfa', true);
@@ -186,23 +195,30 @@ class CoordinadorController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador.proyectos', $rol, new Proyecto());
-        $persona = DB::table('personas')->where('usuario', $user->id)->first();
-        $coordinador = Coordinador::findOrFail($persona->num_identificacion);
-        $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
-        $estadoOptions = [
-            '1' => 'Propuesta',
-            '2' => 'En curso',
-            '3' => 'Finalizado',
-            '4' => 'Inactivo',
-        ];
-        
-        $tipoOptions = [
-            '1' => 'Investigación',
-            '2' => 'Innovación y Desarrollo',
-            '3' => 'Emprendimiento',
-        ];
-        
-        return view('Coordinador.proyectos', compact('proyectos', 'user','estadoOptions','tipoOptions'));
+        $persona = Persona::where('usuario', $user->id)->first();
+       if($persona !== null){
+            $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+            $proyectos = null;
+            if($coordinador !== null){
+                $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
+            }
+            $estadoOptions = [
+                '1' => 'Propuesta',
+                '2' => 'En curso',
+                '3' => 'Finalizado',
+                '4' => 'Inactivo',
+            ];
+            
+            $tipoOptions = [
+                '1' => 'Investigación',
+                '2' => 'Innovación y Desarrollo',
+                '3' => 'Emprendimiento',
+            ];
+            
+            return view('Coordinador.proyectos', compact('proyectos', 'user','estadoOptions','tipoOptions'));
+       }else{
+            return redirect()->route('perfil')->with('actualizarProfa', true);
+       }
     }
     public function vistaVincularProyecto($num_identificacion){
         $user = auth()->user();

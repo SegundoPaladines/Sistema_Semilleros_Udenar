@@ -4,13 +4,23 @@
 
 @section('content_header')
 
-<div class="container">
-    <div class="note note-success mb-3">
-        <figure class="text-center">
-            <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
-        </figure>
+@if($semillero !== null)
+    <div class="container">
+        <div class="mb-3 note note-success">
+            <figure class="text-center">
+                <h1>Listado de Participantes del Semillero {{$semillero->nombre}}</h1>
+            </figure>
+        </div>
     </div>
-</div>
+@else
+    <div class="container">
+        <div class="mb-3 note note-success">
+            <figure class="text-center">
+                <h1>Listado de Participantes</h1>
+            </figure>
+        </div>
+    </div>
+@endif
 
 @stop
 
@@ -25,96 +35,100 @@
     </ul>  
     <br>
 
-    <br>
-    <table id="buscador-agregar">
-        <tr>
-            <td>
-                <div id="contenedor-buscador" class="input-group">
-                    <div id="inp">
-                        <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
-                    </div>
-                    <div id="ic">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
-    
-    </center>
-
-    <br>
-    <div class="tabla-container" style= "overflow-x: auto;">
-
-    <table id="tabla_usuarios" class="table">
-        <thead class="table-info">
+    @if($semillero !== null)
+        <br>
+        <table id="buscador-agregar">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Numero De Identificación</th>
-                <th scope="col">Codigo Estudiante</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Semestre</th>
-                <th scope="col">Fecha Vinculación</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-            $i=1;
-            @endphp
-            @foreach($participantes as $p)
-            <tr>
-                <th scope="row">{{$i}}</th>
-                <td>{{$p->num_identificacion}}</td>
-                <td>{{$p->cod_estudiante}}</td>
-                <td>{{app('App\Http\Controllers\Coordinador\CoordinadorController')->obtenerNombrePersona($p->num_identificacion)}}</td>
-                <td>{{app('App\Http\Controllers\Coordinador\CoordinadorController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
-                <td>{{$p->semestre}}</td>
-                <td>{{$p->fecha_vinculacion}}</td>
-                <td>{{$p->estado}}</td>
                 <td>
-                    <center>
-                    <a style="margin: 3px;" href="{{route('desvincular_sem_sem_cor', $p->num_identificacion)}}" class="btn btn-danger btn-sm">Desvincular</a>
-                    <a style="margin: 3px;" href="{{route('vista_proyectos_vincular', $p->num_identificacion)}}" class="btn btn-primary btn-sm">Vincular a Proyecto</a>
-                    </center>
+                    <div id="contenedor-buscador" class="input-group">
+                        <div id="inp">
+                            <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
+                        </div>
+                        <div id="ic">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
                 </td>
             </tr>
-            @php
-            $i++;
-            @endphp
-            @endforeach
-        </tbody>
-    </table>
+        </table>
+        
+        </center>
 
-    </div>    
+        <br>
+        <div class="tabla-container" style= "overflow-x: auto;">
 
-    <script>
+        <table id="tabla_usuarios" class="table">
+            <thead class="table-info">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Numero De Identificación</th>
+                    <th scope="col">Codigo Estudiante</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Semestre</th>
+                    <th scope="col">Fecha Vinculación</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                $i=1;
+                @endphp
+                @foreach($participantes as $p)
+                <tr>
+                    <th scope="row">{{$i}}</th>
+                    <td>{{$p->num_identificacion}}</td>
+                    <td>{{$p->cod_estudiante}}</td>
+                    <td>{{app('App\Http\Controllers\Coordinador\CoordinadorController')->obtenerNombrePersona($p->num_identificacion)}}</td>
+                    <td>{{app('App\Http\Controllers\Coordinador\CoordinadorController')->obtenerCorreoUsuario($p->num_identificacion)}}</td>
+                    <td>{{$p->semestre}}</td>
+                    <td>{{$p->fecha_vinculacion}}</td>
+                    <td>{{$p->estado}}</td>
+                    <td>
+                        <center>
+                        <a style="margin: 3px;" href="{{route('desvincular_sem_sem_cor', $p->num_identificacion)}}" class="btn btn-danger btn-sm">Desvincular</a>
+                        <a style="margin: 3px;" href="{{route('vista_proyectos_vincular', $p->num_identificacion)}}" class="btn btn-primary btn-sm">Vincular a Proyecto</a>
+                        </center>
+                    </td>
+                </tr>
+                @php
+                $i++;
+                @endphp
+                @endforeach
+            </tbody>
+        </table>
 
-        //buscador
-        document.addEventListener("DOMContentLoaded", function() {
-            var filtroBusqueda = document.getElementById("buscador");
+        </div>    
 
-            filtroBusqueda.addEventListener("keyup", function() {
-                var valorBusqueda = filtroBusqueda.value.toLowerCase();
-                var filas = document.querySelectorAll("#tabla_usuarios tbody tr");
+        <script>
 
-                filas.forEach(function(fila) {
-                    var contenidoFila = fila.textContent.toLowerCase();
-                    if (contenidoFila.indexOf(valorBusqueda) !== -1) {
-                        fila.style.display = "table-row";
-                    } else {
-                        fila.style.display = "none";
-                    }
+            //buscador
+            document.addEventListener("DOMContentLoaded", function() {
+                var filtroBusqueda = document.getElementById("buscador");
+
+                filtroBusqueda.addEventListener("keyup", function() {
+                    var valorBusqueda = filtroBusqueda.value.toLowerCase();
+                    var filas = document.querySelectorAll("#tabla_usuarios tbody tr");
+
+                    filas.forEach(function(fila) {
+                        var contenidoFila = fila.textContent.toLowerCase();
+                        if (contenidoFila.indexOf(valorBusqueda) !== -1) {
+                            fila.style.display = "table-row";
+                        } else {
+                            fila.style.display = "none";
+                        }
+                    });
                 });
             });
-        });
 
-    </script>
-
-
-
+        </script>
+    @else
+        <div>
+            <center><h5>Usted actualmente no se encuentra vienculad@ a ningun semillero</h5></center>
+        </div>
+    @endif
+    
 </div>    
     @if (session('desvinculacionExitosa'))
         <script>

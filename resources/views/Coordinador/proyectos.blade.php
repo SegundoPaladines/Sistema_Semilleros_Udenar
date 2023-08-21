@@ -5,7 +5,7 @@
 @section('content_header')
 
 <div class="container">
-    <div class="note note-success mb-3">
+    <div class="mb-3 note note-success">
         <figure class="text-center">
         <h1>Listado de Proyectos</h1>
         </figure>
@@ -17,104 +17,112 @@
 @section('content')
 
 <div class="container">
-
     <center>
-
-    <br>
-    <ul class="list-unstyled">
-        <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
-    </ul>  
-    <br>
-
-    <!-- Buscador y botón Añadir usuario  -->
-    <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
-        <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
-            <div class="col-md-" id="inp">
-                <input id="buscador" type="text" placeholder="Buscar proyecto" style="width: 100%;">
-            </div>
-            <div id="ic">
-                <i class="fas fa-search"></i>
-            </div>
+        <div>
+            <br>
+            <ul class="list-unstyled">
+                <li class="mb-1"><i class="fas fa-check-circle me-2 text-success"></i>Bienvenido {{ $user->name }}</li>
+            </ul>  
+            <br>
         </div>
-        <div class="col-md-3" id="btn-agregar">
-            <a href="{{route('vista_agr_proy')}}" class="btn btn-success">Añadir Proyecto</a>
-        </div>
-    </div>
-    <br>
-    
     </center>
 
-    <br>
-    <div class="tabla-container" style= "overflow-x: auto;">
-    <table id= "tabla_usuarios" class="table">
-        <thead class="table-info">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre del Proyecto</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Tipo de Proyecto</th>
-                <th scope="col">Fecha inicio</th>
-                <th scope="col">Fecha Finalización</th>
-                <th scope="col">Semillero</th>
-                <th scope="col">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $i=1;
-            @endphp
-            @foreach($proyectos as $p)
+    @if ($proyectos !== null)
+        <center>
+            <!-- Buscador y botón Añadir usuario  -->
+            <div id="buscador-agregar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+                <div id="contenedor-buscador" class="input-group" style="flex-grow: 2; margin-right: 10px;">
+                    <div class="col-md-" id="inp">
+                        <input id="buscador" type="text" placeholder="Buscar proyecto" style="width: 100%;">
+                    </div>
+                    <div id="ic">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div class="col-md-3" id="btn-agregar">
+                    <a href="{{route('vista_agr_proy')}}" class="btn btn-success">Añadir Proyecto</a>
+                </div>
+            </div>
+            <br>
+        </center>
+        
+        <br>
+        <div class="tabla-container" style= "overflow-x: auto;">
+        <table id= "tabla_usuarios" class="table">
+            <thead class="table-info">
                 <tr>
-                    <th scope="row">{{$i}}</th>
-                    <td>{{$p->id_proyecto}}</td>
-                    <td>{{$p->titulo}}</td>
-                    <td>{{$estadoOptions[$p->estado]}}</td>
-                    <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
-                    <td>{{$p->feacha_inicio}}</td>
-                    <td>{{$p->feacha_fin}}</td>
-                    <td>{{$p->semillero}}</td>
-                    
-                    <td>
-                        <center>
-                        <a style="margin: 3px;" href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Vincular a Evento</a>
-                        <a style="margin: 3px;" href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-info btn-sm">Editar</a>
-                        @if($p->id !== $user->id)
-                            <a style="margin: 3px;" href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger btn-sm">Eliminar</a>
-                        @endif
-                        </center>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre del Proyecto</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Tipo de Proyecto</th>
+                    <th scope="col">Fecha inicio</th>
+                    <th scope="col">Fecha Finalización</th>
+                    <th scope="col">Semillero</th>
+                    <th scope="col">Opciones</th>
                 </tr>
+            </thead>
+            <tbody>
                 @php
-                    $i++;
+                    $i=1;
                 @endphp
-            @endforeach
-        </tbody>
-    </table>
-    </div>
-
-    <script>
-
-        //buscador
-        document.addEventListener("DOMContentLoaded", function() {
-            var filtroBusqueda = document.getElementById("buscador");
-
-            filtroBusqueda.addEventListener("keyup", function() {
-                var valorBusqueda = filtroBusqueda.value.toLowerCase();
-                var filas = document.querySelectorAll("#tabla_usuarios tbody tr");
-
-                filas.forEach(function(fila) {
-                    var contenidoFila = fila.textContent.toLowerCase();
-                    if (contenidoFila.indexOf(valorBusqueda) !== -1) {
-                        fila.style.display = "table-row";
-                    } else {
-                        fila.style.display = "none";
-                    }
+                @foreach($proyectos as $p)
+                    <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$p->id_proyecto}}</td>
+                        <td>{{$p->titulo}}</td>
+                        <td>{{$estadoOptions[$p->estado]}}</td>
+                        <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
+                        <td>{{$p->feacha_inicio}}</td>
+                        <td>{{$p->feacha_fin}}</td>
+                        <td>{{$p->semillero}}</td>
+                        
+                        <td>
+                            <center>
+                            <a style="margin: 3px;" href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Vincular a Evento</a>
+                            <a style="margin: 3px;" href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-info btn-sm">Editar</a>
+                            @if($p->id !== $user->id)
+                                <a style="margin: 3px;" href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger btn-sm">Eliminar</a>
+                            @endif
+                            </center>
+                        </td>
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
+        </div>
+        <script>
+    
+            //buscador
+            document.addEventListener("DOMContentLoaded", function() {
+                var filtroBusqueda = document.getElementById("buscador");
+    
+                filtroBusqueda.addEventListener("keyup", function() {
+                    var valorBusqueda = filtroBusqueda.value.toLowerCase();
+                    var filas = document.querySelectorAll("#tabla_usuarios tbody tr");
+    
+                    filas.forEach(function(fila) {
+                        var contenidoFila = fila.textContent.toLowerCase();
+                        if (contenidoFila.indexOf(valorBusqueda) !== -1) {
+                            fila.style.display = "table-row";
+                        } else {
+                            fila.style.display = "none";
+                        }
+                    });
                 });
             });
-        });
-
-    </script>
+    
+        </script>
+    @else
+        <center>
+            <div>
+                <h5>Es posible que usted no este vinculad@ a un semillero</h5>
+            </div>
+        </center>
+    @endif
 
 </div>
     @if (session('registroExitoso'))
