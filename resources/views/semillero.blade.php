@@ -67,6 +67,7 @@
                             <div class="row">
                                 <center>
                                     <div class="col">
+                                        <a  href="{{route('listado_Semilleristas_cor')}}" class="btn btn-secondary btn-rounded">Participantes</a>
                                         <a  href="{{route('vista_editar_semillero_cor', $coordinador->semillero)}}" class="btn btn-secondary btn-rounded">Editar</a>
                                         <a  href="{{route('sem_report_coor')}}" class="btn btn-secondary btn-rounded" target="_blank">Generar Reporte</a>
                                     </div>

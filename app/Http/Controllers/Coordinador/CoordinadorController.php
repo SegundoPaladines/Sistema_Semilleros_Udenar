@@ -17,6 +17,7 @@ use App\Models\Proyecto;
 use App\Models\Evento;
 use App\Models\Presentacion;
 use App\Models\Integrante_Proy;
+use Carbon\Carbon;
 
 class CoordinadorController extends Controller
 {
@@ -38,7 +39,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        // $this->authorize('coordinador', $rol, new Semillero());
+        $this->authorize('coordinador', $rol);
 
         $validator = Validator::make($request->all(), [
             'id_semillero' => 'required',
@@ -179,7 +180,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador', $rol, new Semillero());
+        $this->authorize('coordinador', $rol);
         
         $semillerista = Semillerista::findOrFail($num_identificacion);
         $semillerista->semillero = null;
@@ -194,7 +195,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $this->authorize('coordinador', $rol);
         $persona = Persona::where('usuario', $user->id)->first();
        if($persona !== null){
             $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
@@ -224,7 +225,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $this->authorize('coordinador', $rol);
         $persona = DB::table('personas')->where('usuario', $user->id)->first();
         $coordinador = Coordinador::findOrFail($persona->num_identificacion);
         $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
@@ -247,7 +248,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $this->authorize('coordinador', $rol);
         $persona = DB::table('personas')->where('usuario', $user->id)->first();
         $coordinador = Coordinador::findOrFail($persona->num_identificacion);
         $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
@@ -258,7 +259,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol, new Integrante_Proy());
+        $this->authorize('coordinador', $rol);
         
         // Verificar si ya existe una vinculación
         $vinculacionExistente = Integrante_Proy::where('proyecto', $id_proyecto)
@@ -282,7 +283,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador', $rol, new Integrante_Proy());
+        $this->authorize('coordinador', $rol);
         
         // Obtener la instancia del modelo Integrante_Proy
         $nuevo_proyecto_vinculado = Integrante_Proy::where('semillerista', $num_identificacion)
@@ -299,7 +300,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $this->authorize('coordinador', $rol);
         $eventos = Evento::all();        
         return view('Coordinador.vista_vincular_evento', compact('user','id_proyecto','eventos'));
     }
@@ -307,7 +308,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $this->authorize('coordinador', $rol);
         $eventos = Evento::all(); 
         return view('Coordinador.vista_vincular_evento', compact('user','eventos','id_proyecto'));
     }
@@ -315,7 +316,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol, new Presentacion());
+        $this->authorize('coordinador', $rol);
         
         // Verificar si ya existe una vinculación
         $vinculacionExistente = Presentacion::where('proyecto', $id_proyecto)
@@ -338,7 +339,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador', $rol, new Presentacion());
+        $this->authorize('coordinador', $rol);
         
         // Obtener la instancia del modelo Presentacion
         $nuevo_proyecto_vinculado = Presentacion::where('proyecto', $id_proyecto)
@@ -389,7 +390,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $this->authorize('coordinador', $rol);
         $persona = DB::table('personas')->where('usuario', $user->id)->first();
         $coordinador = Coordinador::findOrFail($persona->num_identificacion);
     
@@ -399,7 +400,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol, new Proyecto());
+        $this->authorize('coordinador', $rol);
         
         $nuevo_proyecto = new Proyecto();
 
@@ -420,7 +421,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol);
+        $this->authorize('coordinador', $rol);
         
         $proyecto_id = Proyecto::findOrFail($id);
 
@@ -430,7 +431,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol);
+        $this->authorize('coordinador', $rol);
 
         $proyecto_id = Proyecto::findOrFail($id);
 
@@ -451,7 +452,7 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol);
+        $this->authorize('coordinador', $rol);
     
         return redirect()->route('proyectos', ['elimina' => $id])->with('preguntarEliminar', true);
     }
@@ -459,11 +460,64 @@ class CoordinadorController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('coordinador.proyectos', $rol);
+        $this->authorize('coordinador', $rol);
 
         $proyecto_del = Proyecto::findOrFail($id);
         $proyecto_del->delete();
         
         return redirect()->route('proyectos', ['eliminado' => $proyecto_del->nombre])->with('proyectoEliminado', true);
+    }
+    public function agregarParticipantes(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol);
+
+        $semilleristas_libres = Semillerista::whereNull('semillero')->get();
+        $persona = Persona::where('usuario', $user->id)->first();
+
+        if($persona !== null){
+            $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+            $semillero = null;
+            if($coordinador !== null){
+                $semillero = Semillero::where('id_semillero', $coordinador->semillero)->first();
+            }
+            return view('Coordinador.agregar-participantes-semillero', compact('semilleristas_libres', 'semillero', 'user'));
+        }else{
+            return redirect()->route('perfil')->with('actualizarProfa', true);
+        }
+    }
+    public function vincularParticipante($documento){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol);
+
+        $semillerista = Semillerista::where('num_identificacion',$documento)->first();
+        if($semillerista !== null){
+            $persona = Persona::where('usuario', $user->id)->first();
+            if($persona !== null){
+                $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+                if($coordinador !== null){
+                    $semillero =  DB::table('semilleros')->where('id_semillero', $coordinador->semillero)->first();
+                    if($semillero !== null){
+                        $semillerista->semillero = $semillero->id_semillero;
+                        $semillerista->fecha_vinculacion = Carbon::now()->toDateString(); // Obtiene la fecha actual y la formatea como date
+                        $semillerista->estado = "1";
+                        $semillerista->save();
+
+                        return redirect()->route('agregar_participantes_semillero')->with('vinculacionExitosa', true);
+                    }else{
+                        return redirect()->route('ver_semillero');
+                    }
+                }else{
+                    return redirect()->route('ver_semillero');
+                }
+            }else{
+                return redirect()->route('perfil')->with('actualizarProfa', true);
+            }
+        }else{
+            return redirect()->route('agregar_participantes_semillero')->with('vinculacionFallida', true);
+        }
     }
 }

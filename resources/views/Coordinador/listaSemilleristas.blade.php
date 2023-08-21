@@ -39,7 +39,7 @@
         <br>
         <table id="buscador-agregar">
             <tr>
-                <td>
+                <td width="75%">
                     <div id="contenedor-buscador" class="input-group">
                         <div id="inp">
                             <input id ="buscador" type="text" placeholder="Buscar Semilleristas">
@@ -48,6 +48,9 @@
                             <i class="fas fa-search"></i>
                         </div>
                     </div>
+                </td>
+                <td>
+                    <a  href="{{route('agregar_participantes_semillero')}}" class="btn btn-success btn-rounded">Añadir Participantes</a>
                 </td>
             </tr>
         </table>
