@@ -82,6 +82,7 @@
                             <a style="margin: 3px;" href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Vincular a Evento</a>
                             <a style="margin: 3px;" href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-info btn-sm">Editar</a>
                             @if($p->id !== $user->id)
+                                <a style="margin: 3px;" href="{{route('listado_Semilleristas_cor_proy', $p->id_proyecto)}}" class="btn btn-warning btn-sm">Participantes</a>
                                 <a style="margin: 3px;" href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger btn-sm">Eliminar</a>
                             @endif
                             </center>

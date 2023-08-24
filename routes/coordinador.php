@@ -7,6 +7,7 @@ Route::get('', [CoordinadorController::class, 'index'])->name("coordinador.home"
 Route::get('vista/editar_semillero/{id}', [CoordinadorController::class, 'editarSemillero'])->name('vista_editar_semillero_cor');
 Route::post('vista/actualizar_semillero/{id}', [CoordinadorController::class, 'actualizarSemillero'])->name('actualizar_semillero_cor');
 Route::get('/semillero/semilleristas', [CoordinadorController::class, 'verSemilleristas'])->name('listado_Semilleristas_cor');
+Route::get('/semillero/semilleristaspro/{id_proyecto}', [CoordinadorController::class, 'verSemProyecto'])->name('listado_Semilleristas_cor_proy');
 Route::get('/desvincular_sem_sem/{num_identificacion}', [CoordinadorController::class, 'desvincularSemillero'])->name('desvincular_sem_sem_cor');
 
 //rutas de usuarios
