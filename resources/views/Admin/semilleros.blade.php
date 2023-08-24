@@ -75,11 +75,11 @@
                     <div class="row">
                         <center>
                             <div class="col">
-                                <a  href="{{route('actualizar_semillero', $s->id_semillero)}}" class="btn btn-secondary btn-rounded">Actualizar</a>
-                                <a  href="{{route('participantes_semillero', $s->id_semillero)}}" class="btn btn-secondary btn-rounded">Participantes</a>
-                                <a  href="{{route('vista_coor_sem', $s->id_semillero)}}" class="btn btn-secondary btn-rounded">Coordinador</a>
-                                <a  href="{{route('sem_report_dir', $s->id_semillero)}}" class="btn btn-secondary btn-rounded" target="_blank">Generar Reporte</a>
-                                <a  href="{{route('delete_sem', $s->id_semillero)}}" class="btn btn-danger btn-rounded">Eliminar</a>
+                                <a style="margin: 3px;" href="{{route('actualizar_semillero', $s->id_semillero)}}" class="btn btn-secondary btn-rounded btn-sm">Actualizar</a>
+                                <a style="margin: 3px;" href="{{route('participantes_semillero', $s->id_semillero)}}" class="btn btn-secondary btn-rounded btn-sm">Participantes</a>
+                                <a style="margin: 3px;" href="{{route('vista_coor_sem', $s->id_semillero)}}" class="btn btn-secondary btn-rounded btn-sm">Coordinador</a>
+                                <a style="margin: 3px;" href="{{route('sem_report_dir', $s->id_semillero)}}" class="btn btn-secondary btn-rounded btn-sm" target="_blank">Generar Reporte</a>
+                                <a style="margin: 3px;" href="{{route('delete_sem', $s->id_semillero)}}" class="btn btn-danger btn-rounded btn-sm">Eliminar</a>
                             </div>
                         </center>
                     </div>
