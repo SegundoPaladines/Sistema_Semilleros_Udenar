@@ -60,7 +60,6 @@
                     <th scope="col">Nombre de Evento</th>
                     <th scope="col">Fecha de Inicio</th>
                     <th scope="col">Fecha de Finalización</th>
-                    <th scope="col">Opciones</th>
                     @can('director-coordinador.eventos')
                     <th scope="col">Opciones</th>
                     @endcan
