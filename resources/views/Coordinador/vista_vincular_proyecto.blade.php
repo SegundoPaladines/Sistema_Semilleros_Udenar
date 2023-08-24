@@ -57,8 +57,6 @@
                     <th scope="col">Tipo de Proyecto</th>
                     <th scope="col">Fecha inicio</th>
                     <th scope="col">Fecha Finalización</th>
-                    <th scope="col">Propuesta</th>
-                    <th scope="col">Proyecto Final</th>
                     <th scope="col">Opciones</th>
                 </tr>
             </thead>
@@ -75,8 +73,6 @@
                         <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
                         <td>{{$p->feacha_inicio}}</td>
                         <td>{{$p->feacha_fin}}</td>
-                        <td><a href="{{ asset($p->arc_propuesta) }}" target="_blank">Descargar PDF</a></td>
-                        <td><a href="{{ asset($p->arc_adjunto) }}" target="_blank">Descargar PDF</a></td>
                         <td>
                             <center>
                             <a style="margin: 3px;" href="{{route('vincular_sem_proyecto', ['id_proyecto' => $p->id_proyecto, 'num_identificacion' => $num_identificacion])}}" class="btn btn-primary btn-sm">Vincular</a>
@@ -132,6 +128,14 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 mostrarAlertaRegistroExitoso("No se pudo vincular al semillerista porque ya está vinculado al proyecto.","Vinculación Denegada", false);
+            });
+        </script>
+    @endif
+
+    @if (session('vinculacionDenegadaTipo'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("No se pudo vincular al semillerista porque el proyecto ya no esta disponible.","Vinculación Denegada ", false);
             });
         </script>
     @endif

@@ -54,6 +54,8 @@
                     <th scope="col">Fecha inicio</th>
                     <th scope="col">Fecha Finalización</th>
                     <th scope="col">Semillero</th>
+                    <th scope="col">Propuesta</th>
+                    <th scope="col">Proyecto final</th>
                     <th scope="col">Opciones</th>
                 </tr>
             </thead>
@@ -71,6 +73,16 @@
                         <td>{{$p->feacha_inicio}}</td>
                         <td>{{$p->feacha_fin}}</td>
                         <td>{{$p->semillero}}</td>
+                        <td>
+                            <a href="{{ Storage::url($p->arc_propuesta)}}" target="_blank" style="background-color: #6caa84;" class="btn btn-floating" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar propuesta">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ Storage::url($p->arc_adjunto)}}" target="_blank" style="background-color: #6caa84;" class="btn btn-floating" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar proyecto final">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </td>
                         <td>
                             <a style="margin: 3px;" href="{{route('edit_proyectos_dir', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Editar</a>
                             @if($p->id !== $user->id)
