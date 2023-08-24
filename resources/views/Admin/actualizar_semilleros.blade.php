@@ -31,8 +31,8 @@
             <!-- Id del Semillero -->
             <div class="col-md-4">
                 <div class="form-outline">
-                            <input type="text" id="id_semillero" name="id_semillero" class="form-control is-valid" value="{{ $id_semillero_edit }}" />
-                            <label class="form-label" for="id_semillero">Id del Semillero</label>
+                    <input type="text" id="id_semillero" name="id_semillero" class="form-control is-valid" value="{{ $id_semillero_edit }}" maxlength="10"/>
+                    <label class="form-label" for="id_semillero">Id del Semillero</label>
                 </div>
                 @error('id_semillero')
                     <span class="text-danger">{{ $message }}</span>
@@ -42,7 +42,7 @@
             <!-- Nombre del Semillero -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <input type="text" id="nombre" name="nombre" class="form-control is-valid" value="{{ $semillero->nombre }}" />
+                    <input type="text" id="nombre" name="nombre" class="form-control is-valid" value="{{ $semillero->nombre }}" maxlength="30"/>
                     <label class="form-label" for="nombre">Nombre del Semillero</label>
                 </div>
                 @error('nombre')
@@ -89,7 +89,7 @@
             <!-- Correo -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <input type="text" id="correo" name="correo" class="form-control is-valid" value="{{ $semillero->correo }}" />
+                    <input type="text" id="correo" name="correo" class="form-control is-valid" value="{{ $semillero->correo }}" maxlength="50"/>
                     <label class="form-label" for="correo">Correo</label>
                 </div>
                 @error('correo')
@@ -122,7 +122,7 @@
             <!-- Descripción -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <textarea class="form-control is-valid" id="descripcion" name="descripcion" rows="3">{{ $semillero->descripcion }}</textarea>
+                    <textarea class="form-control is-valid" id="descripcion" name="descripcion" rows="3" maxlength="2000">{{ $semillero->descripcion }}</textarea>
                     <label class="form-label" for="descripcion">Descripción</label>
                 </div>
                 @error('descripcion')
@@ -133,7 +133,7 @@
             <!-- Misión -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <textarea class="form-control is-valid" id="mision" name="mision" rows="3">{{ $semillero->mision }}</textarea>
+                    <textarea class="form-control is-valid" id="mision" name="mision" rows="3" maxlength="2000">{{ $semillero->mision }}</textarea>
                     <label class="form-label" for="mision">Misión</label>
                 </div>
                 @error('mision')
@@ -144,7 +144,7 @@
             <!-- Visión -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <textarea class="form-control is-valid" id="vision" name="vision" rows="3">{{$semillero->vision }}</textarea>
+                    <textarea class="form-control is-valid" id="vision" name="vision" rows="3" maxlength="2000">{{$semillero->vision }}</textarea>
                     <label class="form-label" for="vision">Visión</label>
                 </div>
                 @error('vision')
@@ -155,7 +155,7 @@
             <!-- Presentación -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <textarea class="form-control is-valid" id="presentacion" name="presentacion" rows="3">{{ $semillero->presentacion }}</textarea>
+                    <textarea class="form-control is-valid" id="presentacion" name="presentacion" rows="3" maxlength="2000">{{ $semillero->presentacion }}</textarea>
                     <label class="form-label" for="presentacion">Presentación</label>
                 </div>
                 @error('presentacion')
@@ -166,7 +166,7 @@
             <!-- Objetivos -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <textarea class="form-control is-valid"  id="objetivos" name="objetivos" rows="3">{{ $semillero->objetivos }}</textarea>
+                    <textarea class="form-control is-valid"  id="objetivos" name="objetivos" rows="3" maxlength="2000">{{ $semillero->objetivos }}</textarea>
                     <label class="form-label" for="objetivos">Objetivos</label>
                 </div>
                 @error('objetivos')
@@ -177,7 +177,7 @@
             <!-- Valores -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <textarea class="form-control is-valid" id="valores" name="valores" rows="3">{{ $semillero->valores }}</textarea>
+                    <textarea class="form-control is-valid" id="valores" name="valores" rows="3" maxlength="2000">{{ $semillero->valores }}</textarea>
                     <label class="form-label" for="valores">Valores</label>
                 </div>
                 @error('valores')
@@ -188,7 +188,7 @@
             <!-- Lineas de Investigación -->
             <div class="col-md-12">
                 <div class="form-outline">
-                    <textarea class="form-control is-valid" id="lineas_inv" name="lineas_inv" rows="3">{{ $semillero->lineas_inv }}</textarea>
+                    <textarea class="form-control is-valid" id="lineas_inv" name="lineas_inv" rows="3" maxlength="2000">{{ $semillero->lineas_inv }}</textarea>
                     <label class="form-label" for="lineas_inv">Lineas de Investigación</label>
                 </div>
                 @error('lineas_inv')
