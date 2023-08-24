@@ -16,6 +16,8 @@ use Intervention\Image\Facades\Image;
 use App\Models\Persona;
 use App\Models\Coordinador;
 use App\Models\Semillerista;
+use App\Models\Proyecto;
+use App\Models\Evento;
 
 class ReportController extends Controller
 {
@@ -172,5 +174,39 @@ class ReportController extends Controller
         }else{
             return redirect()->route('perfil')->with('actualizarProfa', true);
         }
+    }
+
+    public function generarReporteEventos(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $eventos = Evento::all();
+        date_default_timezone_set('America/Bogota');
+        $fechaActual = date("d-m-Y");
+        $horaActual = date("h:i A");
+        $fecha = $fechaActual.' | '.$horaActual;
+
+        $tipoOptions = [
+            '1' => 'Congreso',
+            '2' => 'Encuentro',
+            '3' => 'Seminario',
+            '4' => 'Taller',
+        ];
+        
+        $modalidadOptions = [
+            '1' => 'Virtual',
+            '2' => 'Presencial',
+            '3' => 'Hibrida',
+        ];
+        $clasificacionOptions = [
+            '1' => 'Local',
+            '2' => 'Regional',
+            '3' => 'Nacional',
+        ];
+
+        $pdf = Pdf::loadView('Reportes.eventos', compact('eventos', 'fecha','tipoOptions','modalidadOptions','clasificacionOptions'));
+        return $pdf->stream('Reporte_Eventos.pdf');
     }
 }

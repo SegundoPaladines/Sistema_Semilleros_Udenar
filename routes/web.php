@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,8 @@ Route::middleware([
     Route::get('/eventos', [HomeController::class, 'listarEventos'])->name('listar_eventos');
     Route::get('/semillero', [HomeController::class, 'verSemillero'])->name('ver_semillero');
     Route::get('vista/proyectos_vinculados_evento/{codigo_evento}', [HomeController::class, 'vistaProyectoEventoVinculado'])->name('vista_proy_vinculado_evento');
+    //Reportes
+    Route::get('/reporte_eventos', [ReportController::class, 'generarReporteEventos'])->name('eventos_report');
     // Route::get('/eventos', [AdminController::class, 'listarEventos'])->name('listar_eventos');
 
     //Route::get('/cambiar_contrasena', [HomeController::class, 'contrasena'])-name('contrasena');

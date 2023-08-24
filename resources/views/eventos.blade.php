@@ -41,6 +41,11 @@
     </div>
 
     </center>
+    <div class="gap-2 d-grid d-md-flex justify-content-md-center">
+        <a class="btn btn-warning btn-rounded" href="{{route('eventos_report')}}" target="_blank">
+            <i class="fas fa-download"></i> Generar Reporte
+        </a>
+    </div>
     <br>
     <div class="tabla-container" style= "overflow-x: auto;">
     <table id= "tabla_eventos" class="table">
@@ -51,6 +56,10 @@
                 <th scope="col">Nombre de Evento</th>
                 <th scope="col">Fecha de Inicio</th>
                 <th scope="col">Fecha de Finalización</th>
+                <th scope="col">Lugar</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Modalidad</th>
+                <th scope="col">Clasificación</th>
                 @can('director.administracion')<th scope="col">Opciones</th>@endcan
                 @can('coordinador.administracion')
                     <th scope="col">Opción</th>
@@ -68,6 +77,10 @@
                     <td>{{$e->nombre}}</td>
                     <td>{{$e->fecha_inicio}}</td>
                     <td>{{$e->fecha_fin}}</td>
+                    <td>{{$e->lugar}}</td>
+                    <td>{{$tipoOptions[$e->tipo]}}</td>
+                    <td>{{$modalidadOptions[$e->modalidad]}}</td>
+                    <td>{{$clasificacionOptions[$e->clasificacion]}}</td>
                     @can('coordinador.administracion')
                         <td>
                             <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>

@@ -176,7 +176,24 @@ class HomeController extends Controller
     public function listarEventos(){
         $user = auth()->user();
         $eventos = Evento::all();
-        return view('eventos', compact('eventos','user'));
+        $tipoOptions = [
+            '1' => 'Congreso',
+            '2' => 'Encuentro',
+            '3' => 'Seminario',
+            '4' => 'Taller',
+        ];
+        
+        $modalidadOptions = [
+            '1' => 'Virtual',
+            '2' => 'Presencial',
+            '3' => 'Hibrida',
+        ];
+        $clasificacionOptions = [
+            '1' => 'Local',
+            '2' => 'Regional',
+            '3' => 'Nacional',
+        ];
+        return view('eventos', compact('eventos','user','tipoOptions','modalidadOptions','clasificacionOptions'));
     }
     public function verSemillero(){
         $user = auth()->user();
