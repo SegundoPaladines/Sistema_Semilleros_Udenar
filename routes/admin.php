@@ -97,3 +97,6 @@ Route::get('/reporte_usuarios', [ReportController::class, 'generarReporteUsuario
 
 //Generar reporte semilleros
 Route::get('/reporte_semillero/{id}', [ReportController::class, 'generarReporteSemillero_admin'])->name('sem_report_dir');
+
+//Generar reporte proyectos
+Route::get('/reporte_proyectosA', [ReportController::class, 'generarReporteProyectosA'])->name('proyectosA_report');

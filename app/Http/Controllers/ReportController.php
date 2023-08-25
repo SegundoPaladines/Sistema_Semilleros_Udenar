@@ -209,4 +209,102 @@ class ReportController extends Controller
         $pdf = Pdf::loadView('Reportes.eventos', compact('eventos', 'fecha','tipoOptions','modalidadOptions','clasificacionOptions'));
         return $pdf->stream('Reporte_Eventos.pdf');
     }
+
+    public function generarReporteProyectosA(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+        date_default_timezone_set('America/Bogota');
+        $fechaActual = date("d-m-Y");
+        $horaActual = date("h:i A");
+        $fecha = $fechaActual.' | '.$horaActual;
+
+        $proyectos = Proyecto::all();
+        $estadoOptions = [
+            '1' => 'Propuesta',
+            '2' => 'En curso',
+            '3' => 'Finalizado',
+            '4' => 'Inactivo',
+        ];
+        
+        $tipoOptions = [
+            '1' => 'Investigación',
+            '2' => 'Innovación y Desarrollo',
+            '3' => 'Emprendimiento',
+        ];
+
+        $pdf = Pdf::loadView('Reportes.proyectosA', compact('proyectos', 'fecha','tipoOptions','estadoOptions'));
+        return $pdf->stream('Reporte_Proyectos.pdf');
+    }
+
+    public function generarReporteProyectosC(){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol);
+
+        $persona = Persona::where('usuario', $user->id)->first();
+        if($persona !== null){
+            $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+            if($coordinador !== null){
+                $semillero = DB::table('semilleros')->where('id_semillero', $coordinador->semillero)->first();
+                if($semillero !== null){
+                    date_default_timezone_set('America/Bogota');
+                    $fechaActual = date("d-m-Y");
+                    $horaActual = date("h:i A");
+                    $fecha = $fechaActual.' | '.$horaActual;
+            
+                    $logo = $semillero->logo;
+                    $foto = '';
+                    if($logo !== null){
+                        $foto= public_path().Storage::url($logo);
+                    }else{
+                        $foto = public_path().'/vendor/adminlte/dist/img/logo.png';
+                    }
+
+                    $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
+                    $estadoOptions = [
+                        '1' => 'Propuesta',
+                        '2' => 'En curso',
+                        '3' => 'Finalizado',
+                        '4' => 'Inactivo',
+                    ];
+                    
+                    $tipoOptions = [
+                        '1' => 'Investigación',
+                        '2' => 'Innovación y Desarrollo',
+                        '3' => 'Emprendimiento',
+                    ];
+
+                    $pdf = Pdf::loadView('Reportes.proyectosC', compact('proyectos', 'fecha','tipoOptions','estadoOptions'));
+                    return $pdf->stream('Reporte_Proyectos.pdf');
+                }else{
+                    return redirect()->route('ver_semillero');
+                }
+            }else{
+                return redirect()->route('ver_semillero');
+            }
+        }else{
+            return redirect()->route('perfil')->with('actualizarProfa', true);
+        }
+
+
+        $proyectos = Proyecto::all();
+        $estadoOptions = [
+            '1' => 'Propuesta',
+            '2' => 'En curso',
+            '3' => 'Finalizado',
+            '4' => 'Inactivo',
+        ];
+        
+        $tipoOptions = [
+            '1' => 'Investigación',
+            '2' => 'Innovación y Desarrollo',
+            '3' => 'Emprendimiento',
+        ];
+
+        $pdf = Pdf::loadView('Reportes.proyectosA', compact('proyectos', 'fecha','tipoOptions','estadoOptions'));
+        return $pdf->stream('Reporte_Proyectos.pdf');
+    }
 }

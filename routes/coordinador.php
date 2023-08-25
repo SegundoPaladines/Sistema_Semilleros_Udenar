@@ -50,3 +50,6 @@ Route::get('/reporte_semilleristas', [ReportController::class, 'generarReporteSe
 //agregar participantes de semillero
 Route::get('/agregar_participantes', [CoordinadorController::class, 'agregarParticipantes'])->name('agregar_participantes_semillero');
 Route::get('/agregar_participante/{documento}', [CoordinadorController::class, 'vincularParticipante'])->name('vincular_sem');
+
+//Generar reporte proyectos
+Route::get('/reporte_proyectosC', [ReportController::class, 'generarReporteProyectosC'])->name('proyectosC_report');

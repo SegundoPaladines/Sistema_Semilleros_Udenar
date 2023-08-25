@@ -45,7 +45,11 @@
             </div>
             <br>
         </center>
-        
+        <div class="gap-2 d-grid d-md-flex justify-content-md-center">
+        <a class="btn btn-warning btn-rounded" href="{{route('proyectosC_report')}}" target="_blank">
+            <i class="fas fa-download"></i> Generar Reporte
+        </a>
+    </div>
         <br>
         <div class="tabla-container" style= "overflow-x: auto;">
         <table id= "tabla_usuarios" class="table">
