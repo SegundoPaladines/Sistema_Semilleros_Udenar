@@ -84,8 +84,10 @@
                     <td>{{$clasificacionOptions[$e->clasificacion]}}</td>
                     @can('coordinador.administracion')
                         <td>
+                            <center>
                             <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>
-                            <a class="btn btn-warning btn-rounded" href="{{route('eventosI_report', $e->codigo_evento)}}" target="_blank"> <i class="fas fa-download"></i> Generar Reporte </a>
+                            <a class="btn btn-success btn-sm" href="{{route('eventosI_report', $e->codigo_evento)}}" target="_blank"> <i class="fas fa-download"></i> Generar Reporte </a>
+                            </center>
                         </td>
                     @endcan
                     @can('director.administracion')
@@ -94,7 +96,7 @@
                         <a style="margin: 3px;" href="{{route('vista_proy_vinculado_evento', $e->codigo_evento)}}" class="btn btn-primary btn-sm">Ver Proyectos</a>
                         <a style="margin: 3px;" href="{{route('edit_eventos', $e->codigo_evento)}}" class="btn btn-warning btn-sm">Editar</a>
                         <a style="margin: 3px;" href="{{route('eliminar_evento', $e->codigo_evento)}}" class="btn btn-danger btn-sm">Eliminar</a>
-                        <a class="btn btn-warning btn-rounded" href="{{route('eventosI_report', $e->codigo_evento)}}" target="_blank"><i class="fas fa-download"></i> Generar Reporte </a>                   
+                        <a class="btn btn-success btn-sm" href="{{route('eventosI_report', $e->codigo_evento)}}" target="_blank"><i class="fas fa-download"></i> Generar Reporte </a>                   
                         </center>
                     </td>
                     @endcan
