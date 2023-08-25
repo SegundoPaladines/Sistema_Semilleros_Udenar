@@ -53,8 +53,6 @@
                 <th scope="col">Tipo de Proyecto</th>
                 <th scope="col">Fecha inicio</th>
                 <th scope="col">Fecha Finalización</th>
-                <th scope="col">Propuesta</th>
-                <th scope="col">Proyecto Final</th>
             </tr>
         </thead>
         <tbody>
@@ -70,8 +68,6 @@
                     <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
                     <td>{{$p->feacha_inicio}}</td>
                     <td>{{$p->feacha_fin}}</td>
-                    <td><a href="{{ asset($p->arc_propuesta) }}" target="_blank">Descargar PDF</a></td>
-                    <td><a href="{{ asset($p->arc_adjunto) }}" target="_blank">Descargar PDF</a></td>
                 </tr>
                 @php
                     $i++;
