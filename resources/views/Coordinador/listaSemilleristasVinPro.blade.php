@@ -111,7 +111,7 @@
         </script>
     @else
         <div>
-            <center><h5>Actualmente no se encuentra ningún semillerista vienculad@ a este proyecto</h5></center>
+            <center><h5>Actualmente no se encuentra ningún semillerista vinculad@ a este proyecto</h5></center>
         </div>
     @endif
     

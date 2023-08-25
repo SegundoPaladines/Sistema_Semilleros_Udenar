@@ -134,7 +134,7 @@
         </script>
     @else
         <div>
-            <center><h5>Usted actualmente no se encuentra vienculad@ a ningun semillero</h5></center>
+            <center><h5>Usted actualmente no se encuentra vinculad@ a ningún semillero</h5></center>
         </div>
     @endif
     

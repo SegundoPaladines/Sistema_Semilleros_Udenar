@@ -127,7 +127,7 @@
                 <br>
                 <hr>
                 <br>
-                <h5>Actualmente usted no se encuentra vienculad@ a un semillero</h5>
+                <h5>Actualmente usted no se encuentra vinculad@ a un semillero</h5>
              </div>
         </center>
     @endif
