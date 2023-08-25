@@ -180,7 +180,7 @@ class ReportController extends Controller
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
-        $this->authorize('director', $rol);
+        // $this->authorize('director', $rol);
 
         $eventos = Evento::all();
         date_default_timezone_set('America/Bogota');
@@ -208,6 +208,44 @@ class ReportController extends Controller
 
         $pdf = Pdf::loadView('Reportes.eventos', compact('eventos', 'fecha','tipoOptions','modalidadOptions','clasificacionOptions'));
         return $pdf->stream('Reporte_Eventos.pdf');
+    }
+
+    public function generarReporteEventosIndividual($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+
+        $id_texto = intval($id);
+        $eventos = DB::table('eventos')->where('codigo_evento',$id_texto)->get();
+        // dd($evento);
+        if($eventos !== null){
+            // $eventos= Evento::all();
+            date_default_timezone_set('America/Bogota');
+            $fechaActual = date("d-m-Y");
+            $horaActual = date("h:i A");
+            $fecha = $fechaActual.' | '.$horaActual;
+    
+            $tipoOptions = [
+                '1' => 'Congreso',
+                '2' => 'Encuentro',
+                '3' => 'Seminario',
+                '4' => 'Taller',
+            ];
+            
+            $modalidadOptions = [
+                '1' => 'VirtualA',
+                '2' => 'Presencial',
+                '3' => 'Hibrida',
+            ];
+            $clasificacionOptions = [
+                '1' => 'Local',
+                '2' => 'Regional',
+                '3' => 'Nacional',
+            ];
+    
+            $pdf = Pdf::loadView('Reportes.eventosIndividual', compact('eventos', 'fecha','tipoOptions','modalidadOptions','clasificacionOptions'));
+            return $pdf->stream('Reporte_Eventos.pdf');
+        }
     }
 
     public function generarReporteProyectosA(){
