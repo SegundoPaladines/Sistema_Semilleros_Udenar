@@ -380,6 +380,34 @@ class AdminController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol, new Evento());
+
+        $validator = Validator::make($r->all(), [
+            'codigo_evento' => 'required',
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
+            'lugar' => 'required',
+            'tipo' => 'required',
+            'modalidad' => 'required',
+            'clasificacion' => 'required',
+            'observaciones' => 'required',
+        ], [
+            'codigo_evento.required'=>'Este campo no puede estar vacío',
+            'nombre.required'=>'Este campo no puede estar vacío',
+            'descripcion.required'=>'Este campo no puede estar vacío',
+            'fecha_inicio.required'=>'Este campo no puede estar vacío',
+            'fecha_fin.required'=>'Este campo no puede estar vacío',
+            'lugar.required'=>'Este campo no puede estar vacío',
+            'tipo.required'=>'Este campo no puede estar vacío',
+            'modalidad.required'=>'Este campo no puede estar vacío',
+            'clasificacion.required'=>'Este campo no puede estar vacío',
+            'observaciones.required'=>'Este campo no puede estar vacío',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         
         $nuevo_evento = new Evento();
 
@@ -394,6 +422,8 @@ class AdminController extends Controller
         $nuevo_evento->clasificacion = $r->input('clasificacion');
         $nuevo_evento->observaciones = $r->input('observaciones');
         $nuevo_evento->save();
+
+
         
         return redirect()->route('vista_reg_eventos')->with('registroExitoso', true);
     }
