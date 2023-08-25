@@ -292,6 +292,46 @@ class CoordinadorController extends Controller
         
         return redirect()->back()->with('vinculacionExitosa', true);
     }
+
+    public function verSemProyecto($id_proyecto) {
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('coordinador', $rol);
+        $proyecto = Proyecto::findOrFail($id_proyecto);
+
+        $persona = DB::table('personas')->where('usuario', $user->id)->first();
+        if($persona !== null){
+            $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
+        }
+        
+        // Busca el semillero del coordinador que hace la consulta
+        $semillero = Semillero::where('id_semillero', $coordinador->semillero)->first();
+        if($semillero !== null){
+            $id = $semillero->id_semillero;
+            // Busca los participantes de este semillero
+            $participantes = Semillerista::where('semillero', $id)->get();
+            $participantesConVinculacion = collect(); // Aquí almacenaremos los participantes con vinculación
+
+            foreach ($participantes as $participante) {
+                $num_identificacion = $participante->num_identificacion;
+                //Busca los participantes que perteneces al proyecto actual
+                $vinculacionExistente = Integrante_Proy::where('proyecto', $id_proyecto)
+                    ->where('semillerista', $num_identificacion)
+                    ->exists();
+                // Si el participante pertenece al proyecto lo adjunta a la lista
+                if ($vinculacionExistente) {
+                    $participantesConVinculacion->push($participante);
+                }
+            }
+
+            return view('Coordinador.listaSemilleristasVinPro',compact('participantesConVinculacion', 'user', 'proyecto'));
+
+        }else{
+            return redirect()->route('perfil')->with('actualizarProfa', true);
+        }
+    }
+
     public function desvincularProyecto($num_identificacion,$id_proyecto){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];

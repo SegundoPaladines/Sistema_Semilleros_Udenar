@@ -70,19 +70,19 @@
                         </div>
                         <hr>
                         <div>
-                            <a href="{{route('edit_usr', $u->id)}}" class="btn btn-primary">Editar</a>
+                            <a href="{{route('edit_usr', $u->id)}}" class="btn btn-primary btn-sm">Editar</a>
                             @if($u->id !== $user->id)
-                                <a href="{{route('delete_usr', $u->id)}}" class="btn btn-danger">Eliminar</a>
+                                <a href="{{route('delete_usr', $u->id)}}" class="btn btn-danger btn-sm">Eliminar</a>
                             @endif
 
                             @if($u->id !== $user->id)
-                                <a href="{{route('perfiles', $u->id)}}" class="btn btn-info">Perfil</a>
+                                <a href="{{route('perfiles', $u->id)}}" class="btn btn-info btn-sm">Perfil</a>
                             @else
-                                <a href="{{route('perfil')}}" class="btn btn-info">Perfil</a>
+                                <a href="{{route('perfil')}}" class="btn btn-info btn-sm">Perfil</a>
                             @endif
 
                             @if($u->getRoleNames()->first() == 'semillerista')
-                                <a href="{{route('act_info_acad_sem', $u->id)}}" class="btn btn-dark">Inf. Acad</a>
+                                <a style="margin: 3px;" href="{{route('act_info_acad_sem', $u->id)}}" class="btn btn-dark btn-sm">Inf. Acad</a>
                             @endif
                         </div>
                     </div>
