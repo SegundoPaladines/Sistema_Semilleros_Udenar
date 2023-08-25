@@ -1029,8 +1029,16 @@ class AdminController extends Controller
         $nuevo_proyecto->estado = $request->input('estado');
         $nuevo_proyecto->feacha_inicio = $request->input('feacha_inicio');
         $nuevo_proyecto->feacha_fin = $request->input('feacha_fin');
-        $nuevo_proyecto->arc_propuesta = $request->input('arc_propuesta');
-        $nuevo_proyecto->arc_adjunto = $request->input('arc_adjunto');
+        $arc_propuesta = $request->file('arc_propuesta');
+        // Almacenar el archivo en la ubicación deseada
+        $rutaPropuesta = $arc_propuesta->store('public/proyectos/propuestas');
+        // Actualizar la ruta en el modelo
+        $nuevo_proyecto->arc_propuesta = $rutaPropuesta;
+        /////////////////////////////////////////////////////
+        $arc_adjunto = $request->file('arc_adjunto');
+        $rutaAdjunto = $arc_adjunto->store('public/proyectos/finales');
+        $nuevo_proyecto->arc_adjunto = $rutaAdjunto;
+
         $nuevo_proyecto->save();
         
         return redirect()->route('vista_agr_proy_dir')->with('registroExitoso', true);
@@ -1060,8 +1068,25 @@ class AdminController extends Controller
         $proyecto_id->estado = $r->input('estado');
         $proyecto_id->feacha_inicio = $r->input('feacha_inicio');
         $proyecto_id->feacha_fin = $r->input('feacha_fin');
-        $proyecto_id->arc_propuesta = $r->input('arc_propuesta');
-        $proyecto_id->arc_adjunto = $r->input('arc_adjunto');
+        $arc_propuesta = $r->file('arc_propuesta');
+        if ($arc_propuesta !== null && $arc_propuesta->isValid()) {
+            if ($proyecto_id->arc_propuesta !== null) {
+                Storage::delete($proyecto_id->arc_propuesta);
+            }
+
+            $rutaPropuesta = $arc_propuesta->store('public/proyectos/propuestas');
+            $proyecto_id->arc_propuesta = $rutaPropuesta;
+        }
+        
+        $arc_adjunto = $r->file('arc_adjunto');
+        if ($arc_adjunto !== null && $arc_adjunto->isValid()) {
+            if ($proyecto_id->arc_adjunto !== null) {
+                Storage::delete($proyecto_id->arc_adjunto);
+            }
+
+            $rutaAdjunto = $arc_adjunto->store('public/proyectos/finales');
+            $proyecto_id->arc_adjunto = $rutaAdjunto;
+        }
         $proyecto_id->save();
 
         return redirect()->route('proyectos_dir')->with('registroExitoso', true);

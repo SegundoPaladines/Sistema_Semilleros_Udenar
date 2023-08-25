@@ -27,7 +27,7 @@
 
     <div id="contenedor-form">
 
-        <form  class="row g-3 needs-validation" novalidate method="POST" action="" action="{{ route('agregar_proyecto') }}">
+        <form  class="row g-3 needs-validation" novalidate method="POST" action=""  enctype="multipart/form-data" action="{{ route('agregar_proyecto') }}">
             @csrf
 
             <!-- Id del proyecto -->

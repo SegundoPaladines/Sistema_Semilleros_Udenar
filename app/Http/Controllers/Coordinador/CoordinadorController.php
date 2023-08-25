@@ -18,6 +18,7 @@ use App\Models\Evento;
 use App\Models\Presentacion;
 use App\Models\Integrante_Proy;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class CoordinadorController extends Controller
 {
@@ -260,6 +261,12 @@ class CoordinadorController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador', $rol);
+
+         // Verificar si el proyecto está en curso o finalizado
+        $proyecto = Proyecto::findOrFail($id_proyecto);
+        if ($proyecto->estado === '2' || $proyecto->estado === '3' || $proyecto->estado === '4') {
+            return redirect()->back()->with('vinculacionDenegadaTipo', true);
+        }
         
         // Verificar si ya existe una vinculación
         $vinculacionExistente = Integrante_Proy::where('proyecto', $id_proyecto)
@@ -267,7 +274,7 @@ class CoordinadorController extends Controller
         
         if ($vinculacionExistente) {
             // Redirigir con mensaje de "vinculación denegada"
-            return redirect()->route('add_sem_proyecto', $num_identificacion)->with('vinculacionDenegada', true);
+            return redirect()->back()->with('vinculacionDenegada', true);
         }
         
         // Si no existe la vinculación, proceder a vincular
@@ -411,8 +418,16 @@ class CoordinadorController extends Controller
         $nuevo_proyecto->estado = $request->input('estado');
         $nuevo_proyecto->feacha_inicio = $request->input('feacha_inicio');
         $nuevo_proyecto->feacha_fin = $request->input('feacha_fin');
-        $nuevo_proyecto->arc_propuesta = $request->input('arc_propuesta');
-        $nuevo_proyecto->arc_adjunto = $request->input('arc_adjunto');
+        $arc_propuesta = $request->file('arc_propuesta');
+        // Almacenar el archivo en la ubicación deseada
+        $rutaPropuesta = $arc_propuesta->store('public/proyectos/propuestas');
+        // Actualizar la ruta en el modelo
+        $nuevo_proyecto->arc_propuesta = $rutaPropuesta;
+        /////////////////////////////////////////////////////
+        $arc_adjunto = $request->file('arc_adjunto');
+        $rutaAdjunto = $arc_adjunto->store('public/proyectos/finales');
+        $nuevo_proyecto->arc_adjunto = $rutaAdjunto;
+        
         $nuevo_proyecto->save();
         
         return redirect()->route('vista_agr_proy')->with('registroExitoso', true);
@@ -442,8 +457,27 @@ class CoordinadorController extends Controller
         $proyecto_id->estado = $r->input('estado');
         $proyecto_id->feacha_inicio = $r->input('feacha_inicio');
         $proyecto_id->feacha_fin = $r->input('feacha_fin');
-        $proyecto_id->arc_propuesta = $r->input('arc_propuesta');
-        $proyecto_id->arc_adjunto = $r->input('arc_adjunto');
+
+        $arc_propuesta = $r->file('arc_propuesta');
+        if ($arc_propuesta !== null && $arc_propuesta->isValid()) {
+            if ($proyecto_id->arc_propuesta !== null) {
+                Storage::delete($proyecto_id->arc_propuesta);
+            }
+
+            $rutaPropuesta = $arc_propuesta->store('public/proyectos/propuestas');
+            $proyecto_id->arc_propuesta = $rutaPropuesta;
+        }
+        
+        $arc_adjunto = $r->file('arc_adjunto');
+        if ($arc_adjunto !== null && $arc_adjunto->isValid()) {
+            if ($proyecto_id->arc_adjunto !== null) {
+                Storage::delete($proyecto_id->arc_adjunto);
+            }
+
+            $rutaAdjunto = $arc_adjunto->store('public/proyectos/finales');
+            $proyecto_id->arc_adjunto = $rutaAdjunto;
+        }
+
         $proyecto_id->save();
 
         return redirect()->route('proyectos')->with('registroExitoso', true);
