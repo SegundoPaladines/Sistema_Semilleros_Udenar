@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <title>Reporte de Proyectos</title>
+    <title>Reporte de Proyecto</title>
   </head>
   <body>
       <div class="encabezado">
@@ -36,35 +36,57 @@
       </div>
       <center>
         <div style="border-top:1px solid black; border-bottom: 1px solid black;">
-          <h5>Listado de Proyectos</h5>
+          <h5>Proyecto</h5>
         </div>
       </center>
       <br>
       <table class="table table-bordered">
-          <thead>
-              <tr>
-                  <th style="border: 1px solid black;}">Id</th>
-                  <th style="border: 1px solid black;}">Titulo</th>
-                  <th style="border: 1px solid black;}">Estado</th>
-                  <th style="border: 1px solid black;}">Tipo</th>
-                  <th style="border: 1px solid black;}">fecha inicio</th>
-                  <th style="border: 1px solid black;}">fecha fin</th>
-              </tr>
-          </thead>
-          <tbody>
-              @php $i = 1; @endphp
-              @foreach($proyectos as $p)
-                  <tr>
-                      <td style="border: 1px solid black;}"> {{$p->id_proyecto}}</td>
-                      <td style="border: 1px solid black;}">{{ $p->titulo }}</td>
-                      <td style="border: 1px solid black;}">{{$estadoOptions[$p->estado]}}</td>
-                      <td style="border: 1px solid black;}">{{$tipoOptions[$p->tipo_proyecto]}}</td>
-                      <td style="border: 1px solid black;}">{{ $p->feacha_inicio }}</td>
-                      <td style="border: 1px solid black;}">{{ $p->feacha_fin }}</td>
-                  </tr>
-                  @php $i++; @endphp
-              @endforeach
-          </tbody>
-      </table>
+    <tbody>
+        @php $i = 0; @endphp
+        @foreach($proyectos as $p)
+            @if($i % 4 === 0)
+                <tr>
+            @endif
+            <td style="border: 1px solid black;">Código: {{$p->id_proyecto}}</td>
+            <td colspan="2" style="border: 1px solid black;">Nombre: {{ $p->titulo }}</td>
+            @if($i % 4 === 3)
+          </tr>
+          @endif
+          @if($i % 4 === 0)
+          <tr>
+            @endif
+            <td style="border: 1px solid black;">Semillero: {{ $p->semillero }}</td>
+            <td style="border: 1px solid black;">Fecha Inicio: {{ $p->feacha_inicio }}</td>
+            <td style="border: 1px solid black;">Fecha Fin: {{ $p->feacha_fin }}</td>
+            @if($i % 4 === 3)
+                </tr>
+            @endif
+            @if($i % 4 === 0)
+                <tr>
+            @endif
+            <td style="border: 1px solid black;">Tipo: {{$tipoOptions[$p->tipo_proyecto]}}</td>
+            <td colspan="2" style="border: 1px solid black;">Estado: {{$estadoOptions[$p->estado]}}</td>
+            @if($i % 4 === 3)
+                </tr>
+            @endif
+            <!-- @if($i % 4 === 0)
+                <tr>
+            @endif
+            @if($i % 4 === 3)
+                </tr>
+            @endif
+            @if($i % 4 === 0)
+                <tr>
+            @endif
+            @if($i % 4 === 3)
+                </tr>
+            @endif --> -->
+            @php $i++; @endphp
+        @endforeach
+        @if($i % 4 !== 0)
+            </tr>
+        @endif
+    </tbody>
+</table>
   </body>
 </html>

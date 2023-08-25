@@ -215,11 +215,9 @@ class ReportController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
 
-        $id_texto = intval($id);
-        $eventos = DB::table('eventos')->where('codigo_evento',$id_texto)->get();
-        // dd($evento);
+        $id_int = intval($id);
+        $eventos = DB::table('eventos')->where('codigo_evento',$id_int)->get();
         if($eventos !== null){
-            // $eventos= Evento::all();
             date_default_timezone_set('America/Bogota');
             $fechaActual = date("d-m-Y");
             $horaActual = date("h:i A");
@@ -274,6 +272,41 @@ class ReportController extends Controller
 
         $pdf = Pdf::loadView('Reportes.proyectosA', compact('proyectos', 'fecha','tipoOptions','estadoOptions'));
         return $pdf->stream('Reporte_Proyectos.pdf');
+    }
+
+    public function generarReporteProyectosIndividuaAI($id){
+        $user = auth()->user();
+        $nombre_rol = $user->getRoleNames()[0];
+        $rol = Rol::where('name', $nombre_rol)->first();
+        $this->authorize('director', $rol);
+
+        $id_int = intval($id);
+        $proyectos = DB::table('proyectos')->where('id_proyecto',$id_int)->get();
+        if($proyectos !== null){
+            date_default_timezone_set('America/Bogota');
+            $fechaActual = date("d-m-Y");
+            $horaActual = date("h:i A");
+            $fecha = $fechaActual.' | '.$horaActual;
+    
+            // $proyectos = Proyecto::all();
+            $estadoOptions = [
+                '1' => 'Propuesta',
+                '2' => 'En curso',
+                '3' => 'Finalizado',
+                '4' => 'Inactivo',
+            ];
+            
+            $tipoOptions = [
+                '1' => 'Investigación',
+                '2' => 'Innovación y Desarrollo',
+                '3' => 'Emprendimiento',
+            ];
+    
+            $pdf = Pdf::loadView('Reportes.proyectosIndividual', compact('proyectos', 'fecha','tipoOptions','estadoOptions'));
+            return $pdf->stream('Reporte_Proyectos.pdf');
+
+        }
+
     }
 
     public function generarReporteProyectosC(){

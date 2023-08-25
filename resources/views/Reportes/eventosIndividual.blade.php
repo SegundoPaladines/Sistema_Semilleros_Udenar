@@ -41,7 +41,6 @@
       </center>
       <br>
       <table class="table table-bordered">
-      <table class="table table-bordered">
     <tbody>
         @php $i = 0; @endphp
         @foreach($eventos as $e)

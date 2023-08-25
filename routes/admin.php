@@ -100,3 +100,4 @@ Route::get('/reporte_semillero/{id}', [ReportController::class, 'generarReporteS
 
 //Generar reporte proyectos
 Route::get('/reporte_proyectosA', [ReportController::class, 'generarReporteProyectosA'])->name('proyectosA_report');
+Route::get('/reporte_proyectosAI/{id}', [ReportController::class, 'generarReporteProyectosIndividuaAI'])->name('proyectosAI_report');

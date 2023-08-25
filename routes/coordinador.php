@@ -53,3 +53,4 @@ Route::get('/agregar_participante/{documento}', [CoordinadorController::class, '
 
 //Generar reporte proyectos
 Route::get('/reporte_proyectosC', [ReportController::class, 'generarReporteProyectosC'])->name('proyectosC_report');
+Route::get('/reporte_proyectosI/{id}', [ReportController::class, 'generarReporteProyectosIndividual'])->name('proyectosI_report');
