@@ -85,6 +85,8 @@
                             <center>
                             <a style="margin: 3px;" href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Vincular a Evento</a>
                             <a style="margin: 3px;" href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-info btn-sm">Editar</a>
+                            <a class="btn btn-warning btn-rounded" href="{{route('proyectosCI_report', $p->id_proyecto)}}" target="_blank"> <i class="fas fa-download"></i> Generar Reporte </a>
+                            
                             @if($p->id !== $user->id)
                                 <a style="margin: 3px;" href="{{route('eliminar_proyecto', $p->id_proyecto)}}" class="btn btn-danger btn-sm">Eliminar</a>
                             @endif
