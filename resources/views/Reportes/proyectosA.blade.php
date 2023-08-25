@@ -58,7 +58,7 @@
                   <tr>
                       <td style="border: 1px solid black;}"> {{$p->id_proyecto}}</td>
                       <td style="border: 1px solid black;}">{{ $p->titulo }}</td>
-                      <td style="border: 1px solid black;}">{{ $p->semillero }}</td>
+                      <td style="border: 1px solid black;}">{{app('App\Http\Controllers\Admin\AdminController')->obtenerNombreSemillero($p->semillero)}}</td>
                       <td style="border: 1px solid black;}">{{$estadoOptions[$p->estado]}}</td>
                       <td style="border: 1px solid black;}">{{$tipoOptions[$p->tipo_proyecto]}}</td>
                       <td style="border: 1px solid black;}">{{ $p->feacha_inicio }}</td>

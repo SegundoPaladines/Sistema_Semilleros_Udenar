@@ -55,7 +55,7 @@
           @if($i % 4 === 0)
           <tr>
             @endif
-            <td style="border: 1px solid black;">Semillero: {{ $p->semillero }}</td>
+            <td style="border: 1px solid black;">Semillero: {{ $nombre }}</td>
             <td style="border: 1px solid black;">Fecha Inicio: {{ $p->feacha_inicio }}</td>
             <td style="border: 1px solid black;">Fecha Fin: {{ $p->feacha_fin }}</td>
             @if($i % 4 === 3)
@@ -69,18 +69,6 @@
             @if($i % 4 === 3)
                 </tr>
             @endif
-            <!-- @if($i % 4 === 0)
-                <tr>
-            @endif
-            @if($i % 4 === 3)
-                </tr>
-            @endif
-            @if($i % 4 === 0)
-                <tr>
-            @endif
-            @if($i % 4 === 3)
-                </tr>
-            @endif --> -->
             @php $i++; @endphp
         @endforeach
         @if($i % 4 !== 0)

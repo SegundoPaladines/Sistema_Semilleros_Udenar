@@ -282,6 +282,9 @@ class ReportController extends Controller
 
         $id_int = intval($id);
         $proyectos = DB::table('proyectos')->where('id_proyecto',$id_int)->get();
+        $proyectos2 = DB::table('proyectos')->where('id_proyecto',$id_int)->first();
+        $semillero = DB::table('semilleros')->where('id_semillero', $proyectos2->semillero)->first();
+        $nombre = $semillero->nombre;
         if($proyectos !== null){
             date_default_timezone_set('America/Bogota');
             $fechaActual = date("d-m-Y");
@@ -302,7 +305,7 @@ class ReportController extends Controller
                 '3' => 'Emprendimiento',
             ];
     
-            $pdf = Pdf::loadView('Reportes.proyectosIndividual', compact('proyectos', 'fecha','tipoOptions','estadoOptions'));
+            $pdf = Pdf::loadView('Reportes.proyectosIndividual', compact('proyectos', 'fecha','tipoOptions','estadoOptions','nombre'));
             return $pdf->stream('Reporte_Proyectos.pdf');
 
         }
@@ -385,7 +388,7 @@ class ReportController extends Controller
                     }else{
                         $foto = public_path().'/vendor/adminlte/dist/img/logo.png';
                     }
-
+                    $nombre = $semillero->nombre;
                     $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
                     $estadoOptions = [
                         '1' => 'Propuesta',
@@ -400,7 +403,7 @@ class ReportController extends Controller
                         '3' => 'Emprendimiento',
                     ];
 
-                    $pdf = Pdf::loadView('Reportes.proyectosIndividual', compact('proyectos', 'fecha','tipoOptions','estadoOptions'));
+                    $pdf = Pdf::loadView('Reportes.proyectosIndividual', compact('proyectos', 'fecha','tipoOptions','estadoOptions','nombre'));
                     return $pdf->stream('Reporte_Proyectos.pdf');
                 }else{
                     return redirect()->route('ver_semillero');
