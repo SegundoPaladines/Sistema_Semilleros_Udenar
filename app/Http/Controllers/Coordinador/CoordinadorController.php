@@ -198,11 +198,15 @@ class CoordinadorController extends Controller
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador', $rol);
         $persona = Persona::where('usuario', $user->id)->first();
+        $nombre = '';
        if($persona !== null){
             $coordinador = Coordinador::where('num_identificacion', $persona->num_identificacion)->first();
             $proyectos = null;
+
             if($coordinador !== null){
                 $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
+                $semillero = Semillero::where('id_semillero',$coordinador->semillero)->first();
+                $nombre = $semillero->nombre;
             }
             $estadoOptions = [
                 '1' => 'Propuesta',
@@ -216,8 +220,10 @@ class CoordinadorController extends Controller
                 '2' => 'Innovación y Desarrollo',
                 '3' => 'Emprendimiento',
             ];
+
             
-            return view('Coordinador.proyectos', compact('proyectos', 'user','estadoOptions','tipoOptions'));
+            
+            return view('Coordinador.proyectos', compact('proyectos', 'user','estadoOptions','tipoOptions', 'nombre'));
        }else{
             return redirect()->route('perfil')->with('actualizarProfa', true);
        }

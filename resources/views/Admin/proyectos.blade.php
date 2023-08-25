@@ -77,7 +77,7 @@
                         <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
                         <td>{{$p->feacha_inicio}}</td>
                         <td>{{$p->feacha_fin}}</td>
-                        <td>{{$p->semillero}}</td>
+                        <td>{{app('App\Http\Controllers\Admin\AdminController')->obtenerNombreSemillero($p->semillero)}}</td>
                         <td>
                             <a href="{{ Storage::url($p->arc_propuesta)}}" target="_blank" style="background-color: #6caa84;" class="btn btn-floating" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar propuesta">
                                 <i class="fas fa-download"></i>

@@ -989,7 +989,8 @@ class AdminController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol, new Proyecto());
-    
+
+        
         $proyectos = Proyecto::all();
         $estadoOptions = [
             '1' => 'Propuesta',
@@ -1123,5 +1124,10 @@ class AdminController extends Controller
         }else{
             return 'https://distrimar.s3.amazonaws.com/static/apm/img/misc/default_user.png';
         }
+    }
+
+    public function obtenerNombreSemillero($id){
+        $semillero = DB::table('semilleros')->where('id_semillero', $id)->first();
+        return $semillero->nombre;
     }
 }
