@@ -67,30 +67,8 @@
                 @enderror
             </div>
 
-            <!-- Correo-->
-            <div class="col-md-4">
-                <div class="form-outline">
-                    <input type="email" id="correo" name="correo" class="form-control is-valid"/>
-                    <label class="form-label" for="correo">Correo</label>
-                </div>
-                @error('correo')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <!-- Telefono -->
-            <div class="col-md-4">
-                <div class="form-outline">
-                    <input type="text" id="telefono" name="telefono" class="form-control is-valid"/>
-                    <label class="form-label" for="telefono">Número de Contacto</label>
-                </div>
-                @error('telefono')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
             <!-- Dirección -->
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="form-outline">
                     <input type="text" id="lugar" name="lugar" class="form-control is-valid" value="{{$evento_id->lugar}}"/>
                     <label class="form-label" for="lugar">Lugar</label>

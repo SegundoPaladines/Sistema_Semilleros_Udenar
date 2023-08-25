@@ -443,6 +443,34 @@ class AdminController extends Controller
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol);
 
+        $validator = Validator::make($r->all(), [
+            'codigo_evento' => 'required',
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
+            'lugar' => 'required',
+            'tipo' => 'required',
+            'modalidad' => 'required',
+            'clasificacion' => 'required',
+            'observaciones' => 'required',
+        ], [
+            'codigo_evento.required'=>'Este campo no puede estar vacío',
+            'nombre.required'=>'Este campo no puede estar vacío',
+            'descripcion.required'=>'Este campo no puede estar vacío',
+            'fecha_inicio.required'=>'Este campo no puede estar vacío',
+            'fecha_fin.required'=>'Este campo no puede estar vacío',
+            'lugar.required'=>'Este campo no puede estar vacío',
+            'tipo.required'=>'Este campo no puede estar vacío',
+            'modalidad.required'=>'Este campo no puede estar vacío',
+            'clasificacion.required'=>'Este campo no puede estar vacío',
+            'observaciones.required'=>'Este campo no puede estar vacío',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $evento_id = Evento::findOrFail($id);
 
         $evento_id->codigo_evento = $r->input('codigo_evento');
@@ -1050,6 +1078,30 @@ class AdminController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol, new Proyecto());
+
+        $validator = Validator::make($request->all(), [
+            'id_proyecto' => 'required',
+            'semillero' => 'required',
+            'titulo' => 'required',
+            'tipo_proyecto' => 'required',
+            'estado' => 'required',
+            'feacha_inicio' => 'required',
+            'feacha_fin' => 'required',
+            'arc_propuesta' => 'required',
+        ], [
+            'id_proyecto.required' => 'El campo no puede estar vacío.',
+            'semillero.required' => 'El campo no puede estar vacío.',
+            'titulo.required' => 'El campo no puede estar vacío.',
+            'tipo_proyecto.required' => 'El campo no puede estar vacío.',
+            'estado.required' => 'El campo no puede estar vacío.',
+            'feacha_inicio.required' => 'El campo no puede estar vacío.',
+            'feacha_fin.required' => 'El campo no puede estar vacío.',
+            'arc_propuesta.required' => 'El campo no puede estar vacío.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         
         $nuevo_proyecto = new Proyecto();
 
@@ -1062,14 +1114,17 @@ class AdminController extends Controller
         $nuevo_proyecto->feacha_fin = $request->input('feacha_fin');
         $arc_propuesta = $request->file('arc_propuesta');
         // Almacenar el archivo en la ubicación deseada
-        $rutaPropuesta = $arc_propuesta->store('public/proyectos/propuestas');
-        // Actualizar la ruta en el modelo
-        $nuevo_proyecto->arc_propuesta = $rutaPropuesta;
-        /////////////////////////////////////////////////////
+        if ($arc_propuesta !== null && $arc_propuesta->isValid()) {
+            $rutaPropuesta = $arc_propuesta->store('public/proyectos/propuestas');
+            // Actualizar la ruta en el modelo
+            $nuevo_proyecto->arc_propuesta = $rutaPropuesta;
+            /////////////////////////////////////////////////////
+        }
         $arc_adjunto = $request->file('arc_adjunto');
-        $rutaAdjunto = $arc_adjunto->store('public/proyectos/finales');
-        $nuevo_proyecto->arc_adjunto = $rutaAdjunto;
-
+        if ($arc_propuesta !== null && $arc_propuesta->isValid()) {
+            $rutaAdjunto = $arc_adjunto->store('public/proyectos/finales');
+            $nuevo_proyecto->arc_adjunto = $rutaAdjunto;
+        }
         $nuevo_proyecto->save();
         
         return redirect()->route('vista_agr_proy_dir')->with('registroExitoso', true);
@@ -1089,6 +1144,30 @@ class AdminController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol);
+
+        $validator = Validator::make($r->all(), [
+            'id_proyecto' => 'required',
+            'semillero' => 'required',
+            'titulo' => 'required',
+            'tipo_proyecto' => 'required',
+            'estado' => 'required',
+            'feacha_inicio' => 'required',
+            'feacha_fin' => 'required',
+            'arc_propuesta' => 'required',
+        ], [
+            'id_proyecto.required' => 'El campo no puede estar vacío.',
+            'semillero.required' => 'El campo no puede estar vacío.',
+            'titulo.required' => 'El campo no puede estar vacío.',
+            'tipo_proyecto.required' => 'El campo no puede estar vacío.',
+            'estado.required' => 'El campo no puede estar vacío.',
+            'feacha_inicio.required' => 'El campo no puede estar vacío.',
+            'feacha_fin.required' => 'El campo no puede estar vacío.',
+            'arc_propuesta.required' => 'El campo no puede estar vacío.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $proyecto_id = Proyecto::findOrFail($id);
 

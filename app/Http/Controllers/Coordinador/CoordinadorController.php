@@ -73,6 +73,7 @@ class CoordinadorController extends Controller
             'presentacion.required' => 'El campo Presentación es requerido.',
             'fecha_creacion.required' => 'El campo Fecha de Creación es requerido.',
             'resolucion.required' => 'El campo Resolución es requerido.',
+            'num_res.required' => 'Este campo es requerido.',
             'resolucion.mimes' => 'El campo Resolución debe ser un archivo de tipo PDF, Word o PowerPoint.',
         ]);
         
@@ -454,6 +455,30 @@ class CoordinadorController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador', $rol);
+ 
+        $validator = Validator::make($request->all(), [
+            'id_proyecto' => 'required',
+            'semillero' => 'required',
+            'titulo' => 'required',
+            'tipo_proyecto' => 'required',
+            'estado' => 'required',
+            'feacha_inicio' => 'required',
+            'feacha_fin' => 'required',
+            'arc_propuesta' => 'required',
+        ], [
+            'id_proyecto.required' => 'El campo no puede estar vacío.',
+            'semillero.required' => 'El campo no puede estar vacío.',
+            'titulo.required' => 'El campo no puede estar vacío.',
+            'tipo_proyecto.required' => 'El campo no puede estar vacío.',
+            'estado.required' => 'El campo no puede estar vacío.',
+            'feacha_inicio.required' => 'El campo no puede estar vacío.',
+            'feacha_fin.required' => 'El campo no puede estar vacío.',
+            'arc_propuesta.required' => 'El campo no puede estar vacío.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         
         $nuevo_proyecto = new Proyecto();
 
@@ -494,6 +519,31 @@ class CoordinadorController extends Controller
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('coordinador', $rol);
 
+
+        $validator = Validator::make($r->all(), [
+            'id_proyecto' => 'required',
+            'semillero' => 'required',
+            'titulo' => 'required',
+            'tipo_proyecto' => 'required',
+            'estado' => 'required',
+            'feacha_inicio' => 'required',
+            'feacha_fin' => 'required',
+            'arc_propuesta' => 'required',
+        ], [
+            'id_proyecto.required' => 'El campo no puede estar vacío.',
+            'semillero.required' => 'El campo no puede estar vacío.',
+            'titulo.required' => 'El campo no puede estar vacío.',
+            'tipo_proyecto.required' => 'El campo no puede estar vacío.',
+            'estado.required' => 'El campo no puede estar vacío.',
+            'feacha_inicio.required' => 'El campo no puede estar vacío.',
+            'feacha_fin.required' => 'El campo no puede estar vacío.',
+            'arc_propuesta.required' => 'El campo no puede estar vacío.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        
         $proyecto_id = Proyecto::findOrFail($id);
 
         $proyecto_id->id_proyecto = $r->input('id_proyecto');
