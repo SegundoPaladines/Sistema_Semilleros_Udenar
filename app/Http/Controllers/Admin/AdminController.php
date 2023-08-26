@@ -318,6 +318,12 @@ class AdminController extends Controller
     
         $usr_edit = User::findOrFail($id);
         $persona = Persona::where('usuario', $usr_edit->id)->first();
+
+        $usuarioRepetido = Persona::all();
+
+        $usuarioExistente = $usuarioRepetido->firstWhere('num_identificacion', $request->input('num_identificacion'));
+
+        if ($usuarioExistente === null) {
     
         if ($persona === null) {
             $persona = new Persona();
@@ -346,7 +352,10 @@ class AdminController extends Controller
 
         $persona->save();
 
-        return redirect()->route('perfiles', $usr_edit->id)->with('actualizacionExitosa', true);
+        return redirect()->route('perfiles', $usr_edit->id)->with('actualizacionExitosa', true);}
+        else {
+            return redirect()->route('perfiles', $usr_edit->id)->with('actualizacionNoExitosa', true);
+        }
     }
     public function listarSemilleros(){
         $user = auth()->user();
@@ -393,7 +402,7 @@ class AdminController extends Controller
             'clasificacion' => 'required',
             'observaciones' => 'required',
         ], [
-            'codigo_evento.required'=>'Este campo no puede estar vacío',
+            'codigo_evento.required'=>'Este campo no puede estar vacío, debe ser un número',
             'nombre.required'=>'Este campo no puede estar vacío',
             'descripcion.required'=>'Este campo no puede estar vacío',
             'fecha_inicio.required'=>'Este campo no puede estar vacío',
@@ -499,7 +508,10 @@ class AdminController extends Controller
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol);
     
-        return redirect()->route('listar_eventos', ['elimina' => $id])->with('preguntarEliminar', true);
+        $evento_del = Evento::findOrFail($id);
+        $evento_del->delete();
+        return redirect()->route('listar_eventos', ['eliminado' => $evento_del->nombre])->with('eventoEliminado', true);
+        // return redirect()->route('listar_eventos', ['elimina' => $id])->with('preguntarEliminar', true);
     }
     public function confirmacionEliminacionEvento($id){
         $user = auth()->user();
@@ -558,6 +570,12 @@ class AdminController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+
+        $semilleroRepetido = Semillero::all();
+
+        $semilleroExistente = $semilleroRepetido->firstWhere('id_semillero', $request->input('id_semillero'));
+
+        if ($semilleroExistente === null) {
         $semillero = new Semillero();
 
         $semillero->id_semillero = $request->input('id_semillero');
@@ -601,7 +619,10 @@ class AdminController extends Controller
 
         $semillero->save();
 
-        return redirect()->route('agregar_semilleros')->with('registroExitoso', true);
+        return redirect()->route('agregar_semilleros')->with('registroExitoso', true);}
+        else {
+            return redirect()->route('agregar_semilleros')->with('registroNoExitoso', true);
+        }
     }
     public function vistaActualizarSemillero($id){
         $user = auth()->user();
@@ -1097,7 +1118,7 @@ class AdminController extends Controller
             'feacha_fin' => 'required',
             'arc_propuesta' => 'required',
         ], [
-            'id_proyecto.required' => 'El campo no puede estar vacío.',
+            'id_proyecto.required' => 'El campo no puede estar vacío, debe ser un número.',
             'semillero.required' => 'El campo no puede estar vacío.',
             'titulo.required' => 'El campo no puede estar vacío.',
             'tipo_proyecto.required' => 'El campo no puede estar vacío.',

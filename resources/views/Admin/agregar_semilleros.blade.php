@@ -206,6 +206,13 @@
             });
         </script>
     @endif
+    @if (session('registroNoExitoso'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡El semillero no se ha registrado con éxito, el ID ingresado ya existe!", "Registro Exitoso", false);
+            });
+        </script>
+    @endif
     <!-- Modal -->
     <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
         <div class="modal-dialog">

@@ -33,7 +33,7 @@
             <!-- Id del proyecto -->
             <div class="col-md-6">
                 <div class="form-outline">
-                    <input type="text" id="id_proyecto" name="id_proyecto" class="form-control is-valid"/>
+                    <input type="number" id="id_proyecto" name="id_proyecto" class="form-control is-valid"/>
                     <label class="form-label" for="id_proyecto">Id del Proyecto</label>
                 </div>
                 @error('id_proyecto')

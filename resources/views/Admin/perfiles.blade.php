@@ -167,6 +167,13 @@
         });
     </script>
     @endif
+    @if (session('actualizacionNoExitosa'))
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              actualizacionNoExitosa();
+          });
+      </script>
+    @endif
 
     <!-- Modal -->
     <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">

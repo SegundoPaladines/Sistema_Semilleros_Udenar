@@ -90,7 +90,11 @@ class HomeController extends Controller
     
         $user = auth()->user();
         $persona = Persona::where('usuario', $user->id)->first();
-    
+        $usuarioRepetido = Persona::all();
+
+        $usuarioExistente = $usuarioRepetido->firstWhere('num_identificacion', $request->input('num_identificacion'));
+
+        if ($usuarioExistente === null) {
         if ($persona === null) {
             $persona = new Persona();
         }
@@ -123,6 +127,9 @@ class HomeController extends Controller
             return redirect()->route('vista_actualizar_datos_semillerista');
         }else{
             return redirect()->route('perfil')->with('actualizacionExitosa', true);
+        }}
+        else {
+            return redirect()->route('perfil')->with('actualizacionNoExitosa', true);
         }
     }
     public function actualizarContrasena(){

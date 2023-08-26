@@ -33,7 +33,7 @@
             <!-- Id del Evento -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <input type="text" id="codigo_evento" name="codigo_evento" class="form-control is-valid"/>
+                    <input type="number" id="codigo_evento" name="codigo_evento" class="form-control is-valid"/>
                     <label class="form-label" for="codigo_evento">Id del Evento</label>
                 </div>
                 @error('codigo_evento')
