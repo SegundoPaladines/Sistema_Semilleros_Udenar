@@ -80,9 +80,9 @@
 
             <!-- tipo de evento -->
             <div class="col-md-4">
-                <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+                <label class="form-label" for="tipo_proyecto" id="lb">Tipo de evento: </label>
                 <select id ="tipo" name="tipo" class="form-select is-valid">
-                    <option value="">Tipo</option>
+                    <!-- <option value="">Tipo</option> -->
                     <option value="1" {{ $evento_id->tipo == '1' ? 'selected' : '' }}>Congreso</option>
                     <option value="2" {{ $evento_id->tipo == '2' ? 'selected' : '' }}>Encuentro</option>
                     <option value="3" {{ $evento_id->tipo == '3' ? 'selected' : '' }}>Seminario</option>
@@ -95,9 +95,9 @@
 
             <!-- modalidad -->
             <div class="col-md-4">
-                <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+                <label class="form-label" for="tipo_proyecto" id="lb">Modalidad del evento: </label>
                 <select id ="modalidad" name="modalidad" class="form-select is-valid">
-                    <option selected>Modalidad</option>
+                    <!-- <option selected>Modalidad</option> -->
                     <option value="1" {{ $evento_id->modalidad == '1' ? 'selected' : '' }}>Virtual</option>
                     <option value="2" {{ $evento_id->modalidad == '2' ? 'selected' : '' }}>Presencial</option>
                     <option value="3" {{ $evento_id->modalidad == '3' ? 'selected' : '' }}>Hibrida</option>
@@ -109,9 +109,9 @@
 
             <!-- clasificación -->
             <div class="col-md-4">
-                <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+                <label class="form-label" for="tipo_proyecto" id="lb">Clasificación del evento: </label>
                 <select id ="clasificacion" name="clasificacion" class="form-select is-valid">
-                    <option selected>Clasificación</option>
+                    <!-- <option selected>Clasificación</option> -->
                     <option value="1" {{ $evento_id->clasificacion == '1' ? 'selected' : '' }}>Local</option>
                     <option value="2" {{ $evento_id->clasificacion == '2' ? 'selected' : '' }}>Regional</option>
                     <option value="3" {{ $evento_id->clasificacion == '3' ? 'selected' : '' }}>Nacional</option>

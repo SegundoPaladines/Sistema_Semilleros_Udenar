@@ -31,6 +31,7 @@
 
             <!-- Id del proyecto -->
             <div class="col-md-6">
+                <label class="form-label" for="id_proyecto" id="lb">ID proyecto: </label>
                 <div class="form-outline">
                     <input type="text" id="id_proyecto" name="id_proyecto" class="form-control is-valid"/>
                     <label class="form-label" for="id_proyecto">Id del Proyecto</label>
@@ -41,11 +42,14 @@
             </div>
 
             <!-- Id del semillero -->
-            <div class="col-md-6">
-                <div class="form-outline">
-                    <input type="text" id="semillero" name="semillero" class="form-control is-valid"/>
-                    <label class="form-label" for="semillero">Id del Semillero</label>
-                </div>
+            <div class="col-md-6">                    
+                <label class="form-label" for="semillero" id="lb">Seleccione ID semillero: </label>
+                    <select id ="semillero" name="semillero" class="form-select is-valid">
+                        <!-- <option selected>Semillero</option> -->
+                        @foreach($semillero as $s)
+                            <option value="{{$s->id_semillero}}">{{$s->id_semillero}}</option>
+                        @endforeach
+                </select>
                 @error('semillero')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -64,9 +68,9 @@
 
             <!-- Opciones tipo de proyecto -->
             <div class="col-md-6">
-            <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+            <label class="form-label" for="tipo_proyecto" id="lb">Tipo de proyecto: </label>
                 <select id ="tipo_proyecto" name="tipo_proyecto" class="form-select is-valid">
-                    <option selected>Tipo</option>
+                    <!-- <option selected>Tipo</option> -->
                     <option value="1">Investigación</option>
                     <option value="2">Innovación y Desarrollo</option>
                     <option value="3">Emprendimiento</option>
@@ -78,9 +82,9 @@
 
             <!-- Opciones estado -->
             <div class="col-md-6">
-            <label class="form-label" for="estado" id="lb">Seleccione: </label>
+            <label class="form-label" for="estado" id="lb">Estado del proyecto: </label>
                 <select id ="estado" name="estado" class="form-select is-valid">
-                    <option selected>Estado</option>
+                    <!-- <option selected>Estado</option> -->
                     <option value="1">Propuesta</option>
                     <option value="2">En curso</option>
                     <option value="3">Finalizado</option>

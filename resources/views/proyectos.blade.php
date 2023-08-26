@@ -57,7 +57,6 @@
                     <th scope="col">Tipo de Proyecto</th>
                     <th scope="col">Fecha inicio</th>
                     <th scope="col">Fecha Finalización</th>
-                    <th scope="col">Semillero</th>
                     
                 </tr>
             </thead>
@@ -74,7 +73,6 @@
                         <td>{{$tipoOptions[$p->tipo_proyecto]}}</td>
                         <td>{{$p->feacha_inicio}}</td>
                         <td>{{$p->feacha_fin}}</td>
-                        <td>{{$p->semillero}}</td>
                     </tr>
                     @php
                         $i++;

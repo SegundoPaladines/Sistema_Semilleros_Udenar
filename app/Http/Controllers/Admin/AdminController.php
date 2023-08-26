@@ -1070,8 +1070,10 @@ class AdminController extends Controller
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
         $this->authorize('director', $rol, new Proyecto());
+
+        $semillero = Semillero::all();
     
-        return view('Admin.vista_agr_proy', compact('user'));
+        return view('Admin.vista_agr_proy', compact('user','semillero'));
     }
     public function agregarProyecto(Request $request){
         $user = auth()->user();

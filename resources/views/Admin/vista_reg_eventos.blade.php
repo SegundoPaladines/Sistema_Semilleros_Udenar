@@ -84,9 +84,9 @@
 
             <!-- tipo de evento -->
             <div class="col-md-4">
-                <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+                <label class="form-label" for="tipo_proyecto" id="lb">Tipo de evento: </label>
                 <select id ="tipo" name="tipo" class="form-select is-valid">
-                        <option selected>Tipo</option>
+                        <!-- <option selected>Tipo</option> -->
                         <option value="1">Congreso</option>
                         <option value="2">Encuentro</option>
                         <option value="3">Seminario</option>
@@ -99,9 +99,9 @@
 
             <!-- modalidad -->
             <div class="col-md-4">
-                <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+                <label class="form-label" for="tipo_proyecto" id="lb">Modalidad del evento: </label>
                 <select id ="modalidad" name="modalidad" class="form-select is-valid">
-                    <option selected>Modalidad</option>
+                    <!-- <option selected>Modalidad</option> -->
                     <option value="1">Virtual</option>
                     <option value="2">Presencial</option>
                     <option value="3">Hibrida</option>
@@ -113,9 +113,9 @@
 
             <!-- clasificación -->
             <div class="col-md-4">
-                <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+                <label class="form-label" for="tipo_proyecto" id="lb">Clasificación del evento: </label>
                 <select id ="clasificacion" name="clasificacion" class="form-select is-valid">
-                    <option selected>Clasificación</option>
+                    <!-- <option selected>Clasificación</option> -->
                     <option value="1">Local</option>
                     <option value="2">Regional</option>
                     <option value="3">Nacional</option>
