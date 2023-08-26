@@ -427,11 +427,11 @@ class AdminController extends Controller
             $nuevo_evento->observaciones = $r->input('observaciones');
             
             $nuevo_evento->save();
+            return redirect()->route('vista_reg_eventos')->with('registroExitoso', true);
         } else {
             return redirect()->route('vista_reg_eventos')->with('registroNoExitoso', true);
         }
 
-        return redirect()->route('vista_reg_eventos')->with('registroExitoso', true);
     }
     public function vistaEditEventos($id){
         $user = auth()->user();
@@ -1110,7 +1110,11 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+        $proyectoRepetido = Proyecto::all();
+
+        $proyectoExistente = $proyectoRepetido->firstWhere('id_proyecto', $request->input('id_proyecto'));
+
+        if ($proyectoExistente === null) {
         $nuevo_proyecto = new Proyecto();
 
         $nuevo_proyecto->id_proyecto = $request->input('id_proyecto');
@@ -1136,6 +1140,9 @@ class AdminController extends Controller
         $nuevo_proyecto->save();
         
         return redirect()->route('vista_agr_proy_dir')->with('registroExitoso', true);
+    } else {
+        return redirect()->route('vista_agr_proy_dir')->with('registroNoExitoso', true);
+    }
     }
     public function vistaEditProyectos($id){
         $user = auth()->user();

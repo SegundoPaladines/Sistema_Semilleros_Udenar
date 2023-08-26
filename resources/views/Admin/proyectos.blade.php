@@ -90,7 +90,7 @@
                         </td>
                         <td>
                             <a style="margin: 3px;" href="{{route('edit_proyectos_dir', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Editar</a>
-                            <a class="btn btn-success btn-sm" href="{{route('proyectosAI_report', $p->id_proyecto)}}" target="_blank"> <i class="fas fa-download"></i> Generar Reporte </a>
+                            <a class="btn btn-success btn-sm" href="{{route('proyectosAI_report', $p->id_proyecto)}}" target="_blank"></i> Generar Reporte </a>
                             @if($p->id !== $user->id)
                                 <a style="margin: 3px;" href="{{route('eliminar_proyecto_dir', $p->id_proyecto)}}" class="btn btn-danger btn-sm">Eliminar</a>
                             @endif

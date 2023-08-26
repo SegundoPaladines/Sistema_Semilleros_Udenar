@@ -97,7 +97,7 @@
                             <center>
                             <a style="margin: 3px;" href="{{route('vista_proy_evento_vincular', $p->id_proyecto)}}" class="btn btn-primary btn-sm">Vincular a Evento</a>
                             <a style="margin: 3px;" href="{{route('edit_proyectos', $p->id_proyecto)}}" class="btn btn-info btn-sm">Editar</a>
-                            <a style="margin: 3px;" class="btn btn-success btn-sm" href="{{route('proyectosCI_report', $p->id_proyecto)}}" target="_blank"> <i class="fas fa-download"></i> Generar Reporte </a>
+                            <a style="margin: 3px;" class="btn btn-success btn-sm" href="{{route('proyectosCI_report', $p->id_proyecto)}}" target="_blank"></i> Generar Reporte </a>
                             
                             @if($p->id !== $user->id)
                                 <a style="margin: 3px;" href="{{route('listado_Semilleristas_cor_proy', $p->id_proyecto)}}" class="btn btn-warning btn-sm">Participantes</a>

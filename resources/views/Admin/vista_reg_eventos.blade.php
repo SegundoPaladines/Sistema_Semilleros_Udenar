@@ -164,7 +164,7 @@
     @if (session('registroNoExitoso'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡No se ha registrado el evento, el codigo ingresado ya existe","", false);
+                mostrarAlertaRegistroExitoso("¡No se ha registrado el evento, el ID ingresado ya existe","", false);
             });
         </script>
     @endif

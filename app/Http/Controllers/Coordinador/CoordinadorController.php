@@ -450,6 +450,7 @@ class CoordinadorController extends Controller
     
         return view('Coordinador.vista_agr_proy', compact('user','coordinador'));
     }
+    
     public function agregarProyecto(Request $request){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
@@ -479,7 +480,11 @@ class CoordinadorController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+        $proyectoRepetido = Proyecto::all();
+
+        $proyectoExistente = $proyectoRepetido->firstWhere('id_proyecto', $request->input('id_proyecto'));
+
+        if ($proyectoExistente === null) {
         $nuevo_proyecto = new Proyecto();
 
         $nuevo_proyecto->id_proyecto = $request->input('id_proyecto');
@@ -505,6 +510,9 @@ class CoordinadorController extends Controller
         $nuevo_proyecto->save();
         
         return redirect()->route('vista_agr_proy')->with('registroExitoso', true);
+    } else {
+            return redirect()->route('vista_agr_proy')->with('registroNoExitoso', true);
+        }
     }
     public function vistaEditProyectos($id){
         $user = auth()->user();

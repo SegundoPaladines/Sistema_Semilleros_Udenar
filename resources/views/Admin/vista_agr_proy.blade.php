@@ -151,6 +151,13 @@
             });
         </script>
     @endif
+    @if (session('registroNoExitoso'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡No se ha agregado el proyecto, el ID ingresado ya existe!","", false);
+            });
+        </script>
+    @endif
 
     <!-- Modal -->
     <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">

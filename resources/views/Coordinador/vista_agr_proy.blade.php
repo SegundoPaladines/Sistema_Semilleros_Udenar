@@ -152,7 +152,7 @@
     @if (session('registroNoExitoso'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                mostrarAlertaRegistroExitoso("¡No se ha agregado el proyecto, el codigo ingresado ya existe!","", false);
+                mostrarAlertaRegistroExitoso("¡No se ha agregado el proyecto, el ID ingresado ya existe!","", false);
             });
         </script>
     @endif
