@@ -491,13 +491,16 @@ class CoordinadorController extends Controller
         $nuevo_proyecto->feacha_fin = $request->input('feacha_fin');
         $arc_propuesta = $request->file('arc_propuesta');
         // Almacenar el archivo en la ubicación deseada
+        if ($arc_propuesta !== null && $arc_propuesta->isValid()) {
         $rutaPropuesta = $arc_propuesta->store('public/proyectos/propuestas');
         // Actualizar la ruta en el modelo
-        $nuevo_proyecto->arc_propuesta = $rutaPropuesta;
+        $nuevo_proyecto->arc_propuesta = $rutaPropuesta;}
         /////////////////////////////////////////////////////
         $arc_adjunto = $request->file('arc_adjunto');
-        $rutaAdjunto = $arc_adjunto->store('public/proyectos/finales');
-        $nuevo_proyecto->arc_adjunto = $rutaAdjunto;
+        if ($arc_adjunto !== null && $arc_adjunto->isValid()) {
+            $rutaAdjunto = $arc_adjunto->store('public/proyectos/finales');
+            $nuevo_proyecto->arc_adjunto = $rutaAdjunto;
+        }
         
         $nuevo_proyecto->save();
         

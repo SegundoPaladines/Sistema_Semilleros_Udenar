@@ -30,7 +30,7 @@
             <!-- Id del Evento -->
             <div class="col-md-4">
                 <div class="form-outline">
-                    <input type="text" id="codigo_evento" name="codigo_evento" class="form-control is-valid" value="{{$evento_id->codigo_evento }}"/>
+                    <input type="text" id="codigo_evento" name="codigo_evento" class="form-control is-valid" value="{{$evento_id->codigo_evento }}"readonly/>
                     <label class="form-label" for="codigo_evento">Id del Evento</label>
                 </div>
                 @error('codigo_evento')

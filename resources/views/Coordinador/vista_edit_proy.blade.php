@@ -65,9 +65,9 @@
 
             <!-- Opciones tipo de proyecto -->
             <div class="col-md-6">
-                <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+                <label class="form-label" for="tipo_proyecto" id="lb">Tipo de proyecto: </label>
                 <select id="tipo_proyecto" name="tipo_proyecto" class="form-select is-valid">
-                    <option value="">Tipo</option>
+                    <!-- <option value="">Tipo</option> -->
                     <option value="1" {{ $proyecto_id->tipo_proyecto == '1' ? 'selected' : '' }}>Investigación</option>
                     <option value="2" {{ $proyecto_id->tipo_proyecto == '2' ? 'selected' : '' }}>Innovación y Desarrollo</option>
                     <option value="3" {{ $proyecto_id->tipo_proyecto == '3' ? 'selected' : '' }}>Emprendimiento</option>
@@ -79,9 +79,9 @@
 
             <!-- Opciones estado -->
             <div class="col-md-6">
-            <label class="form-label" for="estado" id="lb">Seleccione: </label>
+            <label class="form-label" for="estado" id="lb">Estado del proyecto: </label>
                 <select id="estado" name="estado" class="form-select is-valid">
-                    <option value="">Tipo</option>
+                    <!-- <option value="">Tipo</option> -->
                     <option value="1" {{ $proyecto_id->estado == '1' ? 'selected' : '' }}>Propuesta</option>
                     <option value="2" {{ $proyecto_id->estado == '2' ? 'selected' : '' }}>En curso</option>
                     <option value="3" {{ $proyecto_id->estado == '3' ? 'selected' : '' }}>Finalizado</option>

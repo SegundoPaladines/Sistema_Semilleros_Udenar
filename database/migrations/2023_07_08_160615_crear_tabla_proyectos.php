@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('feacha_inicio');
             $table->date('feacha_fin');
             $table->string('arc_propuesta');
-            $table->string('arc_adjunto');
+            $table->string('arc_adjunto')->nullable();
 
             $table->primary('id_proyecto');
             $table->foreign('semillero')->references('id_semillero')->on('semilleros')->onDelete('cascade')->onUpdate('cascade');//si el semillero se elimina o actualiza, se elimina o actualiza al semillerista

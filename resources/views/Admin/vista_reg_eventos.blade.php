@@ -161,6 +161,13 @@
             });
         </script>
     @endif
+    @if (session('registroNoExitoso'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡No se ha registrado el evento, el codigo ingresado ya existe","", false);
+            });
+        </script>
+    @endif
 
     <!-- Modal -->
     <div id="reg_ext_emergente" class="modal fade" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">

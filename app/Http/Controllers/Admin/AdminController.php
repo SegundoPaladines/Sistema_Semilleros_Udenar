@@ -408,23 +408,29 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
-        $nuevo_evento = new Evento();
+        $eventoRepetido = Evento::all();
 
-        $nuevo_evento->codigo_evento = $r->input('codigo_evento');
-        $nuevo_evento->nombre = $r->input('nombre');
-        $nuevo_evento->descripcion = $r->input('descripcion');
-        $nuevo_evento->fecha_inicio = $r->input('fecha_inicio');
-        $nuevo_evento->fecha_fin = $r->input('fecha_fin');
-        $nuevo_evento->lugar = $r->input('lugar');
-        $nuevo_evento->tipo = $r->input('tipo');
-        $nuevo_evento->modalidad = $r->input('modalidad');
-        $nuevo_evento->clasificacion = $r->input('clasificacion');
-        $nuevo_evento->observaciones = $r->input('observaciones');
-        $nuevo_evento->save();
+        $eventoExistente = $eventoRepetido->firstWhere('codigo_evento', $r->input('codigo_evento'));
 
+        if ($eventoExistente === null) {
+            $nuevo_evento = new Evento();
 
-        
+            $nuevo_evento->codigo_evento = $r->input('codigo_evento');
+            $nuevo_evento->nombre = $r->input('nombre');
+            $nuevo_evento->descripcion = $r->input('descripcion');
+            $nuevo_evento->fecha_inicio = $r->input('fecha_inicio');
+            $nuevo_evento->fecha_fin = $r->input('fecha_fin');
+            $nuevo_evento->lugar = $r->input('lugar');
+            $nuevo_evento->tipo = $r->input('tipo');
+            $nuevo_evento->modalidad = $r->input('modalidad');
+            $nuevo_evento->clasificacion = $r->input('clasificacion');
+            $nuevo_evento->observaciones = $r->input('observaciones');
+            
+            $nuevo_evento->save();
+        } else {
+            return redirect()->route('vista_reg_eventos')->with('registroNoExitoso', true);
+        }
+
         return redirect()->route('vista_reg_eventos')->with('registroExitoso', true);
     }
     public function vistaEditEventos($id){
@@ -1123,7 +1129,7 @@ class AdminController extends Controller
             /////////////////////////////////////////////////////
         }
         $arc_adjunto = $request->file('arc_adjunto');
-        if ($arc_propuesta !== null && $arc_propuesta->isValid()) {
+        if ($arc_adjunto !== null && $arc_adjunto->isValid()) {
             $rutaAdjunto = $arc_adjunto->store('public/proyectos/finales');
             $nuevo_proyecto->arc_adjunto = $rutaAdjunto;
         }

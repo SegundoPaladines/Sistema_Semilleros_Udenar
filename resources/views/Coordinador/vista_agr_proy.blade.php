@@ -65,9 +65,9 @@
 
             <!-- Opciones tipo de proyecto -->
             <div class="col-md-6">
-            <label class="form-label" for="tipo_proyecto" id="lb">Seleccione: </label>
+            <label class="form-label" for="tipo_proyecto" id="lb">Tipo de proyecto: </label>
                 <select id ="tipo_proyecto" name="tipo_proyecto" class="form-select is-valid">
-                    <option selected>Tipo</option>
+                    <!-- <option selected>Tipo</option> -->
                     <option value="1">Investigación</option>
                     <option value="2">Innovación y Desarrollo</option>
                     <option value="3">Emprendimiento</option>
@@ -79,9 +79,9 @@
 
             <!-- Opciones estado -->
             <div class="col-md-6">
-            <label class="form-label" for="estado" id="lb">Seleccione: </label>
+            <label class="form-label" for="estado" id="lb">Estado del proyecto: </label>
                 <select id ="estado" name="estado" class="form-select is-valid">
-                    <option selected>Estado</option>
+                    <!-- <option selected>Estado</option> -->
                     <option value="1">Propuesta</option>
                     <option value="2">En curso</option>
                     <option value="3">Finalizado</option>
@@ -146,6 +146,13 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 mostrarAlertaRegistroExitoso("¡Se ha agregado el proyecto!","", true);
+            });
+        </script>
+    @endif
+    @if (session('registroNoExitoso'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                mostrarAlertaRegistroExitoso("¡No se ha agregado el proyecto, el codigo ingresado ya existe!","", false);
             });
         </script>
     @endif
