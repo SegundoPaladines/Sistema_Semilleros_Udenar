@@ -20,7 +20,7 @@
                 <br>
                 <h4>Departamento de Sistemas</h4>
                 <p>Universidad de Nariño <br>
-                  San Juan de Pasto - Colombia  
+                  San Juan de Pasto - Colombia
                 </p>
               </div>
             </td>
@@ -48,9 +48,9 @@
                   <th style="border: 1px solid black;}">Fecha Inicio</th>
                   <th style="border: 1px solid black;}">Fecha Finalización</th>
                   <th style="border: 1px solid black;}">Lugar</th>
-                  <th style="border: 1px solid black;}">Tipo</th>
+                  <!-- <th style="border: 1px solid black;}">Tipo</th>
                   <th style="border: 1px solid black;}">Modalidad</th>
-                  <th style="border: 1px solid black;}">Clasificación</th>
+                  <th style="border: 1px solid black;}">Clasificación</th> -->
               </tr>
           </thead>
           <tbody>
@@ -62,9 +62,9 @@
                       <td style="border: 1px solid black;}">{{ $e->fecha_inicio }}</td>
                       <td style="border: 1px solid black;}">{{ $e->fecha_fin }}</td>
                       <td style="border: 1px solid black;}">{{ $e->lugar }}</td>
-                      <td style="border: 1px solid black;}">{{$tipoOptions[$e->tipo]}}</td>
+                      <!-- <td style="border: 1px solid black;}">{{$tipoOptions[$e->tipo]}}</td>
                       <td style="border: 1px solid black;}">{{$modalidadOptions[$e->modalidad]}}</td>
-                      <td style="border: 1px solid black;}">{{$clasificacionOptions[$e->clasificacion]}}</td>
+                      <td style="border: 1px solid black;}">{{$clasificacionOptions[$e->clasificacion]}}</td> -->
                   </tr>
                   @php $i++; @endphp
               @endforeach

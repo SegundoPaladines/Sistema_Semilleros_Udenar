@@ -364,7 +364,7 @@ class ReportController extends Controller
         }
     }
 
-    public function generarReporteProyectosIndividuaCI(){
+    public function generarReporteProyectosIndividuaCI($id){
         $user = auth()->user();
         $nombre_rol = $user->getRoleNames()[0];
         $rol = Rol::where('name', $nombre_rol)->first();
@@ -389,27 +389,32 @@ class ReportController extends Controller
                         $foto = public_path().'/vendor/adminlte/dist/img/logo.png';
                     }
                     $nombre = $semillero->nombre;
-                    $proyectos = Proyecto::where('semillero',$coordinador->semillero)->get();
-                    $estadoOptions = [
-                        '1' => 'Propuesta',
-                        '2' => 'En curso',
-                        '3' => 'Finalizado',
-                        '4' => 'Inactivo',
-                    ];
-                    
-                    $tipoOptions = [
-                        '1' => 'Investigación',
-                        '2' => 'Innovación y Desarrollo',
-                        '3' => 'Emprendimiento',
-                    ];
-
-                    $pdf = Pdf::loadView('Reportes.proyectosIndividual', compact('proyectos', 'fecha','tipoOptions','estadoOptions','nombre'));
-                    return $pdf->stream('Reporte_Proyectos.pdf');
-                }else{
-                    return redirect()->route('ver_semillero');
+                    $id_int = intval($id);
+                    $proyectos = DB::table('proyectos')->where('id_proyecto',$id_int)->get();
+                    if($proyectos !== null){
+                        date_default_timezone_set('America/Bogota');
+                        $fechaActual = date("d-m-Y");
+                        $horaActual = date("h:i A");
+                        $fecha = $fechaActual.' | '.$horaActual;
+                
+                        // $proyectos = Proyecto::all();
+                        $estadoOptions = [
+                            '1' => 'Propuesta',
+                            '2' => 'En curso',
+                            '3' => 'Finalizado',
+                            '4' => 'Inactivo',
+                        ];
+                        
+                        $tipoOptions = [
+                            '1' => 'Investigación',
+                            '2' => 'Innovación y Desarrollo',
+                            '3' => 'Emprendimiento',
+                        ];
+                        
+                        $pdf = Pdf::loadView('Reportes.proyectosIndividual', compact('proyectos', 'fecha','tipoOptions','estadoOptions','nombre'));
+                        return $pdf->stream('Reporte_Proyectos.pdf');
+                    }
                 }
-            }else{
-                return redirect()->route('ver_semillero');
             }
         }else{
             return redirect()->route('perfil')->with('actualizarProfa', true);
