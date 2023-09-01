@@ -105,8 +105,8 @@
                 <div class="contenido">
                     <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
                     <img class="perfil-img" src="{{asset('src/img/Developers/segundo.jpg')}}">
-                    <h1>Segundo Paladines</h1>
-                    <p class="trabajo">DESARROLLADOR</p>
+                    <h1>Dana Criollo</h1>
+                    <p class="trabajo">DESARROLLADORA</p>
                     <p class="descripcion">
                         Departamento de Sistemas <br>
                         Facultad de Ingeniería <br>
