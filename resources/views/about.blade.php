@@ -57,10 +57,11 @@
                     </p>
                 </div>
                 <div class="links">
-                    <a href="#"  target="_blank"><i class="fa fa-github"></i></a>
-                    <a href="#"  target="_blank"><i class="fa fa-linkedin"></i></a>
-                    <a href="#"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                    <a href="https://github.com/SegundoPaladines"  target="_blank"><i class="fa fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/segundo-paladines-ortiz-b60216257"  target="_blank"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100010282954088"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/channel/UC0lBAjv2RCj8z--bKu2UAew"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                    <a href="https://wa.me/573147856561"  target="_blank"><i class="fa fa-whatsapp"></i></a>
                 </div>
             </div>
             <div class="carta">
