@@ -80,6 +80,7 @@
                     <a href="https://github.com/juancig01"  target="_blank"><i class="fa fa-github"></i></a>
                     <a href="https://www.facebook.com/juankmilo.insuasty"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                     <a id="insta-j" href="https://www.instagram.com/juanc__cmx/"  target="_blank"><i class="fa fa-instagram"></i></a>
+                    <a id="insta-j" href="https://www.youtube.com/channel/UCLln8gUHErtBGw3ghKOXC9w"  target="_blank"><i class="fa fa-youtube-play"></i></a>
                 </div>
             </div>
             <div class="carta">
@@ -95,10 +96,9 @@
                     </p>
                 </div>
                 <div class="links">
-                    <a href="#"  target="_blank"><i class="fa fa-github"></i></a>
-                    <a href="#"  target="_blank"><i class="fa fa-linkedin"></i></a>
-                    <a href="#"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                    <a href="https://github.com/diulioz"  target="_blank"><i class="fa fa-github"></i></a>
+                    <a id="insta-j" href="https://www.youtube.com/channel/UCl2-w3n4Mgu9JMw6l8nY-_w"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                    <a href="mailto:davidcriollo@udenar.edu.co"><i class="fa fa-envelope-o"></i></a>
                 </div>
             </div>
             <div class="carta">
