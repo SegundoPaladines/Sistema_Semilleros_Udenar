@@ -37,6 +37,15 @@ class HomeController extends Controller
             return view('welcome');
         }
     }
+    public function devLogin(){
+        if (auth()->check()) {
+            $user = auth()->user();
+            return view('index')->with('user', $user);
+        } else {
+            session()->flash('openModal', true);
+            return view('about');
+        }
+    }
     public function welcome() {
         session()->forget('openModal');
         return view('welcome');
@@ -265,5 +274,8 @@ class HomeController extends Controller
             '3' => 'Emprendimiento',
         ];        
         return view('verProyectosVinculados', compact('proyectos', 'user','estadoOptions','tipoOptions'));
+    }
+    public function aboutUs(){
+        return view('about');
     }
 }

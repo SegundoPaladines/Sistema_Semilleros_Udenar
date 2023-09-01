@@ -21,9 +21,16 @@ use App\Http\Controllers\ReportController;
 Route::get('/', [HomeController::class,'welcome'])
     ->name('welcome');
 
+Route::get('/development_team', [HomeController::class,'aboutUs'])
+    ->name('about');
+
 Route::get('/login', [HomeController::class,'login'])
     ->middleware(['guest'])
     ->name('login');
+
+Route::get('/dev_login', [HomeController::class,'devLogin'])
+    ->middleware(['guest'])
+    ->name('dev_login');
 
 // rutas con autenticacion
 

@@ -3,10 +3,9 @@ body{
     margin: 0;
     border: 0;
 }
-
 .navbar-custom {
     position: absolute;
-    top: 0;
+    top: 20px;
     left: 0;
     width: 100%;
     background: transparent;

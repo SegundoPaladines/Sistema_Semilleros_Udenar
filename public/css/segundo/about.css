@@ -1,0 +1,177 @@
+.p-container{
+    margin-top: 20vh;
+    min-height: 70vh;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    font-family: "Roboto", sans-serif;
+}
+.contenedor-cartas{
+    display:flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+.titulo{
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    margin-left: -3px;
+    margin-bottom: 4rem;
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 15%;
+    transform: translateY(-50%);
+    width: 100%;
+    opacity: 0;
+    animation: animacionTitulos 1s linear forwards;
+}
+.titulo::after{
+    content: "";
+    width: 20rem;
+    height: 0.2rem;
+    background-color: #45e19f;
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.carta{
+    position: relative;
+    z-index: 10;
+    margin-top: 6rem;
+}
+.contenido{
+    border-radius: 10px;
+    position: relative;
+    width: 15rem;
+    height: auto;
+    background-color: #ebeef8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0.5rem 0.5rem 0.3rem rgba(0, 0, 0, 0.2);
+}
+.carta .fondo-img{
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 30%;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    top: 0;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 62%, 0 100%);
+}
+.carta .perfil-img{
+    width:7rem;
+    height: 7rem;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: -10rem;
+    z-index: 2;
+    border: 2px solid #ebbef8;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+.carta h1{
+    font-size: 1.5rem;
+    color: #333;
+    margin: 1.5rem 0;
+}
+.carta .trabajo{
+    color:#777;
+    font-size: 1rem;
+    font-weight: 300;
+    border-bottom: 1px solid #45e19f;
+}
+.carta .descripcion{
+    font-style: italic;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #333;
+    text-align: center;
+}
+.carta .links {
+    position: absolute;
+    z-index: -10;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background:rgba(255, 255, 255, 0.8);
+    box-shadow: 2px 3px 5px rgba(73, 69, 52, 0.4);
+    padding: 20px;
+    align-items: center;
+    right: 10px;
+    top:15px;
+}
+.carta:hover .links {
+    right: -50px;
+    border-radius: 0 10px 0;
+}
+.carta .links a{
+    font-size: 20px;
+    color: #646069;
+}
+.carta .links a:nth-child(1):hover{
+    color: #1f2329;
+}
+.carta .links a:nth-child(2):hover{
+    color: #0158ca;
+}
+.carta .links a:nth-child(3):hover{
+    color: #0158ca;
+}
+.carta .links a:nth-child(4):hover{
+    color: #bb1c1c;
+}
+
+@media screen and (min-width: 700px){
+    .contenedor-cartas{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .carta {
+        margin: 2.5rem;
+        transition: transform 0.5s;
+    }
+
+    @keyframes fadeIn{
+        from{
+            opacity: 0;
+        }
+        to{
+            opacity: 1;
+        }
+    }
+
+    .carta:nth-child(1){
+        animation: fadeIn 0.5s 0.5s backwards;
+    }
+    .carta:nth-child(2){
+        animation: fadeIn 0.5s 1s backwards;
+    }
+    .carta:nth-child(3){
+        animation: fadeIn 0.5s 1.5s backwards;
+    }
+    .carta:nth-child(4){
+        animation: fadeIn 0.5s 2s backwards;
+    }
+    .carta:hover{
+        transform: scale(1.05);
+    }
+}
+
+@keyframes animacionTitulos {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}

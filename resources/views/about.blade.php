@@ -10,13 +10,15 @@
 
     <!--Hojas de estilo y scripts porpios-->
     <script src="{{ asset('js/segundo/vista-bienvenida.js') }}"></script>
+    <script src="{{ asset('js/segundo/about.js') }}"></script>
     <link href="{{ asset('css/segundo/vista-bienvenida.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/segundo/about.css') }}" rel="stylesheet">
 
     <!--Iconos de font answere-->
     <script src="https://kit.fontawesome.com/47c9cd5333.js" crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body style="background-color:black">
     <header>
         <nav class="navbar navbar-custom">
             <div class="container" id="header">
@@ -29,40 +31,104 @@
                     @endauth
                 </div>
                 <div class="links-container">
-                    <a class="log-in-button" href="{{ route('about') }}">Developers</a></span>
+                    <a class="log-in-button" href="{{ route('welcome') }}">Bienvenida</a></span>
                     @auth
                         <a class="log-in-button" href="{{ route('home') }}">Home</a>
                     @else
-                        <a class="log-in-button" href="{{ route('login') }}">Log-In</a>
+                        <a class="log-in-button" href="{{ route('dev_login') }}">Log-In</a>
                     @endauth
                 </div>
             </div>
           </nav>
     </header>
-    <div  class="title-container">
-        <section>
-            <video src="{{ asset('src/videos/humo.mp4') }}" autoplay muted></video>
-            <h2 class="titulo1">Departamento de</h2>
-            <h1>
-                <span>S</span>
-                <span>I</span>
-                <span>S</span>
-                <span>T</span>
-                <span>E</span>
-                <span>M</span>
-                <span>A</span>
-                <span>S</span>
-                <br>
-                <span>U</span>
-                <span>D</span>
-                <span>E</span>
-                <span>N</span>
-                <span>A</span>
-                <span>R</span>
-            </h1>
-            <h2 class="titulo2">Semilleros de Investigación</h2>
-        </section>
-    </div>
+    <section class="p-container">
+        <center><h1 class="titulo" >Equipo de Desarrollo</h1></center>
+        <div class="contenedor-cartas">
+            <div class="carta">
+                <div class="contenido">
+                    <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
+                    <img class="perfil-img" src="{{asset('src/img/Developers/segundo.jpg')}}">
+                    <h1>Segundo Paladines</h1>
+                    <p class="trabajo">DESARROLLADOR</p>
+                    <p class="descripcion">
+                        Departamento de Sistemas <br>
+                        Facultad de Ingeniería <br>
+                        Universidad de Nariño <br>
+                    </p>
+                </div>
+                <div class="links">
+                    <a href="#"  target="_blank"><i class="fa fa-github"></i></a>
+                    <a href="#"  target="_blank"><i class="fa fa-linkedin"></i></a>
+                    <a href="#"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                </div>
+            </div>
+            <div class="carta">
+                <div class="contenido">
+                    <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
+                    <img class="perfil-img" src="{{asset('src/img/Developers/juan_camilo.jpg')}}">
+                    <h1>Juan Insuasty</h1>
+                    <p class="trabajo">DESARROLLADOR</p>
+                    <p class="descripcion">
+                        Departamento de Sistemas <br>
+                        Facultad de Ingeniería <br>
+                        Universidad de Nariño <br>
+                    </p>
+                </div>
+                <div class="links">
+                    <a href="#"  target="_blank"><i class="fa fa-github"></i></a>
+                    <a href="#"  target="_blank"><i class="fa fa-linkedin"></i></a>
+                    <a href="#"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                </div>
+            </div>
+            <div class="carta">
+                <div class="contenido">
+                    <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
+                    <img class="perfil-img" src="{{asset('src/img/Developers/david.jpg')}}">
+                    <h1>David Criollo</h1>
+                    <p class="trabajo">DESARROLLADOR</p>
+                    <p class="descripcion">
+                        Departamento de Sistemas <br>
+                        Facultad de Ingeniería <br>
+                        Universidad de Nariño <br>
+                    </p>
+                </div>
+                <div class="links">
+                    <a href="#"  target="_blank"><i class="fa fa-github"></i></a>
+                    <a href="#"  target="_blank"><i class="fa fa-linkedin"></i></a>
+                    <a href="#"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                </div>
+            </div>
+            <div class="carta">
+                <div class="contenido">
+                    <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
+                    <img class="perfil-img" src="{{asset('src/img/Developers/segundo.jpg')}}">
+                    <h1>Segundo Paladines</h1>
+                    <p class="trabajo">DESARROLLADOR</p>
+                    <p class="descripcion">
+                        Departamento de Sistemas <br>
+                        Facultad de Ingeniería <br>
+                        Universidad de Nariño <br>
+                    </p>
+                </div>
+                <div class="links">
+                    <a href="#"  target="_blank"><i class="fa fa-github"></i></a>
+                    <a href="#"  target="_blank"><i class="fa fa-linkedin"></i></a>
+                    <a href="#"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                </div>
+            </div>
+    </section>
+
+    <footer class="pie-pg">
+        <div class="p-3 text-center" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 
+            <a class="text-white" href="https://www.udenar.edu.co/" target="blank">Udenar</a>
+             2023
+        </div>
+    </footer>
     
     <dialog id="vtn-login">
         @if (session('status'))
@@ -160,13 +226,5 @@
             });
         </script>
     @endif
-
-    <footer class="pie-pg">
-        <div class="p-3 text-center" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 
-            <a class="text-white" href="https://www.udenar.edu.co/" target="blank">Udenar</a>
-             2023
-        </div>
-    </footer>
 </body>
 </html>
