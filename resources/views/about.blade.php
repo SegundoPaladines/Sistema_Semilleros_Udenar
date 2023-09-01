@@ -77,10 +77,9 @@
                     </p>
                 </div>
                 <div class="links">
-                    <a href="#"  target="_blank"><i class="fa fa-github"></i></a>
-                    <a href="#"  target="_blank"><i class="fa fa-linkedin"></i></a>
-                    <a href="#"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                    <a href="https://github.com/juancig01"  target="_blank"><i class="fa fa-github"></i></a>
+                    <a href="https://www.facebook.com/juankmilo.insuasty"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a id="insta-j" href="https://www.instagram.com/juanc__cmx/"  target="_blank"><i class="fa fa-instagram"></i></a>
                 </div>
             </div>
             <div class="carta">
