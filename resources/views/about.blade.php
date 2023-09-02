@@ -10,12 +10,16 @@
 
     <!--Hojas de estilo y scripts porpios-->
     <script src="{{ asset('js/segundo/vista-bienvenida.js') }}"></script>
-    <script src="{{ asset('js/segundo/about.js') }}"></script>
     <link href="{{ asset('css/segundo/vista-bienvenida.css') }}" rel="stylesheet">
     <link href="{{ asset('css/segundo/about.css') }}" rel="stylesheet">
-
     <!--Iconos de font answere-->
     <script src="https://kit.fontawesome.com/47c9cd5333.js" crossorigin="anonymous"></script>
+
+    <!--JQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!--JS propio-->
+    <script src="{{ asset('js/segundo/about.js') }}"></script>
 
 </head>
 <body style="background-color:black">
@@ -41,88 +45,111 @@
             </div>
           </nav>
     </header>
-    <section class="p-container">
-        <center><h1 class="titulo" >Equipo de Desarrollo</h1></center>
-        <div class="contenedor-cartas">
-            <div class="carta">
-                <div class="contenido">
-                    <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
-                    <img class="perfil-img" src="{{asset('src/img/Developers/segundo.jpg')}}">
-                    <h1>Segundo Paladines</h1>
-                    <p class="trabajo">DESARROLLADOR</p>
-                    <p class="descripcion">
-                        Departamento de Sistemas <br>
-                        Facultad de Ingeniería <br>
-                        Universidad de Nariño <br>
-                    </p>
+   <div id="t-cont">
+        <section class="p-container">
+            <center><h1 class="titulo" >Equipo de Desarrollo</h1></center>
+            <br>
+            <div class="contenedor-cartas">
+                <div class="carta">
+                    <div class="contenido">
+                        <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
+                        <img class="perfil-img" src="{{asset('src/img/Developers/segundo.png')}}">
+                        <h1>Segundo Paladines</h1>
+                        <p class="trabajo">DESARROLLADOR</p>
+                        <p class="descripcion">
+                            Departamento de Sistemas <br>
+                            Facultad de Ingeniería <br>
+                            Universidad de Nariño <br>
+                        </p>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/SegundoPaladines"  target="_blank"><i class="fa fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/segundo-paladines-ortiz-b60216257"  target="_blank"><i class="fa fa-linkedin"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100010282954088"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://www.youtube.com/channel/UC0lBAjv2RCj8z--bKu2UAew"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                        <a href="https://wa.me/573147856561"  target="_blank"><i class="fa fa-whatsapp"></i></a>
+                    </div>
                 </div>
-                <div class="links">
-                    <a href="https://github.com/SegundoPaladines"  target="_blank"><i class="fa fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/segundo-paladines-ortiz-b60216257"  target="_blank"><i class="fa fa-linkedin"></i></a>
-                    <a href="https://www.facebook.com/profile.php?id=100010282954088"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://www.youtube.com/channel/UC0lBAjv2RCj8z--bKu2UAew"  target="_blank"><i class="fa fa-youtube-play"></i></a>
-                    <a href="https://wa.me/573147856561"  target="_blank"><i class="fa fa-whatsapp"></i></a>
+                <div class="carta">
+                    <div class="contenido">
+                        <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
+                        <img class="perfil-img" src="{{asset('src/img/Developers/juan_camilo.jpg')}}">
+                        <h1>Juan Insuasty</h1>
+                        <p class="trabajo">DESARROLLADOR</p>
+                        <p class="descripcion">
+                            Departamento de Sistemas <br>
+                            Facultad de Ingeniería <br>
+                            Universidad de Nariño <br>
+                        </p>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/juancig01"  target="_blank"><i class="fa fa-github"></i></a>
+                        <a href="https://www.facebook.com/juankmilo.insuasty"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a id="insta-j" href="https://www.instagram.com/juanc__cmx/"  target="_blank"><i class="fa fa-instagram"></i></a>
+                        <a id="insta-j" href="https://www.youtube.com/channel/UCLln8gUHErtBGw3ghKOXC9w"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                    </div>
+                </div>
+                <div class="carta">
+                    <div class="contenido">
+                        <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
+                        <img class="perfil-img" src="{{asset('src/img/Developers/david.jpg')}}">
+                        <h1>David Criollo</h1>
+                        <p class="trabajo">DESARROLLADOR</p>
+                        <p class="descripcion">
+                            Departamento de Sistemas <br>
+                            Facultad de Ingeniería <br>
+                            Universidad de Nariño <br>
+                        </p>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/diulioz"  target="_blank"><i class="fa fa-github"></i></a>
+                        <a id="insta-j" href="https://www.youtube.com/channel/UCl2-w3n4Mgu9JMw6l8nY-_w"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                        <a href="mailto:davidcriollo@udenar.edu.co"><i class="fa fa-envelope-o"></i></a>
+                    </div>
+                </div>
+                <div class="carta">
+                    <div class="contenido">
+                        <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
+                        <img class="perfil-img" src="{{asset('src/img/Developers/dana.jpeg')}}">
+                        <h1>Dana Criollo</h1>
+                        <p class="trabajo">DESARROLLADORA</p>
+                        <p class="descripcion">
+                            Departamento de Sistemas <br>
+                            Facultad de Ingeniería <br>
+                            Universidad de Nariño <br>
+                        </p>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/DanaCriolloLopez"  target="_blank"><i class="fa fa-github"></i></a>
+                        <a href="mailto:dana.criollo@udenar.edu.co"  target="_blank"><i class="fa fa-envelope-o"></i></a>
+                        <a href="https://www.facebook.com/dana.criollo"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://www.youtube.com/channel/UCucgO2oe-2IkymgOiUg0O_Q"  target="_blank"><i class="fa fa-youtube-play"></i></a>
+                        <a id="insta-j" href="https://instagram.com/dana__crl?utm_source=qr&igshid=MzNlNGNkZWQ4Mg%3D%3D"  target="_blank"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+        </section>
+        <br>
+        <div class="luces-verdes"></div>
+        <section>
+            <div class="container">
+                <h1 class="titulo2" >Sobre Nosotros</h1>
+                <div class="row">
+                    <div class="col">
+                        <p class="text">
+                            Cada uno de los miembros del equipo de trabajo posee conocimientos que incluyen entre otras cosas a Git y GitHub para el control
+                            de versiones, Laravel como framework para desarrollo de diferentes tipos de aplicativo web,
+                            CSS, blade y HTML para la generación del contenido, junto con JS para el Font-end y PHP para 
+                            el trabajo en Back-end. 
+                        </p>
+                    </div>
+                    <div id="tag" class="col">
+                    </div>
                 </div>
             </div>
-            <div class="carta">
-                <div class="contenido">
-                    <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
-                    <img class="perfil-img" src="{{asset('src/img/Developers/juan_camilo.jpg')}}">
-                    <h1>Juan Insuasty</h1>
-                    <p class="trabajo">DESARROLLADOR</p>
-                    <p class="descripcion">
-                        Departamento de Sistemas <br>
-                        Facultad de Ingeniería <br>
-                        Universidad de Nariño <br>
-                    </p>
-                </div>
-                <div class="links">
-                    <a href="https://github.com/juancig01"  target="_blank"><i class="fa fa-github"></i></a>
-                    <a href="https://www.facebook.com/juankmilo.insuasty"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a id="insta-j" href="https://www.instagram.com/juanc__cmx/"  target="_blank"><i class="fa fa-instagram"></i></a>
-                    <a id="insta-j" href="https://www.youtube.com/channel/UCLln8gUHErtBGw3ghKOXC9w"  target="_blank"><i class="fa fa-youtube-play"></i></a>
-                </div>
-            </div>
-            <div class="carta">
-                <div class="contenido">
-                    <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
-                    <img class="perfil-img" src="{{asset('src/img/Developers/david.jpg')}}">
-                    <h1>David Criollo</h1>
-                    <p class="trabajo">DESARROLLADOR</p>
-                    <p class="descripcion">
-                        Departamento de Sistemas <br>
-                        Facultad de Ingeniería <br>
-                        Universidad de Nariño <br>
-                    </p>
-                </div>
-                <div class="links">
-                    <a href="https://github.com/diulioz"  target="_blank"><i class="fa fa-github"></i></a>
-                    <a id="insta-j" href="https://www.youtube.com/channel/UCl2-w3n4Mgu9JMw6l8nY-_w"  target="_blank"><i class="fa fa-youtube-play"></i></a>
-                    <a href="mailto:davidcriollo@udenar.edu.co"><i class="fa fa-envelope-o"></i></a>
-                </div>
-            </div>
-            <div class="carta">
-                <div class="contenido">
-                    <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
-                    <img class="perfil-img" src="{{asset('src/img/Developers/segundo.jpg')}}">
-                    <h1>Dana Criollo</h1>
-                    <p class="trabajo">DESARROLLADORA</p>
-                    <p class="descripcion">
-                        Departamento de Sistemas <br>
-                        Facultad de Ingeniería <br>
-                        Universidad de Nariño <br>
-                    </p>
-                </div>
-                <div class="links">
-                    <a href="#"  target="_blank"><i class="fa fa-github"></i></a>
-                    <a href="#"  target="_blank"><i class="fa fa-linkedin"></i></a>
-                    <a href="#"  target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"  target="_blank"><i class="fa fa-youtube-play"></i></a>
-                </div>
-            </div>
-    </section>
+        </section>
+   </div>
 
-    <footer class="pie-pg">
+    <footer class="pg-pie">
         <div class="p-3 text-center" style="background-color: rgba(0, 0, 0, 0.2);">
             © 
             <a class="text-white" href="https://www.udenar.edu.co/" target="blank">Udenar</a>
