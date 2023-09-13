@@ -1,5 +1,5 @@
 .p-container{
-    margin-top: 20vh;
+    margin-top: 15vh;
     min-height: 70vh;
     align-items: center;
     justify-content: center;
@@ -11,8 +11,10 @@
     align-items: center;
     align-content: center;
     flex-direction: column;
+    margin-top: 2rem;
 }
 .titulo{
+    margin-top: 1rem;
     text-transform: uppercase;
     font-size: 1.5rem;
     letter-spacing: 3px;
@@ -44,7 +46,7 @@
 .contenido{
     border-radius: 10px;
     position: relative;
-    width: 15rem;
+    width: 20rem;
     height: auto;
     background-color: #ebeef8;
     display: flex;
@@ -64,11 +66,11 @@
     clip-path: polygon(0 0, 100% 0, 100% 62%, 0 100%);
 }
 .carta .perfil-img{
-    width:7rem;
-    height: 7rem;
+    width: 9rem;
+    height: 9rem;
     object-fit: cover;
     border-radius: 50%;
-    margin-top: -10rem;
+    margin-top: -13rem;
     z-index: 2;
     border: 2px solid #ebbef8;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
@@ -214,7 +216,7 @@
 }
 @media screen and (min-width: 700px){
     .titulo {
-        top: 10%;
+        margin-top: 1rem;
     }
     .contenedor-cartas{
         flex-direction: row;
@@ -247,6 +249,9 @@
     }
     .carta:nth-child(4){
         animation: fadeIn 0.5s 2s backwards;
+    }
+    .carta:nth-child(5){
+        animation: fadeIn 0.5s 2.5s backwards;
     }
     .carta:hover{
         transform: scale(1.05);

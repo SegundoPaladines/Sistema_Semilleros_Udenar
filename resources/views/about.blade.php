@@ -53,6 +53,24 @@
                 <div class="carta">
                     <div class="contenido">
                         <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
+                        <img class="perfil-img" src="{{asset('src/img/Developers/sandra.png')}}">
+                        <h1>Sandra Guerrero</h1>
+                        <p class="trabajo">DIRECTORA</p>
+                        <p class="descripcion">
+                            Departamento de Sistemas <br>
+                            Facultad de Ingeniería <br>
+                            Universidad de Nariño <br>
+                        </p>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/Marcela1396"  target="_blank"><i class="fa fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/marcela-guerreroc/"  target="_blank"><i class="fa fa-linkedin"></i></a>
+                        <a href="mailto:marcela1396@udenar.edu.co"><i class="fa fa-envelope-o"></i></a>
+                    </div>
+                </div>
+                <div class="carta">
+                    <div class="contenido">
+                        <img class="fondo-img" src="{{asset('src/img/Developers/fondo.png')}}">
                         <img class="perfil-img" src="{{asset('src/img/Developers/segundo.png')}}">
                         <h1>Segundo Paladines</h1>
                         <p class="trabajo">DESARROLLADOR</p>
